@@ -1,0 +1,15 @@
+# Java
+*.class
+
+# Eclipse
+/.classpath
+/.project
+/.settings/*
+!/.settings/org.eclipse.jdt.ui.prefs
+
+# Gradle
+/.gradle/
+
+# Build
+/build/output/
+/classes/

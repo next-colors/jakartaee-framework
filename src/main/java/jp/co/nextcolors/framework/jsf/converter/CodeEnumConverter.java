@@ -1,0 +1,140 @@
+package jp.co.nextcolors.framework.jsf.converter;
+
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.Map;
+import java.util.Objects;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
+import javax.faces.convert.EnumConverter;
+
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.sun.faces.util.MessageFactory;
+
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.ToString;
+
+import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
+import jp.co.nextcolors.framework.util.GenericUtil;
+
+/**
+ * JSF でプロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
+ *
+ * @author hamana
+ * @param <E>
+ * 			列挙型の型です。
+ * @param <C>
+ * 			列挙型のコードの型です。
+ */
+@ToString
+@EqualsAndHashCode
+public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> implements Converter
+{
+	//-------------------------------------------------------------------------
+	//    Private Properties
+	//-------------------------------------------------------------------------
+	/**
+	 * 列挙型の型を表すクラスです。
+	 *
+	 */
+	private final Class<E> enumClass;
+
+	/**
+	 * 列挙型のコードの型を表すクラスです。
+	 *
+	 */
+	private final Class<C> enumCodeClass;
+
+	//-------------------------------------------------------------------------
+	//    Private Methods
+	//-------------------------------------------------------------------------
+	/**
+	 * 変換に失敗した場合のメッセージを取得します。
+	 *
+	 * @param context
+	 * 			Faces コンテキスト
+	 * @param component
+	 * 			UI コンポーネント
+	 * @param value
+	 * 			変換対象の値
+	 * @return 変換に失敗した場合のメッセージ
+	 */
+	private FacesMessage getConversionErrorMessage( @NonNull final FacesContext context,
+													@NonNull final UIComponent component,
+													@NonNull final Object value )
+	{
+		Object label = MessageFactory.getLabel( context, component );
+
+		return MessageFactory.getMessage( context, EnumConverter.ENUM_ID, value, null, label );
+	}
+
+	//-------------------------------------------------------------------------
+	//    Protected Methods
+	//-------------------------------------------------------------------------
+	@SuppressWarnings("unchecked")
+	protected CodeEnumConverter()
+	{
+		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+
+		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
+			if ( clazz.getSuperclass() == CodeEnumConverter.class ) {
+				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
+				enumClass = (Class<E>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
+				enumCodeClass = (Class<C>) GenericUtil.getActualClass( paramTypes[ 1 ], typeVariableMap );
+
+				return;
+			}
+		}
+
+		throw new RuntimeException( "列挙型の型/列挙型のコードの型を表すクラスを設定できませんでした。" );
+	}
+
+	//-------------------------------------------------------------------------
+	//    Public Methods
+	//-------------------------------------------------------------------------
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public E getAsObject( @NonNull final FacesContext context, @NonNull final UIComponent component, final String value )
+	{
+		if ( StringUtils.isBlank( value ) ) {
+			return null;
+		}
+
+		C code = enumCodeClass.cast( ConvertUtils.convert( value, enumCodeClass ) );
+
+		try {
+			return ICodeEnum.codeOf( enumClass, code );
+		}
+		catch ( IllegalArgumentException e ) {
+			throw new ConverterException( getConversionErrorMessage( context, component, code ), e );
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public String getAsString( @NonNull final FacesContext context, @NonNull final UIComponent component, final Object value )
+	{
+		if ( Objects.isNull( value ) ) {
+			return StringUtils.EMPTY;
+		}
+
+		if ( !enumClass.isInstance( value ) ) {
+			throw new ConverterException( getConversionErrorMessage( context, component, value ) );
+		}
+
+		return enumClass.cast( value ).getCode().toString();
+	}
+}

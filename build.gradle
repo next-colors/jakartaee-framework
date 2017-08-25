@@ -1,0 +1,222 @@
+//-----------------------------------------------------------------------------
+//    Plugins
+//-----------------------------------------------------------------------------
+plugins {
+	id 'java-library';
+	id 'jacoco';
+	id 'eclipse-wtp';
+	id 'io.franzbecker.gradle-lombok' version '1.10';
+}
+
+//-----------------------------------------------------------------------------
+//    Import Classes
+//-----------------------------------------------------------------------------
+import org.gradle.plugins.ide.eclipse.model.Facet;
+import org.gradle.plugins.ide.eclipse.model.Facet.FacetType;
+import io.franzbecker.gradle.lombok.task.DelombokTask;
+
+//-----------------------------------------------------------------------------
+//    Constant Properties
+//-----------------------------------------------------------------------------
+// ビルド出力ディレクトリ
+buildDir = getProperty( 'build.dir.output' );
+// コンパイル時の Java バージョン
+sourceCompatibility = getProperty( 'java.version' );
+// クラス生成時の Java バージョン
+targetCompatibility = getProperty( 'java.version' );
+// コンパイル時に使用する文字エンコーディング
+tasks.withType( AbstractCompile )*.options*.encoding = getProperty( 'common.encoding' );
+
+//-----------------------------------------------------------------------------
+//    Dependent Settings
+//-----------------------------------------------------------------------------
+// コンフィギュレーションの設定
+configurations {
+	//-- 独自コンフィギュレーションの追加
+	// JMockit のためのコンフィギュレーション
+	jmockit;
+}
+
+// ライブラリ取得先リポジトリ
+repositories {
+	// JCenter リポジトリ
+	jcenter();
+}
+
+// 依存関係の設定
+dependencies {
+	// パッケージに含めるライブラリ
+	api(
+		'com.fasterxml.jackson.core:jackson-databind:latest.release',
+		'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:latest.release',
+		'com.google.guava:guava:latest.release',
+		'com.miragesql:miragesql:1.3.0',
+		'commons-beanutils:commons-beanutils:latest.release',
+		'commons-codec:commons-codec:latest.release',
+		'commons-io:commons-io:latest.release',
+		'joda-time:joda-time:latest.release',
+		'org.apache.commons:commons-collections4:latest.release',
+		'org.apache.commons:commons-lang3:latest.release',
+		'org.apache.commons:commons-text:latest.release',
+		'org.jooq:jooq:latest.release',
+		'org.reflections:reflections:latest.release',
+		'org.slf4j:slf4j-api:1.7.+'
+	);
+
+	// コンパイル時にのみ必要なライブラリ
+	compileOnly(
+		'com.sun.faces:jsf-impl:latest.release',
+		'javax:javaee-api:latest.release',
+		'org.projectlombok:lombok:latest.release'
+	);
+
+	// テスト時にのみ必要なライブラリ
+	testImplementation(
+		'junit:junit:latest.release',
+		'org.dbunit:dbunit:latest.release',
+		'org.hamcrest:hamcrest-generator:latest.release',
+		'org.hamcrest:hamcrest-integration:latest.release'
+	);
+
+	// JMockit のライブラリ
+	// test タスク実行時に、JMockit のライブラリを最初に読み込むなどの手を加える必要があるため、
+	// JMockit の依存関係だけ別に定義する。
+	jmockit(
+		'org.jmockit:jmockit:latest.release'
+	);
+}
+
+//-----------------------------------------------------------------------------
+//    Tasks
+//-----------------------------------------------------------------------------
+// JUnit でテストするタスク
+test {
+	// テストが失敗しても処理を継続させる。
+	ignoreFailures = true;
+
+	// @RunWith で Enclosed テストランナーを使用するとテストが 2 回実行されてしまうので、1 回だけの実行にさせる。
+	exclude( '**/*$*' );
+
+	// JVM オプションに JMockit のモジュール読み込みを追加
+	jvmArgs( "-javaagent:${configurations.jmockit.asPath}" );
+
+	// JMockit のモジュールの読み込みを最初にするように設定
+	sourceSets.test {
+		compileClasspath = configurations.jmockit + compileClasspath;
+		runtimeClasspath = configurations.jmockit + runtimeClasspath;
+	}
+
+	jacoco {
+		append = false;
+		destinationFile = file( "${buildDir}/jacoco/jacocoTest.exec" );
+		classDumpDir = file( "${buildDir}/jacoco/classpathdumps" );
+	}
+}
+
+// Lombok のタスク
+lombok {
+	version = getProperty( 'lombok.version' );
+}
+
+// Lombok による変換後のソースコードを生成するためのタスク
+task delombok( type: DelombokTask ) {
+	description = 'Generates delomboked source.';
+
+	ext.outputDir = file( "${buildDir}/${delombok.name}" );
+
+	sourceSets.all {
+		if ( it.name != SourceSet.TEST_SOURCE_SET_NAME ) {
+			it.allJava.srcDirs.each {
+				args( it, '-d', outputDir );
+			}
+		}
+	}
+}
+
+// Javadoc のタスク
+javadoc {
+	dependsOn( delombok );
+
+	source = delombok.outputDir;
+	failOnError = false;
+
+	options {
+		encoding = getProperty( 'common.encoding' );
+		charSet = getProperty( 'common.encoding' );
+		author = true;
+		links(
+			'http://www.joda.org/joda-time/apidocs/',
+			'http://www.slf4j.org/apidocs/',
+			'https://commons.apache.org/proper/commons-beanutils/apidocs/',
+			'https://commons.apache.org/proper/commons-codec/apidocs/',
+			'https://commons.apache.org/proper/commons-collections/apidocs/',
+			'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
+			'https://commons.apache.org/proper/commons-lang/apidocs/',
+			'https://commons.apache.org/proper/commons-text/apidocs/',
+			'https://docs.oracle.com/javaee/7/api/',
+			'https://docs.oracle.com/javase/jp/8/docs/api/',
+			'https://google.github.io/guava/releases/22.0/api/docs/',
+			'https://projectlombok.org/api/',
+			'https://ronmamo.github.io/reflections/',
+			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/2.9.0',
+			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-core/2.9.0',
+			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.0',
+			'https://www.javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-cbor/2.9.0',
+			'https://www.javadoc.io/doc/com.miragesql/miragesql/1.3.0',
+			'https://www.jooq.org/javadoc/3.9.x/'
+		);
+	}
+}
+
+// JaCoCo（Java Code Coverage Library）のタスク
+jacoco {
+	toolVersion = getProperty( 'jacoco.version' );
+}
+
+// JaCoCo（Java Code Coverage Library）でカバレッジレポートを生成するタスク
+jacocoTestReport {
+	description = 'Generates JaCoCo coverage reports after running tests.';
+}
+
+// Eclipse プロジェクトのタスク
+eclipse {
+	// .classpath の設定
+	classpath {
+		// 独自で追加したコンフィギュレーションを追加
+		plusConfigurations += [ configurations.jmockit ];
+		// クラスファイルの出力先
+		defaultOutputDir = file( "${projectDir}/classes" );
+	}
+
+	// WTP（Web Tools Platform）の設定
+	wtp {
+		// プロジェクト・ファセットの設定
+		facet {
+			// Java
+			facet( type: FacetType.fixed, name: 'java' );
+			facet( type: FacetType.installed, name: 'java', version: getProperty( 'java.version' ) );
+
+			file {
+				beforeMerged {
+					List<Facet> facets = it.facets;
+
+					// 既存の設定内容をクリア
+					facets.clear();
+				}
+
+				whenMerged {
+					List<Facet> facets = it.facets;
+
+					// ファセットの種類、ファセット名でソート
+					facets.sort { facet1, facet2 ->
+						if ( facet1.type == facet2.type ) {
+							return facet1.name.compareTo( facet2.name );
+						}
+
+						return facet1.type.name().compareTo( facet2.type.name() );
+					}
+				}
+			}
+		}
+	}
+}

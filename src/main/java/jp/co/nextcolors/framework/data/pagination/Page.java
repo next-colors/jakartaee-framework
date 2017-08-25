@@ -1,0 +1,210 @@
+package jp.co.nextcolors.framework.data.pagination;
+
+import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+
+import com.google.common.math.DoubleMath;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
+
+/**
+ * {@link IPage} の実装クラスです。
+ *
+ * @author hamana
+ * @param <T>
+ * 			ページに含まれる要素の型です。
+ */
+@Getter
+@ToString
+@EqualsAndHashCode
+public class Page<T> implements IPage<T>
+{
+	//-------------------------------------------------------------------------
+	//    Private Properties
+	//-------------------------------------------------------------------------
+	/**
+	 * ページ付けの情報です。
+	 *
+	 */
+	private final IPageRequest pageRequest;
+
+	/**
+	 * ページに含まれる要素です。
+	 *
+	 */
+	private final List<T> elements;
+
+	/**
+	 * 要素の総数です。
+	 *
+	 */
+	private final int totalElements;
+
+	//-------------------------------------------------------------------------
+	//    Public Methods
+	//-------------------------------------------------------------------------
+	/**
+	 * @param pageRequest
+	 * 			ページ付けの情報
+	 * @param elements
+	 * 			ページに含まれる要素
+	 * @param totalElements
+	 * 			要素の総数
+	 */
+	public Page( @NonNull final IPageRequest pageRequest, @NonNull final List<T> elements, final int totalElements )
+	{
+		this.pageRequest = pageRequest;
+		this.elements = Collections.unmodifiableList( elements );
+		this.totalElements = totalElements;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public int getNumber()
+	{
+		return pageRequest.getPageNumber();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public int getSize()
+	{
+		return pageRequest.getPageSize();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public int getNumberOfElements()
+	{
+		return CollectionUtils.size( elements );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public int getTotalPages()
+	{
+		return DoubleMath.roundToInt( (double) totalElements / getSize(), RoundingMode.CEILING );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public boolean hasElements()
+	{
+		return CollectionUtils.isNotEmpty( elements );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public boolean isFirst()
+	{
+		if ( hasPrevious() ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public boolean isLast()
+	{
+		if ( hasNext() ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public boolean hasPrevious()
+	{
+		return pageRequest.hasPrevious();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public boolean hasNext()
+	{
+		if ( getNumber() < getTotalPages() ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public IPageRequest getPreviousPageRequest()
+	{
+		if ( hasPrevious() ) {
+			return pageRequest.previous();
+		}
+
+		return pageRequest;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public IPageRequest getNextPageRequest()
+	{
+		if ( hasNext() ) {
+			return pageRequest.next();
+		}
+
+		return pageRequest;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public <R> IPage<R> map( @NonNull final Function<? super T, ? extends R> mapper )
+	{
+		List<R> elements = this.elements.stream().map( mapper::apply ).collect( Collectors.toList() );
+
+		return new Page<>( pageRequest, elements, totalElements );
+	}
+}

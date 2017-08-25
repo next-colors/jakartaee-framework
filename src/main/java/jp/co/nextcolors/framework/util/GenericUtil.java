@@ -1,0 +1,561 @@
+package jp.co.nextcolors.framework.util;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.GenericDeclaration;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import com.google.common.collect.Maps;
+
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
+
+/**
+ * ジェネリクスを扱うためのユーティリティです。
+ *
+ * @author hamana
+ */
+@UtilityClass
+public class GenericUtil
+{
+	//-------------------------------------------------------------------------
+	//    Private Methods
+	//-------------------------------------------------------------------------
+	/**
+	 * パラメータ化された型（クラスまたはインタフェース）が持つ型変数および型引数を集めて {@link Map} に追加します。
+	 *
+	 * @param type
+	 * 			型
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 */
+	private static void gatherTypeVariables( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( ParameterizedType.class.isInstance( type ) ) {
+			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
+			GenericDeclaration genericDeclaration = GenericDeclaration.class.cast( parameterizedType.getRawType() );
+
+			TypeVariable<?>[] typeVariables = genericDeclaration.getTypeParameters();
+			Type[] actualTypes = parameterizedType.getActualTypeArguments();
+
+			for ( int i = 0; i < actualTypes.length; ++i ) {
+				map.put( typeVariables[ i ], actualTypes[ i ] );
+			}
+		}
+	}
+
+	/**
+	 * パラメータ化された型（クラスまたはインタフェース）が持つ型変数および型引数を集めて {@link Map} に追加します。
+	 *
+	 * @param clazz
+	 * 			クラス
+	 * @param type
+	 * 			型
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 */
+	private static void gatherTypeVariables( @NonNull final Class<?> clazz, @NonNull final Type type,
+												@NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( Objects.isNull( clazz ) ) {
+			return;
+		}
+
+		gatherTypeVariables( type, map );
+
+		Class<?> superClass = clazz.getSuperclass();
+		Type superClassType = clazz.getGenericSuperclass();
+
+		if ( Objects.nonNull( superClass ) ) {
+			gatherTypeVariables( superClass, superClassType, map );
+		}
+
+		Class<?>[] interfaces = clazz.getInterfaces();
+		Type[] interfaceTypes = clazz.getGenericInterfaces();
+
+		for ( int i = 0; i < interfaces.length; ++i ) {
+			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map );
+		}
+	}
+
+	//-------------------------------------------------------------------------
+	//    Public Methods
+	//-------------------------------------------------------------------------
+	/**
+	 * 型の原型がクラスに代入可能であるかどうかを判定します。
+	 *
+	 * @param type
+	 * 			型
+	 * @param clazz
+	 * 			クラス
+	 * @return 型の原型がクラスに代入可能である場合は {@code true}、そうでない場合は {@code false}
+	 */
+	public static boolean isTypeOf( @NonNull final Type type, @NonNull final Class<?> clazz )
+	{
+		if ( Class.class.isInstance( type ) ) {
+			return clazz.isAssignableFrom( Class.class.cast( type ) );
+		}
+
+		if ( ParameterizedType.class.isInstance( type ) ) {
+			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
+
+			return isTypeOf( parameterizedType.getRawType(), clazz );
+		}
+
+		return false;
+	}
+
+	/**
+	 * 型の原型を返します。
+	 *
+	 * @param type
+	 * 			型
+	 * @return 型の原型
+	 */
+	public static Class<?> getRawClass( @NonNull final Type type )
+	{
+		if ( Class.class.isInstance( type ) ) {
+			return Class.class.cast( type );
+		}
+
+		if ( ParameterizedType.class.isInstance( type ) ) {
+			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
+
+			return getRawClass( parameterizedType.getRawType() );
+		}
+
+		if ( WildcardType.class.isInstance( type ) ) {
+			WildcardType wildcardType = WildcardType.class.cast( type );
+			Type[] types = wildcardType.getUpperBounds();
+
+			return getRawClass( types[ 0 ] );
+		}
+
+		if ( GenericArrayType.class.isInstance( type ) ) {
+			GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
+
+			Class<?> rawClass = getRawClass( genericArrayType.getGenericComponentType() );
+
+			return Array.newInstance( rawClass, 0 ).getClass();
+		}
+
+		return null;
+	}
+
+	/**
+	 * 型の型引数の配列を返します。<br>
+	 * 型がパラメータ化された型でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			型
+	 * @return 型の型引数の配列
+	 */
+	public static Type[] getGenericParameters( @NonNull final Type type )
+	{
+		if ( ParameterizedType.class.isInstance( type ) ) {
+			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
+
+			return parameterizedType.getActualTypeArguments();
+		}
+
+		if ( GenericArrayType.class.isInstance( type ) ) {
+			GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
+
+			return getGenericParameters( genericArrayType.getGenericComponentType() );
+		}
+
+		return null;
+	}
+
+	/**
+	 * 指定された位置の型の型引数を返します。<br>
+	 * 型がパラメータ化された型でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			型
+	 * @param index
+	 * 			位置
+	 * @return 指定された位置の型の型引数
+	 */
+	public static Type getGenericParameter( @NonNull final Type type, final int index )
+	{
+		if ( !ParameterizedType.class.isInstance( type ) ) {
+			return null;
+		}
+
+		Type[] genericParameter = getGenericParameters( type );
+
+		if ( Objects.isNull( genericParameter ) ) {
+			return null;
+		}
+
+		return genericParameter[ index ];
+	}
+
+	/**
+	 * パラメータ化された型を要素とする配列の要素型を返します。<br>
+	 * 型がパラメータ化された型の配列でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			パラメータ化された型を要素とする配列
+	 * @return パラメータ化された型を要素とする配列の要素型
+	 */
+	public static Type getElementTypeOfArray( @NonNull final Type type )
+	{
+		if ( !GenericArrayType.class.isInstance( type ) ) {
+			return null;
+		}
+
+		GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
+
+		return genericArrayType.getGenericComponentType();
+	}
+
+	/**
+	 * パラメータ化された {@link Collection} の要素型を返します。<br>
+	 * 型がパラメータ化された {@link Collection} でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Collection}
+	 * @return パラメータ化された {@link Collection} の要素型
+	 */
+	public static Type getElementTypeOfCollection( @NonNull final Type type )
+	{
+		if ( !isTypeOf( type, Collection.class ) ) {
+			return null;
+		}
+
+		return getGenericParameter( type, 0 );
+	}
+
+	/**
+	 * パラメータ化された {@link List} の要素型を返します。<br>
+	 * 型がパラメータ化された {@link List} でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link List}
+	 * @return パラメータ化された {@link List} の要素型
+	 */
+	public static Type getElementTypeOfList( @NonNull final Type type )
+	{
+		if ( !isTypeOf( type, List.class ) ) {
+			return null;
+		}
+
+		return getGenericParameter( type, 0 );
+	}
+
+	/**
+	 * パラメータ化された {@link Set} の要素型を返します。<br>
+	 * 型がパラメータ化された {@link Set} でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Set}
+	 * @return パラメータ化された {@link Set} の要素型
+	 */
+	public static Type getElementTypeOfSet( @NonNull final Type type )
+	{
+		if ( !isTypeOf( type, Set.class ) ) {
+			return null;
+		}
+
+		return getGenericParameter( type, 0 );
+	}
+
+	/**
+	 * パラメータ化された {@link Map} のキーの型を返します。<br>
+	 * 型がパラメータ化された {@link Map} でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Map}
+	 * @return パラメータ化された {@link Map} のキーの型
+	 */
+	public static Type getKeyTypeOfMap( @NonNull final Type type )
+	{
+		if ( !isTypeOf( type, Map.class ) ) {
+			return null;
+		}
+
+		return getGenericParameter( type, 0 );
+	}
+
+	/**
+	 * パラメータ化された {@link Map} の値の型を返します。<br>
+	 * 型がパラメータ化された {@link Map} でない場合は {@code null} を返します。
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Map}
+	 * @return パラメータ化された {@link Map} の値の型
+	 */
+	public static Type getValueTypeOfMap( @NonNull final Type type )
+	{
+		if ( !isTypeOf( type, Map.class ) ) {
+			return null;
+		}
+
+		return getGenericParameter( type, 1 );
+	}
+
+	/**
+	 * パラメータ化された型（クラスまたはインタフェース）が持つ型変数をキー、型引数を値とする {@link Map} を返します。
+	 *
+	 * @param clazz
+	 * 			パラメータ化された型（クラスまたはインタフェース）
+	 * @return パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 */
+	public static Map<TypeVariable<?>, Type> getTypeVariableMap( @NonNull final Class<?> clazz )
+	{
+		Map<TypeVariable<?>, Type> map = Maps.newLinkedHashMap();
+
+		TypeVariable<?>[] typeParameters = clazz.getTypeParameters();
+
+		for ( TypeVariable<?> typeParameter : typeParameters ) {
+			map.put( typeParameter, getActualClass( typeParameter.getBounds()[ 0 ], map ) );
+
+		}
+
+		Class<?> superClass = clazz.getSuperclass();
+		Type superClassType = clazz.getGenericSuperclass();
+
+		if ( Objects.nonNull( superClass ) ) {
+			gatherTypeVariables( superClass, superClassType, map );
+		}
+
+		Class<?>[] interfaces = clazz.getInterfaces();
+		Type[] interfaceTypes = clazz.getGenericInterfaces();
+
+		for ( int i = 0; i < interfaces.length; ++i ) {
+			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map );
+		}
+
+		return map;
+	}
+
+	/**
+	 * 型の実際の型を返します。
+	 * <ul>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数で引数 {@code map} のキーとして含まれている場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が型変数で引数 {@code map} のキーとして含まれていない場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			型
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return 型の実際の型
+	 */
+	public static Class<?> getActualClass( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( Class.class.isInstance( type ) ) {
+			return Class.class.cast( type );
+		}
+
+		if ( ParameterizedType.class.isInstance( type ) ) {
+			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
+
+			return getActualClass( parameterizedType.getRawType(), map );
+		}
+
+		if ( WildcardType.class.isInstance( type ) ) {
+			WildcardType wildcardType = WildcardType.class.cast( type );
+
+			return getActualClass( wildcardType.getUpperBounds()[ 0 ], map );
+		}
+
+		if ( TypeVariable.class.isInstance( type ) ) {
+			TypeVariable<?> typeVariable = TypeVariable.class.cast( type );
+
+			if ( map.containsKey( typeVariable ) ) {
+				return getActualClass( map.get( typeVariable ), map );
+			}
+
+			return getActualClass( typeVariable.getBounds()[ 0 ], map );
+		}
+
+		if ( GenericArrayType.class.isInstance( type ) ) {
+			GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
+
+			Class<?> componentClass = getActualClass( genericArrayType.getGenericComponentType(), map );
+
+			return Array.newInstance( componentClass, 0 ).getClass();
+		}
+
+		return null;
+	}
+
+	/**
+	 * パラメータ化された型を要素とする配列の実際の要素型を返します。
+	 * <ul>
+	 *     <li>型がパラメータ化された型の配列でない場合は {@code null} を返します。</li>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がパラメータ化された型の場合はその原型を返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数の場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			パラメータ化された型を要素とする配列
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return パラメータ化された型を要素とする配列の実際の要素型
+	 */
+	public static Class<?> getActualElementClassOfArray( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( !GenericArrayType.class.isInstance( type ) ) {
+			return null;
+		}
+
+		GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
+
+		return getActualClass( genericArrayType.getGenericComponentType(), map );
+	}
+
+	/**
+	 * パラメータ化された {@link Collection} の実際の要素型を返します。
+	 * <ul>
+	 *     <li>型がパラメータ化された {@link Collection} でない場合は {@code null} を返します。</li>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がパラメータ化された型の場合はその原型を返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数の場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Collection}
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return パラメータ化された {@link Collection} の実際の要素型
+	 */
+	public static Class<?> getActualElementClassOfCollection( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( !isTypeOf( type, Collection.class ) ) {
+			return null;
+		}
+
+		return getActualClass( getGenericParameter( type, 0 ), map );
+	}
+
+	/**
+	 * パラメータ化された {@link List} の実際の要素型を返します。
+	 * <ul>
+	 *     <li>型がパラメータ化された {@link List} でない場合は {@code null} を返します。</li>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がパラメータ化された型の場合はその原型を返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数の場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link List}
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return パラメータ化された {@link List} の実際の要素型
+	 */
+	public static Class<?> getActualElementClassOfList( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( !isTypeOf( type, List.class ) ) {
+			return null;
+		}
+
+		return getActualClass( getGenericParameter( type, 0 ), map );
+	}
+
+	/**
+	 * パラメータ化された {@link Set} の実際の要素型を返します。
+	 * <ul>
+	 *     <li>型がパラメータ化された {@link Set} でない場合は {@code null} を返します。</li>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がパラメータ化された型の場合はその原型を返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数の場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Set}
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return パラメータ化された {@link Set} の実際の要素型
+	 */
+	public static Class<?> getActualElementClassOfSet( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( !isTypeOf( type, Set.class ) ) {
+			return null;
+		}
+
+		return getActualClass( getGenericParameter( type, 0 ), map );
+	}
+
+	/**
+	 * パラメータ化された {@link Map} のキーの実際の型を返します。
+	 * <ul>
+	 *     <li>型がパラメータ化された {@link Map} でない場合は {@code null} を返します。</li>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がパラメータ化された型の場合はその原型を返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数の場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Map}
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return パラメータ化された {@link Map} のキーの実際の型
+	 */
+	public static Class<?> getActualKeyClassOfMap( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( !isTypeOf( type, Map.class ) ) {
+			return null;
+		}
+
+		return getActualClass( getGenericParameter( type, 0 ), map );
+	}
+
+	/**
+	 * パラメータ化された {@link Map} の値の実際の型を返します。
+	 * <ul>
+	 *     <li>型がパラメータ化された {@link Map} でない場合は {@code null} を返します。</li>
+	 *     <li>型が {@link Class} の場合はそのまま返します。</li>
+	 *     <li>型がパラメータ化された型の場合はその原型を返します。</li>
+	 *     <li>型がワイルドカード型の場合は（最初の）上限境界を返します。</li>
+	 *     <li>型が型変数の場合はその変数の実際の型引数を返します。</li>
+	 *     <li>型が配列の場合はその要素の実際の型の配列を返します。</li>
+	 *     <li>その他の場合は {@code null} を返します。</li>
+	 * </ul>
+	 *
+	 * @param type
+	 * 			パラメータ化された {@link Map}
+	 * @param map
+	 * 			パラメータ化された型が持つ型変数をキー、型引数を値とする {@link Map}
+	 * @return パラメータ化された {@link Map} の値の実際の型
+	 */
+	public static Class<?> getActualValueClassOfMap( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
+	{
+		if ( !isTypeOf( type, Map.class ) ) {
+			return null;
+		}
+
+		return getActualClass( getGenericParameter( type, 1 ), map );
+	}
+}
