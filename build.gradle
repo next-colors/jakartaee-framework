@@ -155,7 +155,7 @@ javadoc {
 			'https://commons.apache.org/proper/commons-text/apidocs/',
 			'https://docs.oracle.com/javaee/7/api/',
 			'https://docs.oracle.com/javase/jp/8/docs/api/',
-			'https://google.github.io/guava/releases/22.0/api/docs/',
+			'https://google.github.io/guava/releases/23.0/api/docs/',
 			'https://projectlombok.org/api/',
 			'https://ronmamo.github.io/reflections/',
 			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/2.9.0',
