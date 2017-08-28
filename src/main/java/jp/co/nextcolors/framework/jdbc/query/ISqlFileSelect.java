@@ -33,7 +33,7 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect>
 	 * {@inheritDoc}
 	 *
 	 */
-    @Override
+	@Override
 	ResultQuery<Record> getQuery();
 
 	/**
