@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.data.pagination;
+package jp.co.nextcolors.framework.data.pagination;
 
 import java.math.RoundingMode;
 import java.util.Collections;

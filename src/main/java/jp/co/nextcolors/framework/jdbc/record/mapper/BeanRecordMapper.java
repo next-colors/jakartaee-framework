@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.jdbc.record.mapper;
+package jp.co.nextcolors.framework.jdbc.record.mapper;
 
 import java.util.Objects;
 

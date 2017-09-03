@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.filter.util;
+package jp.co.nextcolors.framework.filter.util;
 
 import java.util.Arrays;
 import java.util.Collections;

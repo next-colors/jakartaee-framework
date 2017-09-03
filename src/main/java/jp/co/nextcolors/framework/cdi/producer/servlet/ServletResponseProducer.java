@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.cdi.producer.servlet;
+package jp.co.nextcolors.framework.cdi.producer.servlet;
 
 import java.util.Objects;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.interceptor;
+package jp.co.nextcolors.framework.interceptor;
 
 import javax.annotation.PostConstruct;
 import javax.interceptor.InvocationContext;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.jdbc.query;
+package jp.co.nextcolors.framework.jdbc.query;
 
 import java.io.File;
 import java.io.IOException;

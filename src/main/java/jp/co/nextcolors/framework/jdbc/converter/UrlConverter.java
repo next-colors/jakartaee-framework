@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.jdbc.converter;
+package jp.co.nextcolors.framework.jdbc.converter;
 
 import java.net.URL;
 import java.util.Objects;

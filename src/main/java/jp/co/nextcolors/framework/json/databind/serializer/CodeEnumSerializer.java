@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- package jp.co.nextcolors.framework.json.databind.serializer;
+package jp.co.nextcolors.framework.json.databind.serializer;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
