@@ -81,7 +81,7 @@ dependencies {
 	// コンパイル時にのみ必要なライブラリ
 	compileOnly(
 		'com.sun.faces:jsf-impl:latest.release',
-		'javax:javaee-api:latest.release',
+		'javax:javaee-api:7.0',
 		'org.projectlombok:lombok:latest.release'
 	);
 
