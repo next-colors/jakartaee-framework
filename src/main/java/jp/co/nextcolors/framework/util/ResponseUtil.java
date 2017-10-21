@@ -66,8 +66,7 @@ public class ResponseUtil
 	}
 
 	/**
-	 * 指定された入力ストリームから読み込んで、ダウンロードレスポンスを出力します。<br>
-	 * 成否に関わらず入力ストリームは閉じます。
+	 * 指定された入力ストリームから読み込んで、ダウンロードレスポンスを出力します。
 	 *
 	 * @param response
 	 * 			レスポンス
@@ -89,14 +88,10 @@ public class ResponseUtil
 		try ( OutputStream output = response.getOutputStream() ) {
 			IOUtils.copy( input, output );
 		}
-		finally {
-			IOUtils.closeQuietly( input );
-		}
 	}
 
 	/**
-	 * 指定されたストリームから読み込んで、指定した Content-Length と共にダウンロードレスポンスを出力します。<br>
-	 * 成否に関わらずストリームは閉じます。
+	 * 指定されたストリームから読み込んで、指定した Content-Length と共にダウンロードレスポンスを出力します。
 	 *
 	 * @param response
 	 * 			レスポンス
