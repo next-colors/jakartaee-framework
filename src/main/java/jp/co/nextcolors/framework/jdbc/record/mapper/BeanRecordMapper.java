@@ -24,8 +24,8 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 
-import jp.sf.amateras.mirage.naming.DefaultNameConverter;
-import jp.sf.amateras.mirage.naming.NameConverter;
+import com.miragesql.miragesql.naming.DefaultNameConverter;
+import com.miragesql.miragesql.naming.NameConverter;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

@@ -23,7 +23,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 
-import jp.sf.amateras.mirage.parser.SqlContext;
+import com.miragesql.miragesql.parser.SqlContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;

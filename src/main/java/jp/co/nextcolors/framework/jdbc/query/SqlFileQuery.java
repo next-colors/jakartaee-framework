@@ -30,13 +30,12 @@ import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
 import com.google.common.collect.Maps;
-
-import jp.sf.amateras.mirage.bean.BeanDescFactory;
-import jp.sf.amateras.mirage.parser.Node;
-import jp.sf.amateras.mirage.parser.SqlContext;
-import jp.sf.amateras.mirage.parser.SqlParser;
-import jp.sf.amateras.mirage.parser.SqlParserImpl;
-import jp.sf.amateras.mirage.util.MirageUtil;
+import com.miragesql.miragesql.bean.BeanDescFactory;
+import com.miragesql.miragesql.parser.Node;
+import com.miragesql.miragesql.parser.SqlContext;
+import com.miragesql.miragesql.parser.SqlParser;
+import com.miragesql.miragesql.parser.SqlParserImpl;
+import com.miragesql.miragesql.util.MirageUtil;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

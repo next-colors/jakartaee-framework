@@ -21,7 +21,7 @@ import java.util.Map;
 import org.jooq.DSLContext;
 import org.jooq.Query;
 
-import jp.sf.amateras.mirage.parser.SqlContext;
+import com.miragesql.miragesql.parser.SqlContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
