@@ -170,13 +170,13 @@ javadoc {
 			'https://commons.apache.org/proper/commons-text/apidocs/',
 			'https://docs.oracle.com/javaee/7/api/',
 			'https://docs.oracle.com/javase/jp/8/docs/api/',
+			'https://fasterxml.github.io/jackson-annotations/javadoc/2.9/',
+			'https://fasterxml.github.io/jackson-core/javadoc/2.9/',
+			'https://fasterxml.github.io/jackson-databind/javadoc/2.9/',
+			'https://fasterxml.github.io/jackson-dataformats-binary/javadoc/cbor/2.9/',
 			'https://google.github.io/guava/releases/23.3-jre/api/docs/',
 			'https://projectlombok.org/api/',
 			'https://ronmamo.github.io/reflections/',
-			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/2.9.2',
-			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-core/2.9.2',
-			'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.2',
-			'https://www.javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-cbor/2.9.2',
 			'https://www.javadoc.io/doc/com.miragesql/miragesql/2.0.0',
 			'https://www.jooq.org/javadoc/3.10.x/'
 		);
