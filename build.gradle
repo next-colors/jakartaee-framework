@@ -148,6 +148,11 @@ task delombok( type: DelombokTask ) {
 	}
 }
 
+// Lombok による変換後のソースコードを生成する際のヘルプを表示するためのタスク
+task delombokHelp( type: DelombokTask ) {
+	args( '--help' );
+}
+
 // Javadoc のタスク
 javadoc {
 	dependsOn( delombok );
