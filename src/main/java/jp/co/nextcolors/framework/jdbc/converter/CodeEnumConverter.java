@@ -102,7 +102,9 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
 			return null;
 		}
 
-		return ICodeEnum.codeOf( enumClass, enumCodeClass.cast( ConvertUtils.convert( databaseObject, enumCodeClass ) ) );
+		Object code = ConvertUtils.convert( databaseObject, enumCodeClass );
+
+		return ICodeEnum.codeOf( enumClass, enumCodeClass.cast( code ) );
 	}
 
 	/**
@@ -116,7 +118,9 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
 			return null;
 		}
 
-		return databaseObjectClass.cast( ConvertUtils.convert( userObject.getCode(), databaseObjectClass ) );
+		Object databaseObject = ConvertUtils.convert( userObject.getCode(), databaseObjectClass );
+
+		return databaseObjectClass.cast( databaseObject );
 	}
 
 	/**
