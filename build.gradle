@@ -20,7 +20,7 @@ plugins {
 	id 'java-library';
 	id 'jacoco';
 	id 'eclipse-wtp';
-	id 'io.franzbecker.gradle-lombok' version '1.10';
+	id 'io.franzbecker.gradle-lombok' version '1.11';
 }
 
 //-----------------------------------------------------------------------------
