@@ -72,7 +72,6 @@ dependencies {
 		'joda-time:joda-time:latest.release',
 		'org.apache.commons:commons-collections4:latest.release',
 		'org.apache.commons:commons-lang3:latest.release',
-		'org.apache.commons:commons-text:latest.release',
 		'org.jooq:jooq:latest.release',
 		'org.reflections:reflections:latest.release',
 		'org.slf4j:slf4j-api:1.7.+'
