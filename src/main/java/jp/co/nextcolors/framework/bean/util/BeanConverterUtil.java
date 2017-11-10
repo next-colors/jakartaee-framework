@@ -80,7 +80,7 @@ public class BeanConverterUtil
 	 *
 	 * @param context
 	 * 			Servlet コンテキスト
-	 * @see org.apache.commons.beanutils.ConvertUtils#register(Converter, Class)
+	 * @see ConvertUtils#register(Converter, Class)
 	 */
 	@SneakyThrows(ReflectiveOperationException.class)
 	public static void registerConverters( @NonNull final ServletContext context )
