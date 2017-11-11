@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * 文字列を {@link URL} 型の値に変換するためのコンバータです。
+ * {@link URL} 型の値を文字列に変換するためのコンバータです。
  *
  * @author hamana
  */
