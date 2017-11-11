@@ -30,7 +30,7 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 import jp.co.nextcolors.framework.util.GenericUtil;
 
 /**
- * レコードのプロパティにコードを持つ列挙型のフィールドを DB のデータ型に準拠した値に変換するための抽象クラスです。
+ * プロパティにコードを持つ列挙型の値を DB のデータ型に準拠した値に変換するための抽象クラスです。
  *
  * @author hamana
  * @param <E>

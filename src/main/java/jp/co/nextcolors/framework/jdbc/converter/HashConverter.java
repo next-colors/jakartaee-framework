@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * レコードのフィールドをハッシュ値に変換するための抽象クラスです。
+ * 文字列をハッシュ値に変換するための抽象クラスです。
  *
  * @author hamana
  */

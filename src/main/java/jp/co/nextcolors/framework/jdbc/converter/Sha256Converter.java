@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * レコードのフィールドを SHA-256 ハッシュ値に変換するためのコンバータです。
+ * 文字列を SHA-256 ハッシュ値に変換するためのコンバータです。
  *
  * @author hamana
  */
