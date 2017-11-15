@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.jooq.Condition;
-import org.jooq.SortField;
+import org.jooq.OrderField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
@@ -55,7 +55,7 @@ public interface IPager<T>
 	 * @return 検索結果
 	 */
 	<R extends TableRecord<R>> IPage<T> fetchPage( IPageRequest pageRequest, Table<R> table,
-													Condition condition, SortField<?>... order );
+													Condition condition, OrderField<?>... order );
 
 	/**
 	 * レコードをページング検索します。
@@ -73,7 +73,7 @@ public interface IPager<T>
 	 * @return 検索結果
 	 */
 	<R extends TableRecord<R>> IPage<T> fetchPage( IPageRequest pageRequest, Table<R> table,
-													Condition condition, Collection<SortField<?>> order );
+													Condition condition, Collection<? extends OrderField<?>> order );
 
 	/**
 	 * SQL ファイルを使用してレコードをページング検索します。

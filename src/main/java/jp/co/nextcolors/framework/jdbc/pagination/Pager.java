@@ -24,10 +24,10 @@ import java.util.Map;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.OrderField;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SelectSeekStepN;
-import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.impl.DSL;
@@ -84,7 +84,7 @@ public class Pager<T> implements IPager<T>
 	public <R extends TableRecord<R>> IPage<T> fetchPage( @NonNull final IPageRequest pageRequest,
 															@NonNull final Table<R> table,
 															final Condition condition,
-															@NonNull final SortField<?>... order )
+															@NonNull final OrderField<?>... order )
 	{
 		return fetchPage( pageRequest, table, condition, Arrays.asList( order ) );
 	}
@@ -97,7 +97,7 @@ public class Pager<T> implements IPager<T>
 	public <R extends TableRecord<R>> IPage<T> fetchPage( @NonNull final IPageRequest pageRequest,
 															@NonNull final Table<R> table,
 															final Condition condition,
-															@NonNull final Collection<SortField<?>> order )
+															@NonNull final Collection<? extends OrderField<?>> order )
 	{
 		SelectSeekStepN<R> query = dslContext.selectFrom( table ).where( condition ).orderBy( order );
 
