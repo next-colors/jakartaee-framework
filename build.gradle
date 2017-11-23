@@ -74,7 +74,7 @@ dependencies {
 		'org.apache.commons:commons-lang3:latest.release',
 		'org.jooq:jooq:latest.release',
 		'org.reflections:reflections:latest.release',
-		'org.slf4j:slf4j-api:1.7.+'
+		'org.slf4j:slf4j-api:latest.release'
 	);
 
 	// コンパイル時にのみ必要なライブラリ
@@ -178,7 +178,7 @@ javadoc {
 			'https://fasterxml.github.io/jackson-core/javadoc/2.9/',
 			'https://fasterxml.github.io/jackson-databind/javadoc/2.9/',
 			'https://fasterxml.github.io/jackson-dataformats-binary/javadoc/cbor/2.9/',
-			'https://google.github.io/guava/releases/23.4-jre/api/docs/',
+			'https://google.github.io/guava/releases/23.5-jre/api/docs/',
 			'https://projectlombok.org/api/',
 			'https://ronmamo.github.io/reflections/',
 			'https://www.javadoc.io/doc/com.miragesql/miragesql/2.0.0',
