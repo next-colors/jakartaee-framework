@@ -25,7 +25,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.AccessLevel;
@@ -125,42 +125,14 @@ public class RequestDumpFilter implements Filter
 		//    Private Methods
 		//---------------------------------------------------------------------
 		/**
-		 * ダンプに関する設定の項目の値を指定された型で取得します。
-		 *
-		 * @param <T>
-		 * 			ダンプに関する設定の項目の値の型
-		 * @param filterConfig
-		 * 			フィルタの設定
-		 * @param configParam
-		 * 			ダンプに関する設定の項目
-		 * @param type
-		 * 			ダンプに関する設定の項目の値の型を表すクラス
-		 * @param defaultValue
-		 * 			ダンプに関する設定の項目の値がない場合の値
-		 * @return ダンプに関する設定の項目の値
-		 */
-		private <T> T getConfigParameterValue( @NonNull final FilterConfig filterConfig,
-												@NonNull final ConfigParameter configParam,
-												@NonNull final Class<T> type, final T defaultValue )
-		{
-			String paramValue = filterConfig.getInitParameter( configParam.name );
-
-			if ( StringUtils.isEmpty( paramValue ) ) {
-				return defaultValue;
-			}
-
-			return type.cast( ConvertUtils.convert( paramValue, type ) );
-		}
-
-		/**
 		 * @param filterConfig
 		 * 			フィルタの設定
 		 */
 		private RequestDumpConfig( @NonNull final FilterConfig filterConfig )
 		{
-			isRequestHeaderDumpMode = getConfigParameterValue( filterConfig, ConfigParameter.REQUEST_HEADER, Boolean.class, true );
-			isRequestParameterDumpMode = getConfigParameterValue( filterConfig, ConfigParameter.REQUEST_PARAMETER, Boolean.class, true );
-			isCookieDumpMode = getConfigParameterValue( filterConfig, ConfigParameter.COOKIE, Boolean.class, true );
+			isRequestHeaderDumpMode = BooleanUtils.toBoolean( filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.name ) );
+			isRequestParameterDumpMode = BooleanUtils.toBoolean( filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.name ) );
+			isCookieDumpMode = BooleanUtils.toBoolean( filterConfig.getInitParameter( ConfigParameter.COOKIE.name ) );
 		}
 	}
 
