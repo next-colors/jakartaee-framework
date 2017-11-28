@@ -26,6 +26,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.AccessLevel;
@@ -131,13 +132,13 @@ public class RequestDumpFilter implements Filter
 		private RequestDumpConfig( @NonNull final FilterConfig filterConfig )
 		{
 			String requestHeader = filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.name );
-			isRequestHeaderDumpMode = BooleanUtils.toBooleanDefaultIfNull( BooleanUtils.toBooleanObject( requestHeader ), true );
+			isRequestHeaderDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( requestHeader ), true );
 
 			String requestParameter = filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.name );
-			isRequestParameterDumpMode = BooleanUtils.toBooleanDefaultIfNull( BooleanUtils.toBooleanObject( requestParameter ), true );
+			isRequestParameterDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( requestParameter ), true );
 
 			String cookie = filterConfig.getInitParameter( ConfigParameter.COOKIE.name );
-			isCookieDumpMode = BooleanUtils.toBooleanDefaultIfNull( BooleanUtils.toBooleanObject( cookie ), true );
+			isCookieDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( cookie ), true );
 		}
 	}
 
