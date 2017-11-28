@@ -130,9 +130,14 @@ public class RequestDumpFilter implements Filter
 		 */
 		private RequestDumpConfig( @NonNull final FilterConfig filterConfig )
 		{
-			isRequestHeaderDumpMode = BooleanUtils.toBoolean( filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.name ) );
-			isRequestParameterDumpMode = BooleanUtils.toBoolean( filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.name ) );
-			isCookieDumpMode = BooleanUtils.toBoolean( filterConfig.getInitParameter( ConfigParameter.COOKIE.name ) );
+			String requestHeader = filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.name );
+			isRequestHeaderDumpMode = BooleanUtils.toBooleanDefaultIfNull( BooleanUtils.toBooleanObject( requestHeader ), true );
+
+			String requestParameter = filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.name );
+			isRequestParameterDumpMode = BooleanUtils.toBooleanDefaultIfNull( BooleanUtils.toBooleanObject( requestParameter ), true );
+
+			String cookie = filterConfig.getInitParameter( ConfigParameter.COOKIE.name );
+			isCookieDumpMode = BooleanUtils.toBooleanDefaultIfNull( BooleanUtils.toBooleanObject( cookie ), true );
 		}
 	}
 
