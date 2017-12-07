@@ -203,8 +203,6 @@ eclipse {
 	classpath {
 		// 独自で追加したコンフィギュレーションを追加
 		plusConfigurations += [ configurations.jmockit ];
-		// クラスファイルの出力先
-		defaultOutputDir = file( "${projectDir}/classes" );
 	}
 
 	// WTP（Web Tools Platform）の設定

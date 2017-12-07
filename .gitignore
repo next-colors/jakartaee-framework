@@ -11,5 +11,5 @@
 /.gradle/
 
 # Build
+/bin/
 /build/output/
-/classes/
