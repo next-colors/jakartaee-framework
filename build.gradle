@@ -165,7 +165,6 @@ javadoc {
 		author = true;
 		links(
 			'http://www.joda.org/joda-time/apidocs/',
-			'http://www.slf4j.org/apidocs/',
 			'https://commons.apache.org/proper/commons-beanutils/apidocs/',
 			'https://commons.apache.org/proper/commons-codec/apidocs/',
 			'https://commons.apache.org/proper/commons-collections/apidocs/',
@@ -182,7 +181,8 @@ javadoc {
 			'https://projectlombok.org/api/',
 			'https://ronmamo.github.io/reflections/',
 			'https://www.javadoc.io/doc/com.miragesql/miragesql/2.0.0',
-			'https://www.jooq.org/javadoc/3.10.x/'
+			'https://www.jooq.org/javadoc/3.10.x/',
+			'https://www.slf4j.org/apidocs/'
 		);
 	}
 }
