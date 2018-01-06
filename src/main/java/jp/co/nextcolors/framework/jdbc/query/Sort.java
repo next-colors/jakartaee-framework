@@ -64,12 +64,14 @@ public class Sort implements Serializable
 		 * プロパティ名/カラム名です。
 		 *
 		 */
+		@NonNull
 		private final String name;
 
 		/**
 		 * ソートの順序です。
 		 *
 		 */
+		@NonNull
 		private final SortOrder sortOrder;
 
 		//---------------------------------------------------------------------
