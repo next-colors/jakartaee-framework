@@ -85,11 +85,15 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 				continue;
 			}
 
-			Class<?> propertyType = PropertyUtils.getPropertyType( bean, propertyName );
+			Object value = field.getValue( record );
 
-			DataType<?> dataType = DSL.getDataType( propertyType );
+			if ( Objects.nonNull( value ) ) {
+				Class<?> propertyType = PropertyUtils.getPropertyType( bean, propertyName );
 
-			Object value = Convert.convert( field.getValue( record ), dataType.getConverter() );
+				DataType<?> dataType = DSL.getDataType( propertyType );
+
+				value = Convert.convert( value, dataType.getConverter() );
+			}
 
 			PropertyUtils.setProperty( bean, propertyName, value );
 		}
