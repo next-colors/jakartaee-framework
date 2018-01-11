@@ -38,9 +38,9 @@ import com.miragesql.miragesql.parser.SqlParserImpl;
 import com.miragesql.miragesql.util.MirageUtil;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.ToString;
 
@@ -51,7 +51,7 @@ import lombok.ToString;
  * @param <S>
  * 			{@link ISqlFileQuery} のサブタイプです。
  */
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode
 public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFileQuery<S>
