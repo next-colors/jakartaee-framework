@@ -176,7 +176,7 @@ javadoc {
 			'https://fasterxml.github.io/jackson-core/javadoc/2.9/',
 			'https://fasterxml.github.io/jackson-databind/javadoc/2.9/',
 			'https://fasterxml.github.io/jackson-dataformats-binary/javadoc/cbor/2.9/',
-			'https://google.github.io/guava/releases/23.6-jre/api/docs/',
+			'https://google.github.io/guava/releases/24.0-jre/api/docs/',
 			'https://javaee.github.io/javaee-spec/javadocs/',
 			'https://projectlombok.org/api/',
 			'https://ronmamo.github.io/reflections/',
