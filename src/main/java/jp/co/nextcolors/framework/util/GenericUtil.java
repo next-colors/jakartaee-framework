@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang3.reflect.TypeUtils;
+
 import com.google.common.collect.Maps;
 
 import lombok.NonNull;
@@ -104,30 +106,6 @@ public class GenericUtil
 	//-------------------------------------------------------------------------
 	//    Public Methods
 	//-------------------------------------------------------------------------
-	/**
-	 * 型の原型がクラスに代入可能であるかどうかを判定します。
-	 *
-	 * @param type
-	 * 			型
-	 * @param clazz
-	 * 			クラス
-	 * @return 型の原型がクラスに代入可能である場合は {@code true}、そうでない場合は {@code false}
-	 */
-	public static boolean isTypeOf( @NonNull final Type type, @NonNull final Class<?> clazz )
-	{
-		if ( Class.class.isInstance( type ) ) {
-			return clazz.isAssignableFrom( Class.class.cast( type ) );
-		}
-
-		if ( ParameterizedType.class.isInstance( type ) ) {
-			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
-
-			return isTypeOf( parameterizedType.getRawType(), clazz );
-		}
-
-		return false;
-	}
-
 	/**
 	 * 型の原型を返します。
 	 *
@@ -244,7 +222,7 @@ public class GenericUtil
 	 */
 	public static Type getElementTypeOfCollection( @NonNull final Type type )
 	{
-		if ( !isTypeOf( type, Collection.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Collection.class ) ) {
 			return null;
 		}
 
@@ -261,7 +239,7 @@ public class GenericUtil
 	 */
 	public static Type getElementTypeOfList( @NonNull final Type type )
 	{
-		if ( !isTypeOf( type, List.class ) ) {
+		if ( !TypeUtils.isAssignable( type, List.class ) ) {
 			return null;
 		}
 
@@ -278,7 +256,7 @@ public class GenericUtil
 	 */
 	public static Type getElementTypeOfSet( @NonNull final Type type )
 	{
-		if ( !isTypeOf( type, Set.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Set.class ) ) {
 			return null;
 		}
 
@@ -295,7 +273,7 @@ public class GenericUtil
 	 */
 	public static Type getKeyTypeOfMap( @NonNull final Type type )
 	{
-		if ( !isTypeOf( type, Map.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Map.class ) ) {
 			return null;
 		}
 
@@ -312,7 +290,7 @@ public class GenericUtil
 	 */
 	public static Type getValueTypeOfMap( @NonNull final Type type )
 	{
-		if ( !isTypeOf( type, Map.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Map.class ) ) {
 			return null;
 		}
 
@@ -459,7 +437,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualElementClassOfCollection( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( !isTypeOf( type, Collection.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Collection.class ) ) {
 			return null;
 		}
 
@@ -486,7 +464,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualElementClassOfList( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( !isTypeOf( type, List.class ) ) {
+		if ( !TypeUtils.isAssignable( type, List.class ) ) {
 			return null;
 		}
 
@@ -513,7 +491,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualElementClassOfSet( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( !isTypeOf( type, Set.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Set.class ) ) {
 			return null;
 		}
 
@@ -540,7 +518,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualKeyClassOfMap( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( !isTypeOf( type, Map.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Map.class ) ) {
 			return null;
 		}
 
@@ -567,7 +545,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualValueClassOfMap( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( !isTypeOf( type, Map.class ) ) {
+		if ( !TypeUtils.isAssignable( type, Map.class ) ) {
 			return null;
 		}
 
