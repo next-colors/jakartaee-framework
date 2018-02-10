@@ -82,10 +82,6 @@ public class GenericUtil
 	private static void gatherTypeVariables( @NonNull final Class<?> clazz, @NonNull final Type type,
 												@NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( Objects.isNull( clazz ) ) {
-			return;
-		}
-
 		gatherTypeVariables( type, map );
 
 		Class<?> superClass = clazz.getSuperclass();
