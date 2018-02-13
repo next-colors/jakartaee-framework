@@ -146,10 +146,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 			return StringUtils.EMPTY;
 		}
 
-		if ( !enumClass.isInstance( value ) ) {
-			throw new ConverterException( getConversionErrorMessage( context, component, value ) );
-		}
-
-		return enumClass.cast( value ).getCode().toString();
+		return value.getCode().toString();
 	}
 }
