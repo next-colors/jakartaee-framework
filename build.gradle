@@ -156,6 +156,7 @@ task delombokHelp( type: DelombokTask ) {
 javadoc {
 	dependsOn( delombok );
 
+	source = delombok.outputDir;
 	failOnError = false;
 
 	options {
@@ -183,10 +184,6 @@ javadoc {
 			'https://www.jooq.org/javadoc/3.10.x/',
 			'https://www.slf4j.org/apidocs/'
 		);
-	}
-
-	doLast {
-		source = delombok.outputDir;
 	}
 }
 
