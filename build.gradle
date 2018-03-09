@@ -60,6 +60,11 @@ repositories {
 
 // 依存関係の設定
 dependencies {
+	// アノテーションプロセッサ
+	annotationProcessor(
+		'org.projectlombok:lombok:latest.release'
+	);
+
 	// パッケージに含めるライブラリ
 	api(
 		'com.fasterxml.jackson.core:jackson-databind:latest.release',
@@ -83,6 +88,10 @@ dependencies {
 		'javax:javaee-api:latest.release',
 		'org.projectlombok:lombok:latest.release'
 	);
+	// アノテーションプロセッサをパッケージから除外
+	compileOnly(
+		configurations.annotationProcessor
+	);
 
 	// テスト時にのみ必要なライブラリ
 	testImplementation(
@@ -90,11 +99,6 @@ dependencies {
 		'org.dbunit:dbunit:latest.release',
 		'org.hamcrest:hamcrest-generator:latest.release',
 		'org.hamcrest:hamcrest-integration:latest.release'
-	);
-
-	// アノテーションプロセッサ
-	annotationProcessor(
-		'org.projectlombok:lombok:latest.release'
 	);
 
 	// JMockit のライブラリ
