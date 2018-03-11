@@ -128,9 +128,6 @@ test {
 	// @RunWith で Enclosed テストランナーを使用するとテストが 2 回実行されてしまうので、1 回だけの実行にさせる。
 	exclude( '**/*$*' );
 
-	// JVM オプションに JMockit のモジュール読み込みを追加
-	jvmArgs( "-javaagent:${configurations.jmockit.asPath}" );
-
 	// JMockit のモジュールの読み込みを最初にするように設定
 	sourceSets.test {
 		compileClasspath = configurations.jmockit + compileClasspath;
