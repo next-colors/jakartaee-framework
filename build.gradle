@@ -45,13 +45,6 @@ tasks.withType( AbstractCompile )*.options*.encoding = getProperty( 'common.enco
 //-----------------------------------------------------------------------------
 //    Dependency Management
 //-----------------------------------------------------------------------------
-// コンフィギュレーションの設定
-configurations {
-	//-- 独自コンフィギュレーションの追加
-	// JMockit のためのコンフィギュレーション
-	jmockit;
-}
-
 // ライブラリ取得先リポジトリ
 repositories {
 	// JCenter リポジトリ
@@ -98,13 +91,7 @@ dependencies {
 		'junit:junit:latest.release',
 		'org.dbunit:dbunit:latest.release',
 		'org.hamcrest:hamcrest-generator:latest.release',
-		'org.hamcrest:hamcrest-integration:latest.release'
-	);
-
-	// JMockit のライブラリ
-	// test タスク実行時に、JMockit のライブラリを最初に読み込むなどの手を加える必要があるため、
-	// JMockit の依存関係だけ別に定義する。
-	jmockit(
+		'org.hamcrest:hamcrest-integration:latest.release',
 		'org.jmockit:jmockit:latest.release'
 	);
 }
@@ -127,12 +114,6 @@ test {
 
 	// @RunWith で Enclosed テストランナーを使用するとテストが 2 回実行されてしまうので、1 回だけの実行にさせる。
 	exclude( '**/*$*' );
-
-	// JMockit のモジュールの読み込みを最初にするように設定
-	sourceSets.test {
-		compileClasspath = configurations.jmockit + compileClasspath;
-		runtimeClasspath = configurations.jmockit + runtimeClasspath;
-	}
 
 	jacoco {
 		append = false;
@@ -213,12 +194,6 @@ jacocoTestReport {
 
 // Eclipse プロジェクトのタスク
 eclipse {
-	// .classpath の設定
-	classpath {
-		// 独自で追加したコンフィギュレーションを追加
-		plusConfigurations += [ configurations.jmockit ];
-	}
-
 	// WTP（Web Tools Platform）の設定
 	wtp {
 		// プロジェクト・ファセットの設定
