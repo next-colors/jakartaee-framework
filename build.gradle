@@ -163,7 +163,6 @@ javadoc {
 			'https://commons.apache.org/proper/commons-collections/apidocs/',
 			'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
 			'https://commons.apache.org/proper/commons-lang/apidocs/',
-			'https://commons.apache.org/proper/commons-text/apidocs/',
 			'https://docs.oracle.com/javaee/7/api/',
 			'https://docs.oracle.com/javase/jp/8/docs/api/',
 			'https://fasterxml.github.io/jackson-annotations/javadoc/2.9/',
