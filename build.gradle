@@ -87,11 +87,16 @@ dependencies {
 
 	// テスト時にのみ必要なライブラリ
 	testImplementation(
-		'junit:junit:latest.release',
 		'org.dbunit:dbunit:latest.release',
 		'org.hamcrest:hamcrest-generator:latest.release',
 		'org.hamcrest:hamcrest-integration:latest.release',
-		'org.jmockit:jmockit:latest.release'
+		'org.jmockit:jmockit:latest.release',
+		'org.junit.jupiter:junit-jupiter-api:latest.release'
+	);
+
+	// テスト実行時にのみ必要なライブラリ
+	testRuntimeOnly(
+		'org.junit.jupiter:junit-jupiter-engine:latest.release'
 	);
 }
 
@@ -108,11 +113,9 @@ task wrapper( type: Wrapper, overwrite: true ) {
 
 // JUnit でテストするタスク
 test {
-	// テストが失敗しても処理を継続させる。
-	ignoreFailures = true;
+	useJUnitPlatform();
 
-	// @RunWith で Enclosed テストランナーを使用するとテストが 2 回実行されてしまうので、1 回だけの実行にさせる。
-	exclude( '**/*$*' );
+	ignoreFailures = true;
 
 	jacoco {
 		append = false;
