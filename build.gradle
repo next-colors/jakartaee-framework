@@ -133,6 +133,8 @@ lombok {
 task delombok( type: DelombokTask ) {
 	description = 'Generates delomboked source.';
 
+	classpath += compileJava.classpath;
+
 	ext.outputDir = file( "${buildDir}/${delombok.name}" );
 
 	sourceSets.all {
