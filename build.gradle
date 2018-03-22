@@ -131,7 +131,7 @@ lombok {
 
 // Lombok による変換後のソースコードを生成するためのタスク
 task delombok( type: DelombokTask ) {
-	description = 'Generates delomboked source.';
+	description = 'Generates delomboked sources.';
 
 	classpath += compileJava.classpath;
 
@@ -148,7 +148,16 @@ task delombok( type: DelombokTask ) {
 
 // Lombok による変換後のソースコードを生成する際のヘルプを表示するためのタスク
 task delombokHelp( type: DelombokTask ) {
+	description = 'Shows the help about delomboking.';
+
 	args( '--help' );
+}
+
+// Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するためのタスク
+task delombokFormatHelp( type: DelombokTask ) {
+	description = 'Shows the help about the format of delomboking.';
+
+	args( '--format-help' );
 }
 
 // Javadoc のタスク
