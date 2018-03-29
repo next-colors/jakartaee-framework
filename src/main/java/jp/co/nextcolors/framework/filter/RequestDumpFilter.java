@@ -29,6 +29,8 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.base.CaseFormat;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -76,29 +78,32 @@ public class RequestDumpFilter implements Filter
 			 * リクエストヘッダの内容をダンプするかどうかの設定です。
 			 *
 			 */
-			REQUEST_HEADER( "requestHeader" ),
+			REQUEST_HEADER,
 
 			/**
 			 * リクエストパラメータの内容をダンプするかどうかの設定です。
 			 *
 			 */
-			REQUEST_PARAMETER( "requestParameter" ),
+			REQUEST_PARAMETER,
 
 			/**
 			 * クッキーの内容をダンプするかどうかの設定です。
 			 *
 			 */
-			COOKIE( "cookie" );
+			COOKIE;
 
 			//-----------------------------------------------------------------
-			//    Private Properties
+			//    Private Methods
 			//-----------------------------------------------------------------
 			/**
-			 * 項目名です。
+			 * パラメータ名を取得します。
 			 *
+			 * @return パラメータ名
 			 */
-			@NonNull
-			private final String name;
+			private String getName()
+			{
+				return CaseFormat.LOWER_UNDERSCORE.to( CaseFormat.LOWER_CAMEL, name() );
+			}
 		}
 
 		//---------------------------------------------------------------------
@@ -131,13 +136,13 @@ public class RequestDumpFilter implements Filter
 		 */
 		private RequestDumpConfig( @NonNull final FilterConfig filterConfig )
 		{
-			String requestHeader = filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.name );
+			String requestHeader = filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.getName() );
 			isRequestHeaderDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( requestHeader ), true );
 
-			String requestParameter = filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.name );
+			String requestParameter = filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.getName() );
 			isRequestParameterDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( requestParameter ), true );
 
-			String cookie = filterConfig.getInitParameter( ConfigParameter.COOKIE.name );
+			String cookie = filterConfig.getInitParameter( ConfigParameter.COOKIE.getName() );
 			isCookieDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( cookie ), true );
 		}
 	}
