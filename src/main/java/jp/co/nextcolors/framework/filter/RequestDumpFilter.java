@@ -101,7 +101,7 @@ public class RequestDumpFilter implements Filter
 	 *
 	 */
 	@Override
-	public void init( @NonNull final FilterConfig filterConfig ) throws ServletException
+	public void init( final FilterConfig filterConfig ) throws ServletException
 	{
 		// Do nothing.
 	}
