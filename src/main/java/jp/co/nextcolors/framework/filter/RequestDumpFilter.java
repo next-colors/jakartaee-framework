@@ -25,14 +25,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.CaseFormat;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
@@ -51,103 +45,6 @@ import jp.co.nextcolors.framework.filter.util.RequestDumpUtil;
 public class RequestDumpFilter implements Filter
 {
 	//-------------------------------------------------------------------------
-	//    Private Classes
-	//-------------------------------------------------------------------------
-	/**
-	 * リクエスト（{@link HttpServletRequest}）の内容のダンプに関する設定です。
-	 *
-	 * @author hamana
-	 */
-	@ToString
-	@EqualsAndHashCode
-	private static final class RequestDumpConfig
-	{
-		//---------------------------------------------------------------------
-		//    Private Enumerations
-		//---------------------------------------------------------------------
-		/**
-		 * ダンプに関する設定の項目を表す列挙型です。
-		 *
-		 * @author hamana
-		 */
-		@AllArgsConstructor(access = AccessLevel.PRIVATE)
-		@ToString
-		private enum ConfigParameter
-		{
-			/**
-			 * リクエストヘッダの内容をダンプするかどうかの設定です。
-			 *
-			 */
-			REQUEST_HEADER,
-
-			/**
-			 * リクエストパラメータの内容をダンプするかどうかの設定です。
-			 *
-			 */
-			REQUEST_PARAMETER,
-
-			/**
-			 * クッキーの内容をダンプするかどうかの設定です。
-			 *
-			 */
-			COOKIE;
-
-			//-----------------------------------------------------------------
-			//    Private Methods
-			//-----------------------------------------------------------------
-			/**
-			 * パラメータ名を取得します。
-			 *
-			 * @return パラメータ名
-			 */
-			private String getName()
-			{
-				return CaseFormat.LOWER_UNDERSCORE.to( CaseFormat.LOWER_CAMEL, name() );
-			}
-		}
-
-		//---------------------------------------------------------------------
-		//    Private Properties
-		//---------------------------------------------------------------------
-		/**
-		 * リクエストヘッダの内容をダンプするかどうかです。
-		 *
-		 */
-		private final boolean isRequestHeaderDumpMode;
-
-		/**
-		 * リクエストパラメータの内容をダンプするかどうかです。
-		 *
-		 */
-		private final boolean isRequestParameterDumpMode;
-
-		/**
-		 * クッキーの内容をダンプするかどうかです。
-		 *
-		 */
-		private final boolean isCookieDumpMode;
-
-		//---------------------------------------------------------------------
-		//    Private Methods
-		//---------------------------------------------------------------------
-		/**
-		 * @param filterConfig
-		 * 			フィルタの設定
-		 */
-		private RequestDumpConfig( @NonNull final FilterConfig filterConfig )
-		{
-			String requestHeader = filterConfig.getInitParameter( ConfigParameter.REQUEST_HEADER.getName() );
-			isRequestHeaderDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( requestHeader ), true );
-
-			String requestParameter = filterConfig.getInitParameter( ConfigParameter.REQUEST_PARAMETER.getName() );
-			isRequestParameterDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( requestParameter ), true );
-
-			String cookie = filterConfig.getInitParameter( ConfigParameter.COOKIE.getName() );
-			isCookieDumpMode = ObjectUtils.defaultIfNull( BooleanUtils.toBooleanObject( cookie ), true );
-		}
-	}
-
-	//-------------------------------------------------------------------------
 	//    Private Constants
 	//-------------------------------------------------------------------------
 	/**
@@ -161,15 +58,6 @@ public class RequestDumpFilter implements Filter
 	 *
 	 */
 	private static final String LF = System.lineSeparator();
-
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * リクエスト（{@link HttpServletRequest}）の内容のダンプに関する設定です。
-	 *
-	 */
-	private RequestDumpConfig requestDumpConfig;
 
 	//-------------------------------------------------------------------------
 	//    Private Methods
@@ -192,21 +80,12 @@ public class RequestDumpFilter implements Filter
 		RequestDumpUtil.dumpRequestProperties( buffer, request, LF, INDENT );
 		// セッションのプロパティを文字列バッファにダンプ
 		RequestDumpUtil.dumpSessionProperties( buffer, request, LF, INDENT );
-
-		if ( requestDumpConfig.isRequestHeaderDumpMode ) {
-			// リクエストヘッダの内容を文字列バッファにダンプ
-			RequestDumpUtil.dumpRequestHeaders( buffer, request, LF, INDENT );
-		}
-
-		if ( requestDumpConfig.isRequestParameterDumpMode ) {
-			// リクエストパラメータの内容を文字列バッファにダンプ
-			RequestDumpUtil.dumpRequestParameters( buffer, request, LF, INDENT );
-		}
-
-		if ( requestDumpConfig.isCookieDumpMode ) {
-			// クッキーの内容を文字列バッファにダンプ
-			RequestDumpUtil.dumpCookies( buffer, request, LF, INDENT );
-		}
+		// リクエストヘッダの内容を文字列バッファにダンプ
+		RequestDumpUtil.dumpRequestHeaders( buffer, request, LF, INDENT );
+		// リクエストパラメータの内容を文字列バッファにダンプ
+		RequestDumpUtil.dumpRequestParameters( buffer, request, LF, INDENT );
+		// クッキーの内容を文字列バッファにダンプ
+		RequestDumpUtil.dumpCookies( buffer, request, LF, INDENT );
 
 		buffer.append( "*******************************************************************************" );
 		buffer.append( LF );
@@ -224,7 +103,7 @@ public class RequestDumpFilter implements Filter
 	@Override
 	public void init( @NonNull final FilterConfig filterConfig ) throws ServletException
 	{
-		requestDumpConfig = new RequestDumpConfig( filterConfig );
+		// Do nothing.
 	}
 
 	/**
