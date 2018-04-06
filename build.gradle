@@ -26,7 +26,6 @@ plugins {
 //-----------------------------------------------------------------------------
 //    Import Classes
 //-----------------------------------------------------------------------------
-import org.gradle.plugins.ide.eclipse.model.Facet;
 import org.gradle.plugins.ide.eclipse.model.Facet.FacetType;
 import io.franzbecker.gradle.lombok.task.DelombokTask;
 
@@ -217,17 +216,13 @@ eclipse {
 
             file {
                 beforeMerged {
-                    List<Facet> facets = it.facets;
-
                     // 既存の設定内容をクリア
-                    facets.clear();
+                    it.facets.clear();
                 }
 
                 whenMerged {
-                    List<Facet> facets = it.facets;
-
                     // ファセットの種類、ファセット名でソート
-                    facets.sort { facet1, facet2 ->
+                    it.facets.sort { facet1, facet2 ->
                         if ( facet1.type == facet2.type ) {
                             return facet1.name.compareTo( facet2.name );
                         }
