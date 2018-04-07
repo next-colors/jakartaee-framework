@@ -26,6 +26,7 @@ plugins {
 //-----------------------------------------------------------------------------
 //    Import Classes
 //-----------------------------------------------------------------------------
+import java.nio.charset.StandardCharsets;
 import org.gradle.plugins.ide.eclipse.model.Facet.FacetType;
 import io.franzbecker.gradle.lombok.task.DelombokTask;
 
@@ -39,7 +40,7 @@ sourceCompatibility = JavaVersion.VERSION_1_8;
 // クラス生成時の Java バージョン
 targetCompatibility = JavaVersion.VERSION_1_8;
 // コンパイル時に使用する文字エンコーディング
-tasks.withType( AbstractCompile )*.options*.encoding = getProperty( 'common.encoding' );
+tasks.withType( AbstractCompile )*.options*.encoding = StandardCharsets.UTF_8;
 
 //-----------------------------------------------------------------------------
 //    Dependency Management
@@ -168,8 +169,8 @@ javadoc {
     failOnError = false;
 
     options {
-        encoding = getProperty( 'common.encoding' );
-        charSet = getProperty( 'common.encoding' );
+        encoding = StandardCharsets.UTF_8;
+        charSet = StandardCharsets.UTF_8;
         author = true;
         links(
             'https://commons.apache.org/proper/commons-beanutils/apidocs/',
