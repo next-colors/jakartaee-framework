@@ -225,10 +225,11 @@ eclipse {
                     // ファセットの種類、ファセット名でソート
                     it.facets.sort { facet1, facet2 ->
                         if ( facet1.type == facet2.type ) {
-                            return facet1.name.compareTo( facet2.name );
+                            facet1.name <=> facet2.name;
                         }
-
-                        return facet1.type.name().compareTo( facet2.type.name() );
+                        else {
+                            facet1.type.name() <=> facet2.type.name();
+                        }
                     }
                 }
             }
