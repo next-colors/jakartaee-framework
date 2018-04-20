@@ -15,6 +15,8 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
+import java.math.BigInteger;
+
 import org.jooq.types.ULong;
 
 import lombok.EqualsAndHashCode;
@@ -45,7 +47,7 @@ public class ULongConverter extends UnsignedNumberConverter<ULong, Long>
 	@Override
 	protected ULong getUnsignedValue( @NonNull final Long signedValue ) throws NumberFormatException
 	{
-		return ULong.valueOf( signedValue );
+		return ULong.valueOf( BigInteger.valueOf( signedValue ) );
 	}
 
 	//-------------------------------------------------------------------------

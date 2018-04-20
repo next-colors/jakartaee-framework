@@ -45,7 +45,7 @@ public class UByteConverter extends UnsignedNumberConverter<UByte, Byte>
 	@Override
 	protected UByte getUnsignedValue( @NonNull final Byte signedValue ) throws NumberFormatException
 	{
-		return UByte.valueOf( signedValue );
+		return UByte.valueOf( signedValue.shortValue() );
 	}
 
 	//-------------------------------------------------------------------------
