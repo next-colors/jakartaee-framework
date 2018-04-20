@@ -45,7 +45,7 @@ public class UShortConverter extends UnsignedNumberConverter<UShort, Short>
 	@Override
 	protected UShort getUnsignedValue( @NonNull final Short signedValue ) throws NumberFormatException
 	{
-		return UShort.valueOf( signedValue );
+		return UShort.valueOf( signedValue.intValue() );
 	}
 
 	//-------------------------------------------------------------------------

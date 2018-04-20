@@ -45,7 +45,7 @@ public class UIntegerConverter extends UnsignedNumberConverter<UInteger, Integer
 	@Override
 	protected UInteger getUnsignedValue( @NonNull final Integer signedValue ) throws NumberFormatException
 	{
-		return UInteger.valueOf( signedValue );
+		return UInteger.valueOf( signedValue.longValue() );
 	}
 
 	//-------------------------------------------------------------------------
