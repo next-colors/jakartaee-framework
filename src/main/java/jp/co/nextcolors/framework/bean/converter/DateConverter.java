@@ -113,7 +113,7 @@ public class DateConverter extends DateTimeConverter
 
 		for ( String separator : TIME_SEPARATORS ) {
 			for ( int i = 1; i <= TIME_COMPONENTS.length; ++i ) {
-				String[] timeComponents = Arrays.copyOfRange( TIME_COMPONENTS, 0, i );
+				String[] timeComponents = Arrays.copyOf( TIME_COMPONENTS, i );
 
 				String timeFormat = String.join( separator, timeComponents );
 
