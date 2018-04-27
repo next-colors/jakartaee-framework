@@ -12,4 +12,5 @@
 
 # Build
 /bin/
+/build/dependencyUpdates/
 /build/output/
