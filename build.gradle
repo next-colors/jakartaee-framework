@@ -20,6 +20,7 @@ plugins {
     id 'java-library';
     id 'jacoco';
     id 'eclipse-wtp';
+    id 'com.github.ben-manes.versions' version '0.17.0';
     id 'io.franzbecker.gradle-lombok' version '1.13';
 }
 
