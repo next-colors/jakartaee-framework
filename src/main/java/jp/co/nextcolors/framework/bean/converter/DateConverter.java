@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.converters.DateTimeConverter;
@@ -111,17 +112,17 @@ public class DateConverter extends DateTimeConverter
 	{
 		Set<String> timeFormats = Sets.newHashSet();
 
-		for ( String separator : TIME_SEPARATORS ) {
-			for ( int i = 1; i <= TIME_COMPONENTS.length; ++i ) {
-				String[] timeComponents = Arrays.copyOf( TIME_COMPONENTS, i );
+		Arrays.stream( TIME_SEPARATORS ).forEach( separator ->
+			IntStream.rangeClosed( 1, TIME_COMPONENTS.length ).forEach( length -> {
+				String[] timeComponents = Arrays.copyOf( TIME_COMPONENTS, length );
 
 				String timeFormat = String.join( separator, timeComponents );
 
-				for ( String timeZoneComponent : TIME_ZONE_COMPONENTS ) {
-					timeFormats.add( timeFormat + timeZoneComponent );
-				}
-			}
-		}
+				Arrays.stream( TIME_ZONE_COMPONENTS ).forEach( timeZoneComponent ->
+					timeFormats.add( timeFormat + timeZoneComponent )
+				);
+			} )
+		);
 
 		return ImmutableSet.copyOf( timeFormats );
 	}
@@ -139,13 +140,13 @@ public class DateConverter extends DateTimeConverter
 		Set<String> dateTimeFormats = Sets.newHashSet();
 		dateTimeFormats.addAll( dateFormats );
 
-		for ( String dateFormat : dateFormats ) {
-			for ( String timeFormat : timeFormats ) {
-				for ( String separator : DATE_TIME_SEPARATORS ) {
-					dateTimeFormats.add( String.join( separator, dateFormat, timeFormat ) );
-				}
-			}
-		}
+		dateFormats.stream().forEach( dateFormat ->
+			timeFormats.stream().forEach( timeFormat ->
+				Arrays.stream( DATE_TIME_SEPARATORS ).forEach( separator ->
+					dateTimeFormats.add( String.join( separator, dateFormat, timeFormat ) )
+				)
+			)
+		);
 
 		return dateTimeFormats.stream().toArray( String[]::new );
 	}
