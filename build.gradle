@@ -50,6 +50,9 @@ tasks.withType( AbstractCompile )*.options*.encoding = StandardCharsets.UTF_8;
 repositories {
     // JCenter リポジトリ
     jcenter();
+
+    // Maven セントラルリポジトリ
+    mavenCentral();
 }
 
 // 依存関係の設定
