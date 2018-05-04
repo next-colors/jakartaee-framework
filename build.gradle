@@ -191,7 +191,7 @@ javadoc {
             'https://google.github.io/guava/releases/25.0-jre/api/docs/',
             'https://projectlombok.org/api/',
             'https://www.javadoc.io/doc/com.miragesql/miragesql/2.0.0',
-            'https://www.javadoc.io/doc/io.github.lukehutch/fast-classpath-scanner/2.19.0',
+            'https://www.javadoc.io/doc/io.github.lukehutch/fast-classpath-scanner/2.20.0',
             'https://www.joda.org/joda-time/apidocs/',
             'https://www.jooq.org/javadoc/3.10.x/',
             'https://www.slf4j.org/apidocs/'
