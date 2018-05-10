@@ -22,11 +22,13 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.reflect.TypeUtils;
 
@@ -63,9 +65,9 @@ public class GenericUtil
 			TypeVariable<?>[] typeVariables = genericDeclaration.getTypeParameters();
 			Type[] actualTypes = parameterizedType.getActualTypeArguments();
 
-			for ( int i = 0; i < actualTypes.length; ++i ) {
-				map.put( typeVariables[ i ], actualTypes[ i ] );
-			}
+			IntStream.range( 0, actualTypes.length ).forEach( i ->
+				map.put( typeVariables[ i ], actualTypes[ i ] )
+			);
 		}
 	}
 
@@ -94,9 +96,9 @@ public class GenericUtil
 		Class<?>[] interfaces = clazz.getInterfaces();
 		Type[] interfaceTypes = clazz.getGenericInterfaces();
 
-		for ( int i = 0; i < interfaces.length; ++i ) {
-			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map );
-		}
+		IntStream.range( 0, interfaces.length ).forEach( i ->
+			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map )
+		);
 	}
 
 	//-------------------------------------------------------------------------
@@ -304,12 +306,9 @@ public class GenericUtil
 	{
 		Map<TypeVariable<?>, Type> map = Maps.newLinkedHashMap();
 
-		TypeVariable<?>[] typeParameters = clazz.getTypeParameters();
-
-		for ( TypeVariable<?> typeParameter : typeParameters ) {
-			map.put( typeParameter, getActualClass( typeParameter.getBounds()[ 0 ], map ) );
-
-		}
+		Arrays.stream( clazz.getTypeParameters() ).forEach( typeParameter ->
+			map.put( typeParameter, getActualClass( typeParameter.getBounds()[ 0 ], map ) )
+		);
 
 		Class<?> superClass = clazz.getSuperclass();
 		Type superClassType = clazz.getGenericSuperclass();
@@ -321,9 +320,9 @@ public class GenericUtil
 		Class<?>[] interfaces = clazz.getInterfaces();
 		Type[] interfaceTypes = clazz.getGenericInterfaces();
 
-		for ( int i = 0; i < interfaces.length; ++i ) {
-			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map );
-		}
+		IntStream.range( 0, interfaces.length ).forEach( i ->
+			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map )
+		);
 
 		return map;
 	}
