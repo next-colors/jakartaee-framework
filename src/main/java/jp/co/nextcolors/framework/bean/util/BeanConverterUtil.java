@@ -22,12 +22,12 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jooq.lambda.Unchecked;
 
 import com.google.common.collect.ImmutableSet;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
-import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
@@ -71,16 +71,13 @@ public class BeanConverterUtil
 	 *
 	 * @see ConvertUtils#register(Converter, Class)
 	 */
-	@SneakyThrows(ReflectiveOperationException.class)
 	public static void registerConverters()
 	{
-		Set<Pair<Class<? extends Converter>, Class<?>>> relations = getConversionRelations();
-
-		for ( Pair<Class<? extends Converter>, Class<?>> relation : relations ) {
+		getConversionRelations().stream().forEach( Unchecked.consumer( relation -> {
 			Converter converter = ConstructorUtils.invokeConstructor( relation.getLeft() );
 			Class<?> targetClass = relation.getRight();
 
 			ConvertUtils.register( converter, targetClass );
-		}
+		} ) );
 	}
 }
