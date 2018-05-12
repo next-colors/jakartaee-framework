@@ -73,7 +73,7 @@ public class BeanConverterUtil
 	 */
 	public static void registerConverters()
 	{
-		getConversionRelations().stream().forEach( Unchecked.consumer( relation -> {
+		getConversionRelations().forEach( Unchecked.consumer( relation -> {
 			Converter converter = ConstructorUtils.invokeConstructor( relation.getLeft() );
 			Class<?> targetClass = relation.getRight();
 

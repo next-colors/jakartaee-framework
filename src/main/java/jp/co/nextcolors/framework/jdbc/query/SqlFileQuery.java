@@ -132,7 +132,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	{
 		Map<String, Object> params = Maps.newHashMap();
 
-		for ( String key : this.params.keySet() ) {
+		this.params.keySet().forEach( key -> {
 			Object value = this.params.get( key );
 
 			if ( Objects.nonNull( value ) ) {
@@ -146,7 +146,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 			}
 
 			params.put( key, value );
-		}
+		} );
 
 		return Collections.unmodifiableMap( params );
 	}

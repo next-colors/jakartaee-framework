@@ -140,8 +140,8 @@ public class DateConverter extends DateTimeConverter
 		Set<String> dateTimeFormats = Sets.newHashSet();
 		dateTimeFormats.addAll( dateFormats );
 
-		dateFormats.stream().forEach( dateFormat ->
-			timeFormats.stream().forEach( timeFormat ->
+		dateFormats.forEach( dateFormat ->
+			timeFormats.forEach( timeFormat ->
 				Arrays.stream( DATE_TIME_SEPARATORS ).forEach( separator ->
 					dateTimeFormats.add( String.join( separator, dateFormat, timeFormat ) )
 				)
