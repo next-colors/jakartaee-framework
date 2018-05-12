@@ -150,11 +150,11 @@ public class RequestDumpUtil
 	{
 		Set<String> headerNames = Sets.newTreeSet( Collections.list( request.getHeaderNames() ) );
 
-		for ( String headerName : headerNames ) {
+		headerNames.forEach( headerName -> {
 			buffer.append( indent );
 			buffer.append( "[Header] " ).append( headerName ).append( " = " ).append( request.getHeader( headerName ) );
 			buffer.append( lf );
-		}
+		} );
 	}
 
 	/**
@@ -174,11 +174,11 @@ public class RequestDumpUtil
 	{
 		Set<String> paramNames = Sets.newTreeSet( Collections.list( request.getParameterNames() ) );
 
-		for ( String paramName : paramNames ) {
+		paramNames.forEach( paramName -> {
 			buffer.append( indent );
 			buffer.append( "[Parameter] " ).append( paramName ).append( " = " ).append( StringUtils.join( request.getParameterValues( paramName ), ", " ) );
 			buffer.append( lf );
-		}
+		} );
 	}
 
 	/**
@@ -204,10 +204,10 @@ public class RequestDumpUtil
 
 		cookies = Arrays.stream( cookies ).sorted( Comparator.comparing( Cookie::getName ) ).toArray( Cookie[]::new );
 
-		for ( Cookie cookie : cookies ) {
+		Arrays.stream( cookies ).forEach( cookie -> {
 			buffer.append( indent );
 			buffer.append( "[Cookie] " ).append( cookie.getName() ).append( " = " ).append( cookie.getValue() );
 			buffer.append( lf );
-		}
+		} );
 	}
 }
