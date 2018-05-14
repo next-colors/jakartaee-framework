@@ -202,9 +202,7 @@ public class RequestDumpUtil
 			return;
 		}
 
-		Arrays.sort( cookies, Comparator.comparing( Cookie::getName ) );
-
-		Arrays.stream( cookies ).forEach( cookie -> {
+		Arrays.stream( cookies ).sorted( Comparator.comparing( Cookie::getName ) ).forEach( cookie -> {
 			buffer.append( indent );
 			buffer.append( "[Cookie] " ).append( cookie.getName() ).append( " = " ).append( cookie.getValue() );
 			buffer.append( lf );
