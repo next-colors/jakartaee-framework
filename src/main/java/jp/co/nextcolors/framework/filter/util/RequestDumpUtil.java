@@ -202,7 +202,7 @@ public class RequestDumpUtil
 			return;
 		}
 
-		cookies = Arrays.stream( cookies ).sorted( Comparator.comparing( Cookie::getName ) ).toArray( Cookie[]::new );
+		Arrays.sort( cookies, Comparator.comparing( Cookie::getName ) );
 
 		Arrays.stream( cookies ).forEach( cookie -> {
 			buffer.append( indent );
