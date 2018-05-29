@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +27,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.ISODateTimeFormat;
-
-import com.google.common.collect.Sets;
 
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -148,9 +145,7 @@ public class RequestDumpUtil
 	public static void dumpRequestHeaders( @NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
 											@NonNull final String lf, @NonNull final String indent )
 	{
-		Set<String> headerNames = Sets.newTreeSet( Collections.list( request.getHeaderNames() ) );
-
-		headerNames.forEach( headerName -> {
+		Collections.list( request.getHeaderNames() ).stream().sorted().forEach( headerName -> {
 			buffer.append( indent );
 			buffer.append( "[Header] " ).append( headerName ).append( " = " ).append( request.getHeader( headerName ) );
 			buffer.append( lf );
@@ -172,9 +167,7 @@ public class RequestDumpUtil
 	public static void dumpRequestParameters( @NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
 												@NonNull final String lf, @NonNull final String indent )
 	{
-		Set<String> paramNames = Sets.newTreeSet( Collections.list( request.getParameterNames() ) );
-
-		paramNames.forEach( paramName -> {
+		Collections.list( request.getParameterNames() ).stream().sorted().forEach( paramName -> {
 			buffer.append( indent );
 			buffer.append( "[Parameter] " ).append( paramName ).append( " = " ).append( StringUtils.join( request.getParameterValues( paramName ), ", " ) );
 			buffer.append( lf );
