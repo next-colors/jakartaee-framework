@@ -109,13 +109,6 @@ dependencies {
 //-----------------------------------------------------------------------------
 //    Tasks
 //-----------------------------------------------------------------------------
-// Gradle ラッパーのタスク
-task wrapper( type: Wrapper, overwrite: true ) {
-    description = 'Generates Gradle wrapper files.';
-
-    gradleVersion = getProperty( 'gradle.version' );
-}
-
 // JUnit でテストするタスク
 test {
     useJUnitPlatform();
