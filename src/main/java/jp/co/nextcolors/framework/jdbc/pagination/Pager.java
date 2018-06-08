@@ -140,7 +140,7 @@ public class Pager<T> implements IPager<T>
 		select.addParameter( "offset", pageRequest.getOffset() );
 		select.addParameter( "limit", pageRequest.getPageSize() );
 
-		List<T> elements = select.fetch().map( new BeanRecordMapper<>( resultClass ) );
+		List<T> elements = select.fetch().map( new BeanRecordMapper<>( resultClass, dslContext.configuration() ) );
 
 		return new Page<>( pageRequest, elements, totalElements );
 	}

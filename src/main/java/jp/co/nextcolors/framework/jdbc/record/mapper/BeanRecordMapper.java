@@ -19,11 +19,12 @@ import java.util.Objects;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
-import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.tools.Convert;
 
 import com.miragesql.miragesql.naming.DefaultNameConverter;
@@ -59,6 +60,13 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 	@NonNull
 	private final Class<B> beanClass;
 
+	/**
+	 * {@link RecordMapper} が動作する構成です。
+	 *
+	 */
+	@NonNull
+	private final Configuration configuration;
+
 	//-------------------------------------------------------------------------
 	//    Public Methods
 	//-------------------------------------------------------------------------
@@ -90,7 +98,7 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 			if ( Objects.nonNull( value ) ) {
 				Class<?> propertyType = PropertyUtils.getPropertyType( bean, propertyName );
 
-				DataType<?> dataType = DSL.getDataType( propertyType );
+				DataType<?> dataType = DefaultDataType.getDataType( configuration.dialect(), propertyType );
 
 				value = Convert.convert( value, dataType.getConverter() );
 			}
