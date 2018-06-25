@@ -17,20 +17,23 @@ package jp.co.nextcolors.framework.bean.util;
 
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jooq.lambda.Unchecked;
+import org.reflections.Reflections;
 
 import com.google.common.collect.ImmutableSet;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
 import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
+import jp.co.nextcolors.framework.servlet.util.ServletContextUtil;
 
 /**
  * Bean（JavaBeans）のコンバータに関するユーティリティです。
@@ -46,19 +49,25 @@ public class BeanConverterUtil
 	/**
 	 * {@link ConvertUtilsBean} に登録するコンバータとコンバータでの変換の対象となるクラスの対応表を返します。
 	 *
+	 * @param context
+	 * 			Servlet コンテキスト
 	 * @return {@link ConvertUtilsBean} に登録するコンバータとコンバータでの変換の対象となるクラスの対応表
 	 */
-	private static Set<Pair<Class<? extends Converter>, Class<?>>> getConversionRelations()
+	private static Set<Pair<Class<? extends Converter>, Class<?>>> getConversionRelations( @NonNull final ServletContext context )
 	{
 		ImmutableSet.Builder<Pair<Class<? extends Converter>, Class<?>>> builder = ImmutableSet.builder();
 
-		new FastClasspathScanner().matchClassesImplementing( Converter.class, converter -> {
+		Reflections reflectionScanner = ServletContextUtil.getClassReflectionScanner( context );
+
+		Set<Class<? extends Converter>> converters = reflectionScanner.getSubTypesOf( Converter.class );
+
+		converters.forEach( converter -> {
 			if ( converter.isAnnotationPresent( BeanConverter.class ) ) {
 				Class<?> targetClass = converter.getAnnotation( BeanConverter.class ).forClass();
 
 				builder.add( Pair.of( converter, targetClass ) );
 			}
-		} ).scan();
+		} );
 
 		return builder.build();
 	}
@@ -69,11 +78,13 @@ public class BeanConverterUtil
 	/**
 	 * {@link ConvertUtilsBean} にコンバータを登録します。
 	 *
+	 * @param context
+	 * 			Servlet コンテキスト
 	 * @see ConvertUtils#register(Converter, Class)
 	 */
-	public static void registerConverters()
+	public static void registerConverters( @NonNull final ServletContext context )
 	{
-		getConversionRelations().forEach( Unchecked.consumer( relation -> {
+		getConversionRelations( context ).forEach( Unchecked.consumer( relation -> {
 			Converter converter = ConstructorUtils.invokeConstructor( relation.getLeft() );
 			Class<?> targetClass = relation.getRight();
 
