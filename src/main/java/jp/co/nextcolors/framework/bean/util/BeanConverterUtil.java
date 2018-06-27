@@ -84,7 +84,9 @@ public class BeanConverterUtil
 	 */
 	public static void registerConverters( @NonNull final ServletContext context )
 	{
-		getConversionRelations( context ).forEach( Unchecked.consumer( relation -> {
+		Set<Pair<Class<? extends Converter>, Class<?>>> relations = getConversionRelations( context );
+
+		relations.forEach( Unchecked.consumer( relation -> {
 			Converter converter = ConstructorUtils.invokeConstructor( relation.getLeft() );
 			Class<?> targetClass = relation.getRight();
 
