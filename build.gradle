@@ -78,7 +78,6 @@ dependencies {
         'org.apache.commons:commons-lang3:latest.release',
         'org.jooq:jool-java-8:latest.release',
         'org.jooq:jooq:latest.release',
-        'org.reflections:reflections:latest.release',
         'org.slf4j:slf4j-api:latest.release'
     );
 
@@ -184,9 +183,8 @@ javadoc {
             'https://google.github.io/guava/releases/25.1-jre/api/docs/',
             'https://javaee.github.io/javaee-spec/javadocs/',
             'https://projectlombok.org/api/',
-            'https://ronmamo.github.io/reflections/',
             'https://www.javadoc.io/doc/com.miragesql/miragesql/2.0.0',
-            'https://www.javadoc.io/doc/io.github.lukehutch/fast-classpath-scanner/3.1.5',
+            'https://www.javadoc.io/doc/io.github.lukehutch/fast-classpath-scanner/3.1.6',
             'https://www.joda.org/joda-time/apidocs/',
             'https://www.jooq.org/javadoc/3.11.x/',
             'https://www.jooq.org/products/jOO%CE%BB/javadoc/latest/',
