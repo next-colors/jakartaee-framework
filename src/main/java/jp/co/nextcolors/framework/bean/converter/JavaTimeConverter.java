@@ -36,12 +36,12 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  * {@code java.time} の日付/時間に変換するための抽象クラスです。
  *
  * @author hamana
- * @param <D>
+ * @param <JT>
  * 			日付/時間の型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConverter
+public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractConverter
 {
 	//-------------------------------------------------------------------------
 	//    Private Properties
@@ -50,7 +50,7 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	 * 日付/時間の型を表すクラスです。
 	 *
 	 */
-	private final Class<D> javaTimeClass;
+	private final Class<JT> javaTimeClass;
 
 	//-------------------------------------------------------------------------
 	//    Protected Methods
@@ -62,7 +62,7 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	 * 			UTC/グリニッジからのオフセット付きの日時
 	 * @return 日付/時間
 	 */
-	protected abstract D getDateTime( OffsetDateTime offsetDateTime );
+	protected abstract JT getDateTime( OffsetDateTime offsetDateTime );
 
 	@SuppressWarnings("unchecked")
 	protected JavaTimeConverter()
@@ -74,7 +74,7 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
 			if ( clazz.getSuperclass() == JavaTimeConverter.class ) {
 				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				javaTimeClass = (Class<D>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
+				javaTimeClass = (Class<JT>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
 
 				return;
 			}
@@ -102,7 +102,7 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	 *
 	 */
 	@Override
-	protected Class<D> getDefaultType()
+	protected Class<JT> getDefaultType()
 	{
 		return javaTimeClass;
 	}
