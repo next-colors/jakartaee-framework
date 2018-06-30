@@ -98,7 +98,7 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	 *
 	 */
 	@Override
-	protected <T> T convertToType( @NonNull final Class<T> type, final Object value ) throws Throwable
+	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Throwable
 	{
 		Date date = Date.class.cast( ConvertUtils.convert( value, Date.class ) );
 
