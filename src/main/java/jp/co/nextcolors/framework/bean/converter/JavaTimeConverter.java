@@ -67,7 +67,7 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	@SuppressWarnings("unchecked")
 	protected JavaTimeConverter()
 	{
-		setDefaultValue( null );
+		super( null );
 
 		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
 
