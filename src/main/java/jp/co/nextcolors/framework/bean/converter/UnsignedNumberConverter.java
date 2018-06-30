@@ -106,16 +106,6 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
 	 *
 	 */
 	@Override
-	protected Class<U> getDefaultType()
-	{
-		return unsignedNumberClass;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, final Object value ) throws Throwable
 	{
 		S signedValue = super.convertToType( signedNumberClass, value );
@@ -125,5 +115,15 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
 		}
 
 		return type.cast( getUnsignedValue( signedValue ) );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	protected Class<U> getDefaultType()
+	{
+		return unsignedNumberClass;
 	}
 }
