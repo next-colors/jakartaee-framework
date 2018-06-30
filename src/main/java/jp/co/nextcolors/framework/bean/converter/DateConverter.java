@@ -24,6 +24,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.Temporal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -100,6 +101,63 @@ public class DateConverter extends DateTimeConverter
 	//    Private Methods
 	//-------------------------------------------------------------------------
 	/**
+	 * {@code java.time} の日付/時間を {@link Date} 型への日付に変換します。
+	 *
+	 * @param value
+	 * 			{@code java.time} の日付/時間
+	 * @return {@link Date} 型の日付
+	 */
+	private Date toDate( @NonNull final Temporal value )
+	{
+		if ( Instant.class.isInstance( value ) ) {
+			Instant instant = Instant.class.cast( value );
+
+			return Date.from( instant );
+		}
+
+		if ( LocalDate.class.isInstance( value ) ) {
+			LocalDate localDate = LocalDate.class.cast( value );
+
+			return Date.from( localDate.atStartOfDay( ZoneId.systemDefault() ).toInstant() );
+		}
+
+		if ( LocalDateTime.class.isInstance( value ) ) {
+			LocalDateTime localDateTime = LocalDateTime.class.cast( value );
+
+			return Date.from( localDateTime.atZone( ZoneId.systemDefault() ).toInstant() );
+		}
+
+		if ( LocalTime.class.isInstance( value ) ) {
+			LocalTime localTime = LocalTime.class.cast( value );
+			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
+
+			return Date.from( localDate.atTime( localTime ).atZone( ZoneId.systemDefault() ).toInstant() );
+		}
+
+		if ( OffsetDateTime.class.isInstance( value ) ) {
+			OffsetDateTime offsetDateTime = OffsetDateTime.class.cast( value );
+
+			return Date.from( offsetDateTime.toInstant() );
+		}
+
+		if ( OffsetTime.class.isInstance( value ) ) {
+			OffsetTime offsetTime = OffsetTime.class.cast( value );
+			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
+
+			return Date.from( localDate.atTime( offsetTime ).toInstant() );
+		}
+
+		if ( ZonedDateTime.class.isInstance( value ) ) {
+			ZonedDateTime zonedDateTime = ZonedDateTime.class.cast( value );
+
+			return Date.from( zonedDateTime.toInstant() );
+		}
+
+		throw new IllegalArgumentException( String.format( "%s はサポートされていない日付/時間の型です。",
+															value.getClass().getName() ) );
+	}
+
+	/**
 	 * 日付のフォーマットを取得します。
 	 *
 	 * @return 日付のフォーマット
@@ -171,53 +229,8 @@ public class DateConverter extends DateTimeConverter
 	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Exception
 	{
-		if ( Instant.class.isInstance( value ) ) {
-			Instant instant = Instant.class.cast( value );
-			Date date = Date.from( instant );
-
-			return type.cast( date );
-		}
-
-		if ( LocalDate.class.isInstance( value ) ) {
-			LocalDate localDate = LocalDate.class.cast( value );
-			Date date = Date.from( localDate.atStartOfDay( ZoneId.systemDefault() ).toInstant() );
-
-			return type.cast( date );
-		}
-
-		if ( LocalDateTime.class.isInstance( value ) ) {
-			LocalDateTime localDateTime = LocalDateTime.class.cast( value );
-			Date date = Date.from( localDateTime.atZone( ZoneId.systemDefault() ).toInstant() );
-
-			return type.cast( date );
-		}
-
-		if ( LocalTime.class.isInstance( value ) ) {
-			LocalTime localTime = LocalTime.class.cast( value );
-			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
-			Date date = Date.from( localDate.atTime( localTime ).atZone( ZoneId.systemDefault() ).toInstant() );
-
-			return type.cast( date );
-		}
-
-		if ( OffsetDateTime.class.isInstance( value ) ) {
-			OffsetDateTime offsetDateTime = OffsetDateTime.class.cast( value );
-			Date date = Date.from( offsetDateTime.toInstant() );
-
-			return type.cast( date );
-		}
-
-		if ( OffsetTime.class.isInstance( value ) ) {
-			OffsetTime offsetTime = OffsetTime.class.cast( value );
-			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
-			Date date = Date.from( localDate.atTime( offsetTime ).toInstant() );
-
-			return type.cast( date );
-		}
-
-		if ( ZonedDateTime.class.isInstance( value ) ) {
-			ZonedDateTime zonedDateTime = ZonedDateTime.class.cast( value );
-			Date date = Date.from( zonedDateTime.toInstant() );
+		if ( Temporal.class.isInstance( value ) ) {
+			Date date = toDate( Temporal.class.cast( value ) );
 
 			return type.cast( date );
 		}
