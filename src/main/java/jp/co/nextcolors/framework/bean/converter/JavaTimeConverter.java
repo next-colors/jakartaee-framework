@@ -22,7 +22,6 @@ import java.time.ZoneId;
 import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.AbstractConverter;
@@ -68,6 +67,8 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	@SuppressWarnings("unchecked")
 	protected JavaTimeConverter()
 	{
+		setDefaultValue( null );
+
 		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
 
 		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
@@ -99,10 +100,6 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, final Object value ) throws Throwable
 	{
-		if ( Objects.isNull( value ) ) {
-			return null;
-		}
-
 		Date date = Date.class.cast( ConvertUtils.convert( value, Date.class ) );
 
 		OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() );
