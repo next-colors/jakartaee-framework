@@ -16,6 +16,11 @@
 package jp.co.nextcolors.framework.bean.converter;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -171,6 +176,30 @@ public class DateConverter extends DateTimeConverter
 	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Exception
 	{
+		if ( LocalDate.class.isInstance( value ) ) {
+			Date date = Date.from( LocalDate.class.cast( value ).atStartOfDay( ZoneId.systemDefault() ).toInstant() );
+
+			return type.cast( date );
+		}
+
+		if ( LocalDateTime.class.isInstance( value ) ) {
+			Date date = Date.from( LocalDateTime.class.cast( value ).atZone( ZoneId.systemDefault() ).toInstant() );
+
+			return type.cast( date );
+		}
+
+		if ( OffsetDateTime.class.isInstance( value ) ) {
+			Date date = Date.from( OffsetDateTime.class.cast( value ).toInstant() );
+
+			return type.cast( date );
+		}
+
+		if ( ZonedDateTime.class.isInstance( value ) ) {
+			Date date = Date.from( ZonedDateTime.class.cast( value ).toInstant() );
+
+			return type.cast( date );
+		}
+
 		if ( !String.class.isInstance( value ) ) {
 			return super.convertToType( type, value );
 		}
