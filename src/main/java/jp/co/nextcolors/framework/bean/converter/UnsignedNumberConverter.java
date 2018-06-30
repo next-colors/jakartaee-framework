@@ -20,7 +20,6 @@ import java.lang.reflect.TypeVariable;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.converters.NumberConverter;
 import org.jooq.types.UNumber;
 
@@ -112,27 +111,19 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
 		return unsignedNumberClass;
 	}
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
 	/**
 	 * {@inheritDoc}
 	 *
 	 */
 	@Override
-	public <T> T convert( @NonNull final Class<T> type, final Object value )
+	protected <T> T convertToType( @NonNull final Class<T> type, final Object value ) throws Throwable
 	{
-		try {
-			S signedValue = convertToType( signedNumberClass, value );
+		S signedValue = super.convertToType( signedNumberClass, value );
 
-			if ( Objects.isNull( signedValue ) ) {
-				return null;
-			}
+		if ( Objects.isNull( signedValue ) ) {
+			return null;
+		}
 
-			return type.cast( getUnsignedValue( signedValue ) );
-		}
-		catch ( Throwable t ) {
-			throw new ConversionException( t );
-		}
+		return type.cast( getUnsignedValue( signedValue ) );
 	}
 }

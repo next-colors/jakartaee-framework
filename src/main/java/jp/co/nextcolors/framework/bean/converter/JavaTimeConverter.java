@@ -88,16 +88,6 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 	 *
 	 */
 	@Override
-	protected Class<D> getDefaultType()
-	{
-		return javaTimeClass;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Throwable
 	{
 		Date date = Date.class.cast( ConvertUtils.convert( value, Date.class ) );
@@ -105,5 +95,15 @@ public abstract class JavaTimeConverter<D extends Temporal> extends AbstractConv
 		OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() );
 
 		return type.cast( getDateTime( offsetDateTime ) );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	protected Class<D> getDefaultType()
+	{
+		return javaTimeClass;
 	}
 }
