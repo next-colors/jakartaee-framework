@@ -19,7 +19,6 @@ import java.time.OffsetDateTime;
 import java.time.Year;
 
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -30,7 +29,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  *
  * @author hamana
  */
-@NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Year.class)
