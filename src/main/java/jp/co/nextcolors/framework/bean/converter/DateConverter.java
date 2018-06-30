@@ -19,7 +19,9 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -190,9 +192,25 @@ public class DateConverter extends DateTimeConverter
 			return type.cast( date );
 		}
 
+		if ( LocalTime.class.isInstance( value ) ) {
+			LocalTime localTime = LocalTime.class.cast( value );
+			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
+			Date date = Date.from( localDate.atTime( localTime ).atZone( ZoneId.systemDefault() ).toInstant() );
+
+			return type.cast( date );
+		}
+
 		if ( OffsetDateTime.class.isInstance( value ) ) {
 			OffsetDateTime offsetDateTime = OffsetDateTime.class.cast( value );
 			Date date = Date.from( offsetDateTime.toInstant() );
+
+			return type.cast( date );
+		}
+
+		if ( OffsetTime.class.isInstance( value ) ) {
+			OffsetTime offsetTime = OffsetTime.class.cast( value );
+			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
+			Date date = Date.from( localDate.atTime( offsetTime ).toInstant() );
 
 			return type.cast( date );
 		}
