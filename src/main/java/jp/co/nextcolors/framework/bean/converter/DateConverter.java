@@ -144,7 +144,6 @@ public class DateConverter extends DateTimeConverter
 		Set<String> timeFormats = getTimeFormats();
 
 		Set<String> dateTimeFormats = Sets.newHashSet();
-		dateTimeFormats.addAll( dateFormats );
 
 		dateFormats.forEach( dateFormat ->
 			timeFormats.forEach( timeFormat ->
@@ -153,6 +152,9 @@ public class DateConverter extends DateTimeConverter
 				)
 			)
 		);
+
+		dateTimeFormats.addAll( dateFormats );
+		dateTimeFormats.addAll( timeFormats );
 
 		return dateTimeFormats.stream().toArray( String[]::new );
 	}
