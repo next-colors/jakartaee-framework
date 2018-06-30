@@ -37,7 +37,7 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  * {@code java.time} の日付/時間に変換するための抽象クラスです。
  *
  * @author hamana
- * @param <T>
+ * @param <D>
  * 			日付/時間の型です。
  */
 @ToString(callSuper = true)
