@@ -177,25 +177,29 @@ public class DateConverter extends DateTimeConverter
 	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Exception
 	{
 		if ( LocalDate.class.isInstance( value ) ) {
-			Date date = Date.from( LocalDate.class.cast( value ).atStartOfDay( ZoneId.systemDefault() ).toInstant() );
+			LocalDate localDate = LocalDate.class.cast( value );
+			Date date = Date.from( localDate.atStartOfDay( ZoneId.systemDefault() ).toInstant() );
 
 			return type.cast( date );
 		}
 
 		if ( LocalDateTime.class.isInstance( value ) ) {
-			Date date = Date.from( LocalDateTime.class.cast( value ).atZone( ZoneId.systemDefault() ).toInstant() );
+			LocalDateTime localDateTime = LocalDateTime.class.cast( value );
+			Date date = Date.from( localDateTime.atZone( ZoneId.systemDefault() ).toInstant() );
 
 			return type.cast( date );
 		}
 
 		if ( OffsetDateTime.class.isInstance( value ) ) {
-			Date date = Date.from( OffsetDateTime.class.cast( value ).toInstant() );
+			OffsetDateTime offsetDateTime = OffsetDateTime.class.cast( value );
+			Date date = Date.from( offsetDateTime.toInstant() );
 
 			return type.cast( date );
 		}
 
 		if ( ZonedDateTime.class.isInstance( value ) ) {
-			Date date = Date.from( ZonedDateTime.class.cast( value ).toInstant() );
+			ZonedDateTime zonedDateTime = ZonedDateTime.class.cast( value );
+			Date date = Date.from( zonedDateTime.toInstant() );
 
 			return type.cast( date );
 		}
