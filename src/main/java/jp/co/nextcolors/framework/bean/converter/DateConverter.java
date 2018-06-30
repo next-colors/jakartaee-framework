@@ -164,16 +164,6 @@ public class DateConverter extends DateTimeConverter
 	 *
 	 */
 	@Override
-	protected Class<Date> getDefaultType()
-	{
-		return Date.class;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Exception
 	{
 		if ( LocalDate.class.isInstance( value ) ) {
@@ -218,6 +208,16 @@ public class DateConverter extends DateTimeConverter
 															value, type.getName(), Arrays.toString( getPatterns() ) ),
 											e );
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	protected Class<Date> getDefaultType()
+	{
+		return Date.class;
 	}
 
 	//-------------------------------------------------------------------------
