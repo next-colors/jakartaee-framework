@@ -67,7 +67,7 @@ public class DateConverter extends DateTimeConverter
 			StringUtils.split( DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.getPattern(), '-' );
 
 	/**
-	 * 時刻のコンポーネントです。
+	 * 時間のコンポーネントです。
 	 *
 	 */
 	private static final String[] TIME_COMPONENTS =
@@ -86,13 +86,13 @@ public class DateConverter extends DateTimeConverter
 	private static final String[] DATE_SEPARATORS = { StringUtils.EMPTY, "-", "/" };
 
 	/**
-	 * 時刻のセパレータです。
+	 * 時間のセパレータです。
 	 *
 	 */
 	private static final String[] TIME_SEPARATORS = { StringUtils.EMPTY, ":" };
 
 	/**
-	 * 日付と時刻のセパレータです。
+	 * 日付と時間のセパレータです。
 	 *
 	 */
 	private static final String[] DATE_TIME_SEPARATORS = { StringUtils.EMPTY, StringUtils.SPACE, "'T'" };
@@ -170,9 +170,9 @@ public class DateConverter extends DateTimeConverter
 	}
 
 	/**
-	 * 時刻のフォーマットを取得します。
+	 * 時間のフォーマットを取得します。
 	 *
-	 * @return 時刻のフォーマット
+	 * @return 時間のフォーマット
 	 */
 	private Set<String> getTimeFormats()
 	{
