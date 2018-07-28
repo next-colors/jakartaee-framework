@@ -26,7 +26,9 @@ import org.jooq.lambda.Unchecked;
 
 import com.google.common.collect.ImmutableSet;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.fastclasspathscanner.ClassInfoList;
+import io.github.fastclasspathscanner.FastClasspathScanner;
+import io.github.fastclasspathscanner.ScanResult;
 
 import lombok.experimental.UtilityClass;
 
@@ -52,13 +54,17 @@ public class BeanConverterUtil
 	{
 		ImmutableSet.Builder<Pair<Class<? extends Converter>, Class<?>>> builder = ImmutableSet.builder();
 
-		new FastClasspathScanner().matchClassesImplementing( Converter.class, converter -> {
+		ScanResult scanResult = new FastClasspathScanner().enableClassInfo().scan();
+
+		ClassInfoList classInfoList = scanResult.getClassesImplementing( Converter.class.getName() );
+
+		classInfoList.loadClasses( Converter.class ).forEach( converter -> {
 			if ( converter.isAnnotationPresent( BeanConverter.class ) ) {
 				Class<?> targetClass = converter.getAnnotation( BeanConverter.class ).forClass();
 
 				builder.add( Pair.of( converter, targetClass ) );
 			}
-		} ).scan();
+		} );
 
 		return builder.build();
 	}
