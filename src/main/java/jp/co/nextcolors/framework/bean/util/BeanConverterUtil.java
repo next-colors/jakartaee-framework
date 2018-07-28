@@ -50,9 +50,9 @@ public class BeanConverterUtil
 	 *
 	 * @return {@link ConvertUtilsBean} に登録するコンバータとコンバータでの変換の対象となるクラスの対応表
 	 */
-	private static Set<Pair<Class<? extends Converter>, Class<?>>> getConversionRelations()
+	private static Set<Pair<Class<Converter>, Class<?>>> getConversionRelations()
 	{
-		ImmutableSet.Builder<Pair<Class<? extends Converter>, Class<?>>> builder = ImmutableSet.builder();
+		ImmutableSet.Builder<Pair<Class<Converter>, Class<?>>> builder = ImmutableSet.builder();
 
 		ScanResult scanResult = new FastClasspathScanner().enableClassInfo().scan();
 
@@ -79,7 +79,7 @@ public class BeanConverterUtil
 	 */
 	public static void registerConverters()
 	{
-		Set<Pair<Class<? extends Converter>, Class<?>>> relations = getConversionRelations();
+		Set<Pair<Class<Converter>, Class<?>>> relations = getConversionRelations();
 
 		relations.forEach( Unchecked.consumer( relation -> {
 			Converter converter = ConstructorUtils.invokeConstructor( relation.getLeft() );
