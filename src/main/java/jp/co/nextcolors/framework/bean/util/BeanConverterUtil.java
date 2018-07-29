@@ -26,9 +26,9 @@ import org.jooq.lambda.Unchecked;
 
 import com.google.common.collect.ImmutableSet;
 
-import io.github.fastclasspathscanner.ClassInfoList;
-import io.github.fastclasspathscanner.FastClasspathScanner;
-import io.github.fastclasspathscanner.ScanResult;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.ScanResult;
 
 import lombok.experimental.UtilityClass;
 
@@ -54,7 +54,7 @@ public class BeanConverterUtil
 	{
 		ImmutableSet.Builder<Pair<Class<Converter>, Class<?>>> builder = ImmutableSet.builder();
 
-		ScanResult scanResult = new FastClasspathScanner().enableClassInfo().scan();
+		ScanResult scanResult = new ClassGraph().enableClassInfo().scan();
 
 		ClassInfoList classInfoList = scanResult.getClassesImplementing( Converter.class.getName() );
 
