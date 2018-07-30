@@ -15,16 +15,11 @@
  */
 package jp.co.nextcolors.framework.bean.util;
 
-import java.util.Set;
-
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jooq.lambda.Unchecked;
-
-import com.google.common.collect.ImmutableSet;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
@@ -43,33 +38,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 public class BeanConverterUtil
 {
 	//-------------------------------------------------------------------------
-	//    Private Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@link ConvertUtilsBean} に登録するコンバータとコンバータでの変換の対象となるクラスの対応表を返します。
-	 *
-	 * @return {@link ConvertUtilsBean} に登録するコンバータとコンバータでの変換の対象となるクラスの対応表
-	 */
-	private static Set<Pair<Class<Converter>, Class<?>>> getConversionRelations()
-	{
-		ImmutableSet.Builder<Pair<Class<Converter>, Class<?>>> builder = ImmutableSet.builder();
-
-		ScanResult scanResult = new ClassGraph().enableClassInfo().scan();
-
-		ClassInfoList classInfoList = scanResult.getClassesImplementing( Converter.class.getName() );
-
-		classInfoList.loadClasses( Converter.class ).forEach( converter -> {
-			if ( converter.isAnnotationPresent( BeanConverter.class ) ) {
-				Class<?> targetClass = converter.getAnnotation( BeanConverter.class ).forClass();
-
-				builder.add( Pair.of( converter, targetClass ) );
-			}
-		} );
-
-		return builder.build();
-	}
-
-	//-------------------------------------------------------------------------
 	//    Public Methods
 	//-------------------------------------------------------------------------
 	/**
@@ -79,13 +47,17 @@ public class BeanConverterUtil
 	 */
 	public static void registerConverters()
 	{
-		Set<Pair<Class<Converter>, Class<?>>> relations = getConversionRelations();
+		ScanResult scanResult = new ClassGraph().enableClassInfo().scan();
 
-		relations.forEach( Unchecked.consumer( relation -> {
-			Converter converter = ConstructorUtils.invokeConstructor( relation.getLeft() );
-			Class<?> targetClass = relation.getRight();
+		ClassInfoList converters = scanResult.getClassesImplementing( Converter.class.getName() );
 
-			ConvertUtils.register( converter, targetClass );
+		converters.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
+			if ( converterClass.isAnnotationPresent( BeanConverter.class ) ) {
+				Converter converter = ConstructorUtils.invokeConstructor( converterClass );
+				Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
+
+				ConvertUtils.register( converter, targetClass );
+			}
 		} ) );
 	}
 }
