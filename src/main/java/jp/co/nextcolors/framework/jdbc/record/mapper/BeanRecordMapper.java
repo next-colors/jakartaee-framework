@@ -15,16 +15,17 @@
  */
 package jp.co.nextcolors.framework.jdbc.record.mapper;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.jooq.Configuration;
 import org.jooq.DataType;
-import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.impl.DefaultDataType;
+import org.jooq.lambda.Unchecked;
 import org.jooq.tools.Convert;
 
 import com.miragesql.miragesql.naming.DefaultNameConverter;
@@ -86,11 +87,11 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 
 		B bean = ConstructorUtils.invokeConstructor( beanClass );
 
-		for ( Field<?> field : record.fields() ) {
+		Arrays.stream( record.fields() ).forEach( Unchecked.consumer( field -> {
 			String propertyName = nameConverter.columnToProperty( field.getName() );
 
 			if ( !PropertyUtils.isWriteable( bean, propertyName ) ) {
-				continue;
+				return;
 			}
 
 			Object value = field.getValue( record );
@@ -104,7 +105,7 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 			}
 
 			PropertyUtils.setProperty( bean, propertyName, value );
-		}
+		} ) );
 
 		return bean;
 	}
