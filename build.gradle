@@ -184,7 +184,7 @@ javadoc {
             'https://javaee.github.io/javaee-spec/javadocs/',
             'https://projectlombok.org/api/',
             'https://www.javadoc.io/doc/com.miragesql/miragesql/2.0.0',
-            'https://www.javadoc.io/doc/io.github.classgraph/classgraph/4.0.0-beta-12',
+            'https://www.javadoc.io/doc/io.github.classgraph/classgraph/4.0.1',
             'https://www.joda.org/joda-time/apidocs/',
             'https://www.jooq.org/javadoc/3.11.x/',
             'https://www.jooq.org/products/jOO%CE%BB/javadoc/latest/',
