@@ -15,6 +15,9 @@
  */
 package jp.co.nextcolors.framework.filter.util;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,7 +29,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.format.ISODateTimeFormat;
 
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -124,8 +126,8 @@ public class RequestDumpUtil
 		buffer.append( lf );
 
 		buffer.append( indent );
-		buffer.append( "Session :: CreationTime = " ).append( ISODateTimeFormat.dateTime().print( session.getCreationTime() ) );
-		buffer.append( ", LastAccessedTime = " ).append( ISODateTimeFormat.dateTime().print( session.getLastAccessedTime() ) );
+		buffer.append( "Session :: CreationTime = " ).append( ZonedDateTime.ofInstant( Instant.ofEpochMilli( session.getCreationTime() ), ZoneId.systemDefault() ) );
+		buffer.append( ", LastAccessedTime = " ).append( ZonedDateTime.ofInstant( Instant.ofEpochMilli( session.getLastAccessedTime() ), ZoneId.systemDefault() ) );
 		buffer.append( ", MaxInactiveInterval = " ).append( session.getMaxInactiveInterval() );
 		buffer.append( lf );
 	}
