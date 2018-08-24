@@ -47,17 +47,17 @@ public class BeanConverterUtil
 	 */
 	public static void registerConverters()
 	{
-		ScanResult scanResult = new ClassGraph().enableClassInfo().scan();
+		try ( ScanResult scanResult = new ClassGraph().enableClassInfo().scan() ) {
+			ClassInfoList converters = scanResult.getClassesImplementing( Converter.class.getName() );
 
-		ClassInfoList converters = scanResult.getClassesImplementing( Converter.class.getName() );
+			converters.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
+				if ( converterClass.isAnnotationPresent( BeanConverter.class ) ) {
+					Converter converter = ConstructorUtils.invokeConstructor( converterClass );
+					Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
 
-		converters.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
-			if ( converterClass.isAnnotationPresent( BeanConverter.class ) ) {
-				Converter converter = ConstructorUtils.invokeConstructor( converterClass );
-				Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
-
-				ConvertUtils.register( converter, targetClass );
-			}
-		} ) );
+					ConvertUtils.register( converter, targetClass );
+				}
+			} ) );
+		}
 	}
 }
