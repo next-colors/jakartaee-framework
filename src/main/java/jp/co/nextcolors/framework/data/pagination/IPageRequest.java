@@ -70,7 +70,7 @@ public interface IPageRequest
 	/**
 	 * 前のページのページ付けができるかどうかを判定します。
 	 *
-	 * @return 前のページのページ付けができる場合は {@code true}、そうでない場合は {@code false}
+	 * @return 前のページのページ付けができる場合は {@code true}、そうではない場合は {@code false}
 	 */
 	boolean hasPrevious();
 }

@@ -88,7 +88,7 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 * 			列挙型の型を表すクラス
 	 * @param code
 	 * 			コード
-	 * @return 指定したコードを持つ指定した列挙型の列挙型定数が存在する場合は {@code true}、そうでない場合は {@code false}
+	 * @return 指定したコードを持つ指定した列挙型の列挙型定数が存在する場合は {@code true}、そうではない場合は {@code false}
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> boolean isValidCode( @NonNull final Class<T> enumClass, final V code )
 	{

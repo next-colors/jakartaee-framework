@@ -75,35 +75,35 @@ public interface IPage<T>
 	/**
 	 * ページに要素が含まれているかどうかを判定します。
 	 *
-	 * @return ページに要素が含まれている場合は {@code true}、そうでない場合は {@code false}
+	 * @return ページに要素が含まれている場合は {@code true}、そうではない場合は {@code false}
 	 */
 	boolean hasElements();
 
 	/**
 	 * 最初のページであるかどうかを判定します。
 	 *
-	 * @return 最初のページである場合は {@code true}、そうでない場合は {@code false}
+	 * @return 最初のページである場合は {@code true}、そうではない場合は {@code false}
 	 */
 	boolean isFirst();
 
 	/**
 	 * 最後のページであるかどうかを判定します。
 	 *
-	 * @return 最後のページである場合は {@code true}、そうでない場合は {@code false}
+	 * @return 最後のページである場合は {@code true}、そうではない場合は {@code false}
 	 */
 	boolean isLast();
 
 	/**
 	 * 前のページが存在するかどうかを判定します。
 	 *
-	 * @return 前のページが存在する場合は {@code true}、そうでない場合は {@code false}
+	 * @return 前のページが存在する場合は {@code true}、そうではない場合は {@code false}
 	 */
 	boolean hasPrevious();
 
 	/**
 	 * 次のページが存在するかどうかを判定します。
 	 *
-	 * @return 次のページが存在する場合は {@code true}、そうでない場合は {@code false}
+	 * @return 次のページが存在する場合は {@code true}、そうではない場合は {@code false}
 	 */
 	boolean hasNext();
 
