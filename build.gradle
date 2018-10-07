@@ -140,6 +140,10 @@ task delombok( type: DelombokTask ) {
             }
         }
     }
+
+    doFirst {
+        outputDir.deleteDir();
+    }
 }
 
 // Lombok による変換後のソースコードを生成する際のヘルプを表示するためのタスク
