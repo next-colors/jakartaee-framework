@@ -29,7 +29,9 @@ plugins {
 //    Import Classes
 //-----------------------------------------------------------------------------
 import java.nio.charset.StandardCharsets;
+import org.gradle.plugins.ide.eclipse.model.ClasspathEntry;
 import org.gradle.plugins.ide.eclipse.model.Facet.FacetType;
+import org.gradle.plugins.ide.eclipse.model.Library;
 import io.franzbecker.gradle.lombok.task.DelombokTask;
 
 //-----------------------------------------------------------------------------
@@ -201,6 +203,28 @@ jacoco {
 
 // Eclipse プロジェクトのタスク
 eclipse {
+    // .classpath の設定
+    classpath {
+        file {
+            whenMerged {
+                // ライブラリ
+                Collection<ClasspathEntry> libraries = it.entries.findAll {
+                    it instanceof Library;
+                }
+
+                // ライブラリ以外
+                Collection<ClasspathEntry> others = it.entries - libraries;
+
+                // ファイル名でソート
+                libraries.sort {
+                    file( it.path ).name;
+                }
+
+                it.entries = others + libraries;
+            }
+        }
+    }
+
     // WTP（Web Tools Platform）の設定
     wtp {
         // プロジェクト・ファセットの設定
