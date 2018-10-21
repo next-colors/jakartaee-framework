@@ -18,7 +18,7 @@ package jp.co.nextcolors.framework.jsf.converter;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -142,10 +142,8 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 	@Override
 	public String getAsString( @NonNull final FacesContext context, @NonNull final UIComponent component, final E value )
 	{
-		if ( Objects.isNull( value ) ) {
-			return StringUtils.EMPTY;
-		}
-
-		return value.getCode().toString();
+		return Optional.ofNullable( value )
+						.map( val -> val.getCode().toString() )
+						.orElse( StringUtils.EMPTY );
 	}
 }
