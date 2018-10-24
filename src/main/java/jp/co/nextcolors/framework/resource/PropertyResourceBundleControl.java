@@ -35,7 +35,7 @@ public class PropertyResourceBundleControl extends ResourceBundleControl
 	//-------------------------------------------------------------------------
 	/**
 	 * @param timeToLive
-	 * 			キャッシュ期間
+	 *         キャッシュ期間
 	 */
 	public PropertyResourceBundleControl( final long timeToLive )
 	{

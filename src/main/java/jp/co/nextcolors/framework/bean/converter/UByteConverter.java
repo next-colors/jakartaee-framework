@@ -53,7 +53,7 @@ public class UByteConverter extends UnsignedNumberConverter<UByte, Byte>
 	//-------------------------------------------------------------------------
 	/**
 	 * @param defaultValue
-	 * 			デフォルト値
+	 *         デフォルト値
 	 */
 	public UByteConverter( final UByte defaultValue )
 	{

@@ -49,7 +49,7 @@ import jp.co.nextcolors.framework.jdbc.record.mapper.BeanRecordMapper;
  *
  * @author hamana
  * @param <T>
- * 			ページに含まれるレコードの型です。
+ *         ページに含まれるレコードの型です。
  */
 @AllArgsConstructor
 @ToString

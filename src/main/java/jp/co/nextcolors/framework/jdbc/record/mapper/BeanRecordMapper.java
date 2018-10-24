@@ -42,9 +42,9 @@ import lombok.ToString;
  *
  * @author hamana
  * @param <R>
- * 			レコードの型です。
+ *         レコードの型です。
  * @param <B>
- * 			変換する Bean（JavaBeans）の型です。
+ *         変換する Bean（JavaBeans）の型です。
  */
 @AllArgsConstructor
 @ToString

@@ -38,7 +38,7 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <JT>
- * 			日付/時間の型です。
+ *         日付/時間の型です。
  */
 @Setter
 @ToString(callSuper = true)
@@ -71,7 +71,7 @@ public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractCon
 	 * 日付/時間を取得します。
 	 *
 	 * @param offsetDateTime
-	 * 			UTC/グリニッジからのオフセット付きの日時
+	 *         UTC/グリニッジからのオフセット付きの日時
 	 * @return 日付/時間
 	 */
 	protected abstract JT getDateTime( OffsetDateTime offsetDateTime );

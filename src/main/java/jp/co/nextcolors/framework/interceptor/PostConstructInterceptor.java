@@ -41,10 +41,10 @@ public abstract class PostConstructInterceptor implements IInterceptor
 	 * インターセプトした {@link PostConstruct} ライフサイクルイベントに対して割り込み処理を行います。
 	 *
 	 * @param context
-	 * 			インターセプトした {@link PostConstruct} ライフサイクルイベントに関するコンテキスト
+	 *         インターセプトした {@link PostConstruct} ライフサイクルイベントに関するコンテキスト
 	 * @return 割り込み処理を実行した結果
 	 * @throws Exception
-	 * 			割り込み処理の実行中にエラーが発生した場合
+	 *         割り込み処理の実行中にエラーが発生した場合
 	 */
 	protected abstract Object invokeInternal( InvocationContext context ) throws Exception;
 
