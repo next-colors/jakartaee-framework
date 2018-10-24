@@ -28,6 +28,7 @@ import org.apache.commons.beanutils.converters.AbstractConverter;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
 
 import jp.co.nextcolors.framework.util.GenericUtil;
@@ -39,6 +40,7 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  * @param <JT>
  * 			日付/時間の型です。
  */
+@Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractConverter
@@ -51,6 +53,16 @@ public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractCon
 	 *
 	 */
 	private final Class<JT> javaTimeClass;
+
+	//-------------------------------------------------------------------------
+	//    Protected Properties
+	//-------------------------------------------------------------------------
+	/**
+	 * タイムゾーン ID です。
+	 *
+	 */
+	@NonNull
+	protected ZoneId zone = ZoneId.systemDefault();
 
 	//-------------------------------------------------------------------------
 	//    Protected Methods
@@ -92,7 +104,7 @@ public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractCon
 	{
 		Date date = Date.class.cast( ConvertUtils.convert( value, Date.class ) );
 
-		OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant( date.toInstant(), ZoneId.systemDefault() );
+		OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant( date.toInstant(), zone );
 
 		return type.cast( getDateTime( offsetDateTime ) );
 	}

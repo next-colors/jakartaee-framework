@@ -42,6 +42,7 @@ import com.google.common.collect.Sets;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.ToString;
 
 import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
@@ -51,6 +52,7 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  *
  * @author hamana
  */
+@Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Date.class)
@@ -98,6 +100,16 @@ public class DateConverter extends DateTimeConverter
 	private static final String[] DATE_TIME_SEPARATORS = { StringUtils.EMPTY, StringUtils.SPACE, "'T'" };
 
 	//-------------------------------------------------------------------------
+	//    Private Properties
+	//-------------------------------------------------------------------------
+	/**
+	 * タイムゾーン ID です。
+	 *
+	 */
+	@NonNull
+	private ZoneId zone = ZoneId.systemDefault();
+
+	//-------------------------------------------------------------------------
 	//    Private Methods
 	//-------------------------------------------------------------------------
 	/**
@@ -118,20 +130,20 @@ public class DateConverter extends DateTimeConverter
 		if ( LocalDate.class.isInstance( value ) ) {
 			LocalDate localDate = LocalDate.class.cast( value );
 
-			return Date.from( localDate.atStartOfDay( ZoneId.systemDefault() ).toInstant() );
+			return Date.from( localDate.atStartOfDay( zone ).toInstant() );
 		}
 
 		if ( LocalDateTime.class.isInstance( value ) ) {
 			LocalDateTime localDateTime = LocalDateTime.class.cast( value );
 
-			return Date.from( localDateTime.atZone( ZoneId.systemDefault() ).toInstant() );
+			return Date.from( localDateTime.atZone( zone ).toInstant() );
 		}
 
 		if ( LocalTime.class.isInstance( value ) ) {
 			LocalTime localTime = LocalTime.class.cast( value );
-			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
+			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, zone ).toLocalDate();
 
-			return Date.from( localDate.atTime( localTime ).atZone( ZoneId.systemDefault() ).toInstant() );
+			return Date.from( localDate.atTime( localTime ).atZone( zone ).toInstant() );
 		}
 
 		if ( OffsetDateTime.class.isInstance( value ) ) {
@@ -142,7 +154,7 @@ public class DateConverter extends DateTimeConverter
 
 		if ( OffsetTime.class.isInstance( value ) ) {
 			OffsetTime offsetTime = OffsetTime.class.cast( value );
-			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, ZoneId.systemDefault() ).toLocalDate();
+			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, zone ).toLocalDate();
 
 			return Date.from( localDate.atTime( offsetTime ).toInstant() );
 		}
