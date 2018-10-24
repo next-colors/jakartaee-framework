@@ -111,7 +111,7 @@ public class DateConverter extends DateTimeConverter
 	 */
 	private Date toDate( @NonNull final Temporal value )
 	{
-		ZoneId zone = Optional.ofNullable( getTimeZone() ).map( TimeZone::toZoneId ).orElse( ZoneId.systemDefault() );
+		ZoneId zone = Optional.ofNullable( getTimeZone() ).map( TimeZone::toZoneId ).orElseGet( ZoneId::systemDefault );
 
 		if ( Instant.class.isInstance( value ) ) {
 			Instant instant = Instant.class.cast( value );
