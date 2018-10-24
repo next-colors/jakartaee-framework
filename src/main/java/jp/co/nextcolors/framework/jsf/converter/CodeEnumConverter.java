@@ -142,8 +142,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 	@Override
 	public String getAsString( @NonNull final FacesContext context, @NonNull final UIComponent component, final E value )
 	{
-		return Optional.ofNullable( value )
-						.map( val -> val.getCode().toString() )
-						.orElse( StringUtils.EMPTY );
+		return Optional.ofNullable( value ).map( val -> val.getCode().toString() ).orElse( StringUtils.EMPTY );
 	}
 }
