@@ -28,7 +28,9 @@ import java.time.temporal.Temporal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.IntStream;
 
 import org.apache.commons.beanutils.ConversionException;
@@ -42,7 +44,6 @@ import com.google.common.collect.Sets;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import lombok.Setter;
 import lombok.ToString;
 
 import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
@@ -52,7 +53,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  *
  * @author hamana
  */
-@Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Date.class)
@@ -100,16 +100,6 @@ public class DateConverter extends DateTimeConverter
 	private static final String[] DATE_TIME_SEPARATORS = { StringUtils.EMPTY, StringUtils.SPACE, "'T'" };
 
 	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * タイムゾーン ID です。
-	 *
-	 */
-	@NonNull
-	private ZoneId zone = ZoneId.systemDefault();
-
-	//-------------------------------------------------------------------------
 	//    Private Methods
 	//-------------------------------------------------------------------------
 	/**
@@ -121,6 +111,8 @@ public class DateConverter extends DateTimeConverter
 	 */
 	private Date toDate( @NonNull final Temporal value )
 	{
+		ZoneId zone = Optional.ofNullable( getTimeZone() ).map( TimeZone::toZoneId ).orElse( ZoneId.systemDefault() );
+
 		if ( Instant.class.isInstance( value ) ) {
 			Instant instant = Instant.class.cast( value );
 
