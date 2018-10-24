@@ -34,9 +34,9 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <U>
- *          符号なし整数の型です。
+ * 			符号なし整数の型です。
  * @param <S>
- *          符号あり整数の型です。
+ * 			符号あり整数の型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -64,10 +64,10 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
 	 * 符号なし整数を取得します。
 	 *
 	 * @param signedValue
-	 *          符号あり整数
+	 * 			符号あり整数
 	 * @return 符号なし整数
 	 * @throws NumberFormatException
-	 *          符号あり整数が符号なし整数に変換できない場合
+	 * 			符号あり整数が符号なし整数に変換できない場合
 	 */
 	protected abstract U getUnsignedValue( S signedValue ) throws NumberFormatException;
 
@@ -93,7 +93,7 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
 
 	/**
 	 * @param defaultValue
-	 *          デフォルト値
+	 * 			デフォルト値
 	 */
 	protected UnsignedNumberConverter( final U defaultValue )
 	{

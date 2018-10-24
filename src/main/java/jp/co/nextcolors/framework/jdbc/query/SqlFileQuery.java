@@ -49,7 +49,7 @@ import lombok.ToString;
  *
  * @author hamana
  * @param <S>
- *          {@link ISqlFileQuery} のサブタイプです。
+ * 			{@link ISqlFileQuery} のサブタイプです。
  */
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
@@ -84,11 +84,11 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	//-------------------------------------------------------------------------
 	/**
 	 * @param dslContext
-	 *          DSL コンテキスト
+	 * 			DSL コンテキスト
 	 * @param sqlFile
-	 *          SQL ファイル
+	 * 			SQL ファイル
 	 * @param params
-	 *          パラメータ
+	 * 			パラメータ
 	 */
 	protected SqlFileQuery( @NonNull final DSLContext dslContext,
 							@NonNull final File sqlFile,

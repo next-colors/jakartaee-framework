@@ -34,9 +34,9 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <E>
- *          列挙型の型です。
+ * 			列挙型の型です。
  * @param <C>
- *          列挙型のコードの型です。
+ * 			列挙型のコードの型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)

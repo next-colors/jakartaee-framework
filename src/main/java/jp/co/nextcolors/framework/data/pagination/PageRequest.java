@@ -49,9 +49,9 @@ public class PageRequest implements IPageRequest
 	//-------------------------------------------------------------------------
 	/**
 	 * @param pageNumber
-	 *          ページ番号
+	 * 			ページ番号
 	 * @param pageSize
-	 *          ページに含める要素の最大数
+	 * 			ページに含める要素の最大数
 	 */
 	public PageRequest( final int pageNumber, final int pageSize )
 	{

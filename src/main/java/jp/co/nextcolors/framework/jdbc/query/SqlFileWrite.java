@@ -41,9 +41,9 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
 	//-------------------------------------------------------------------------
 	/**
 	 * @param dslContext
-	 *          DSL コンテキスト
+	 * 			DSL コンテキスト
 	 * @param sqlFile
-	 *          SQL ファイル
+	 * 			SQL ファイル
 	 */
 	public SqlFileWrite( @NonNull final DSLContext dslContext, @NonNull final File sqlFile )
 	{
@@ -52,11 +52,11 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
 
 	/**
 	 * @param dslContext
-	 *          DSL コンテキスト
+	 * 			DSL コンテキスト
 	 * @param sqlFile
-	 *          SQL ファイル
+	 * 			SQL ファイル
 	 * @param params
-	 *          パラメータ
+	 * 			パラメータ
 	 */
 	public SqlFileWrite( @NonNull final DSLContext dslContext,
 							@NonNull final File sqlFile,

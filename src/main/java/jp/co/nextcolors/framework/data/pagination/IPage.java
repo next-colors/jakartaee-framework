@@ -23,7 +23,7 @@ import java.util.function.Function;
  *
  * @author hamana
  * @param <T>
- *          ページに含まれる要素の型です。
+ * 			ページに含まれる要素の型です。
  */
 public interface IPage<T>
 {
@@ -132,9 +132,9 @@ public interface IPage<T>
 	 * ページに含まれる要素に指定された関数を適用した結果から構成されるページを取得します。
 	 *
 	 * @param <R>
-	 *          ページに含まれる要素に指定された関数を適用した結果の型
+	 * 			ページに含まれる要素に指定された関数を適用した結果の型
 	 * @param mapper
-	 *          ページに含まれる要素に適用する関数
+	 * 			ページに含まれる要素に適用する関数
 	 * @return ページに含まれる要素に指定された関数を適用した結果から構成されるページ
 	 */
 	<R> IPage<R> map( Function<? super T, ? extends R> mapper );

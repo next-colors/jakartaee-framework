@@ -53,7 +53,7 @@ public class UShortConverter extends UnsignedNumberConverter<UShort, Short>
 	//-------------------------------------------------------------------------
 	/**
 	 * @param defaultValue
-	 *          デフォルト値
+	 * 			デフォルト値
 	 */
 	public UShortConverter( final UShort defaultValue )
 	{

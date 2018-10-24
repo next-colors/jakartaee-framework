@@ -81,7 +81,7 @@ public class Sort implements Serializable
 		 * ソート順を生成します。
 		 *
 		 * @param name
-		 *          プロパティ名/カラム名
+		 * 			プロパティ名/カラム名
 		 * @return ソート順
 		 */
 		public static Order by( @NonNull final String name )
@@ -123,7 +123,7 @@ public class Sort implements Serializable
 	 * ソートを生成します。
 	 *
 	 * @param orders
-	 *          ソート順
+	 * 			ソート順
 	 * @return ソート
 	 */
 	public static Sort by( @NonNull final Order... orders )
@@ -135,7 +135,7 @@ public class Sort implements Serializable
 	 * ソートを結合します。
 	 *
 	 * @param sort
-	 *          結合するソート
+	 * 			結合するソート
 	 * @return 結合したソート
 	 */
 	public Sort and( @NonNull final Sort sort )

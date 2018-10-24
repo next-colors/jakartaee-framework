@@ -44,9 +44,9 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <E>
- *          列挙型の型です。
+ * 			列挙型の型です。
  * @param <C>
- *          列挙型のコードの型です。
+ * 			列挙型のコードの型です。
  */
 @ToString
 @EqualsAndHashCode
@@ -74,11 +74,11 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 	 * 変換に失敗した場合のメッセージを取得します。
 	 *
 	 * @param context
-	 *          Faces コンテキスト
+	 * 			Faces コンテキスト
 	 * @param component
-	 *          UI コンポーネント
+	 * 			UI コンポーネント
 	 * @param value
-	 *          変換対象の値
+	 * 			変換対象の値
 	 * @return 変換に失敗した場合のメッセージ
 	 */
 	private FacesMessage getConversionErrorMessage( @NonNull final FacesContext context,

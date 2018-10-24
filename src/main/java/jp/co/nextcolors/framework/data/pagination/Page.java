@@ -35,7 +35,7 @@ import lombok.ToString;
  *
  * @author hamana
  * @param <T>
- *          ページに含まれる要素の型です。
+ * 			ページに含まれる要素の型です。
  */
 @Getter
 @ToString
@@ -68,11 +68,11 @@ public class Page<T> implements IPage<T>
 	//-------------------------------------------------------------------------
 	/**
 	 * @param pageRequest
-	 *          ページ付けの情報
+	 * 			ページ付けの情報
 	 * @param elements
-	 *          ページに含まれる要素
+	 * 			ページに含まれる要素
 	 * @param totalElements
-	 *          要素の総数
+	 * 			要素の総数
 	 */
 	public Page( @NonNull final IPageRequest pageRequest, @NonNull final List<T> elements, final int totalElements )
 	{
