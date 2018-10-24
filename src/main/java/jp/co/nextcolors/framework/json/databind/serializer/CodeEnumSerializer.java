@@ -38,9 +38,9 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  *
  * @author hamana
  * @param <T>
- * 			列挙型の型です。
+ *          列挙型の型です。
  * @param <C>
- * 			列挙型のコードの型です。
+ *          列挙型のコードの型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -52,7 +52,7 @@ public abstract class CodeEnumSerializer<T extends Enum<T> & ICodeEnum<T, C>, C>
 	//-------------------------------------------------------------------------
 	/**
 	 * @param enumClass
-	 * 			列挙型の型を表すクラス
+	 *          列挙型の型を表すクラス
 	 */
 	protected CodeEnumSerializer( @NonNull final Class<T> enumClass )
 	{

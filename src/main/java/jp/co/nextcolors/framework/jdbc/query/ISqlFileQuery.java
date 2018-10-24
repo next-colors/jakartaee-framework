@@ -24,7 +24,7 @@ import org.jooq.Query;
  *
  * @author hamana
  * @param <S>
- * 			{@link ISqlFileQuery} のサブタイプです。
+ *          {@link ISqlFileQuery} のサブタイプです。
  */
 public interface ISqlFileQuery<S extends ISqlFileQuery<S>>
 {
@@ -35,9 +35,9 @@ public interface ISqlFileQuery<S extends ISqlFileQuery<S>>
 	 * パラメータを追加します。
 	 *
 	 * @param name
-	 * 			パラメータ名
+	 *          パラメータ名
 	 * @param value
-	 * 			パラメータ値
+	 *          パラメータ値
 	 * @return このインスタンス自身
 	 */
 	S addParameter( String name, Object value );
@@ -46,7 +46,7 @@ public interface ISqlFileQuery<S extends ISqlFileQuery<S>>
 	 * パラメータを追加します。
 	 *
 	 * @param params
-	 * 			パラメータ
+	 *          パラメータ
 	 * @return このインスタンス自身
 	 */
 	S addParameters( Map<String, Object> params );
@@ -55,7 +55,7 @@ public interface ISqlFileQuery<S extends ISqlFileQuery<S>>
 	 * パラメータを設定します。
 	 *
 	 * @param params
-	 * 			パラメータ
+	 *          パラメータ
 	 * @return このインスタンス自身
 	 */
 	S setParameters( Map<String, Object> params );

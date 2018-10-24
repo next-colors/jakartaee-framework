@@ -35,9 +35,9 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <T>
- * 			列挙型の型です。
+ *          列挙型の型です。
  * @param <V>
- * 			列挙型のコードの型です。
+ *          列挙型のコードの型です。
  */
 public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 {
@@ -49,16 +49,16 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 * 指定したコードが {@code null} の場合は、{@code null} を返します。
 	 *
 	 * @param <T>
-	 * 			列挙型の型
+	 *          列挙型の型
 	 * @param <V>
-	 * 			列挙型のコードの型
+	 *          列挙型のコードの型
 	 * @param enumClass
-	 * 			列挙型の型を表すクラス
+	 *          列挙型の型を表すクラス
 	 * @param code
-	 * 			コード
+	 *          コード
 	 * @return 列挙型定数
 	 * @throws IllegalArgumentException
-	 * 			指定した列挙型に指定したコードの列挙型定数がない場合
+	 *          指定した列挙型に指定したコードの列挙型定数がない場合
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> T codeOf( @NonNull final Class<T> enumClass, final V code )
 														throws IllegalArgumentException
@@ -80,13 +80,13 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 * 指定したコードを持つ指定した列挙型の列挙型定数が存在するかどうかを判定します。
 	 *
 	 * @param <T>
-	 * 			列挙型の型
+	 *          列挙型の型
 	 * @param <V>
-	 * 			列挙型のコードの型
+	 *          列挙型のコードの型
 	 * @param enumClass
-	 * 			列挙型の型を表すクラス
+	 *          列挙型の型を表すクラス
 	 * @param code
-	 * 			コード
+	 *          コード
 	 * @return 指定したコードを持つ指定した列挙型の列挙型定数が存在する場合は {@code true}、そうではない場合は {@code false}
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> boolean isValidCode( @NonNull final Class<T> enumClass, final V code )
@@ -98,11 +98,11 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 * すべてのコードを返します。
 	 *
 	 * @param <T>
-	 * 			列挙型の型
+	 *          列挙型の型
 	 * @param <V>
-	 * 			列挙型のコードの型
+	 *          列挙型のコードの型
 	 * @param enumClass
-	 * 			列挙型の型を表すクラス
+	 *          列挙型の型を表すクラス
 	 * @return すべてのコード
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> Set<V> codes( @NonNull final Class<T> enumClass )
@@ -114,11 +114,11 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 * 列挙型のコードの型を表すクラスを返します。
 	 *
 	 * @param <T>
-	 * 			列挙型の型
+	 *          列挙型の型
 	 * @param <V>
-	 * 			列挙型のコードの型
+	 *          列挙型のコードの型
 	 * @param enumClass
-	 * 			列挙型の型を表すクラス
+	 *          列挙型の型を表すクラス
 	 * @return 列挙型のコードの型を表すクラス
 	 */
 	@SuppressWarnings("unchecked")

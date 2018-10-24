@@ -39,7 +39,7 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <E>
- * 			列挙型の型です。
+ *          列挙型の型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -61,10 +61,10 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
 	 * 指定した序数の列挙型定数に変換します。
 	 *
 	 * @param ordinal
-	 * 			序数
+	 *          序数
 	 * @return 列挙型定数
 	 * @throws ConversionException
-	 * 			指定した序数の列挙型定数がない場合
+	 *          指定した序数の列挙型定数がない場合
 	 */
 	private E convert( final int ordinal )
 	{
@@ -81,10 +81,10 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
 	 * 指定した名前の列挙型定数に変換します。
 	 *
 	 * @param name
-	 * 			名前
+	 *          名前
 	 * @return 列挙型定数
 	 * @throws ConversionException
-	 * 			指定した名前の列挙型定数がない場合
+	 *          指定した名前の列挙型定数がない場合
 	 */
 	private E convert( @NonNull final String name )
 	{

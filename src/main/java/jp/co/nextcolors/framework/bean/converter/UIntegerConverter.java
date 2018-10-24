@@ -53,7 +53,7 @@ public class UIntegerConverter extends UnsignedNumberConverter<UInteger, Integer
 	//-------------------------------------------------------------------------
 	/**
 	 * @param defaultValue
-	 * 			デフォルト値
+	 *          デフォルト値
 	 */
 	public UIntegerConverter( final UInteger defaultValue )
 	{

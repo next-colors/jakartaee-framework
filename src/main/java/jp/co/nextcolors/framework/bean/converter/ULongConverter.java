@@ -55,7 +55,7 @@ public class ULongConverter extends UnsignedNumberConverter<ULong, Long>
 	//-------------------------------------------------------------------------
 	/**
 	 * @param defaultValue
-	 * 			デフォルト値
+	 *          デフォルト値
 	 */
 	public ULongConverter( final ULong defaultValue )
 	{

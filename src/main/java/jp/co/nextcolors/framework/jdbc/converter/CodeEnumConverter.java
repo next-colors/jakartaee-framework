@@ -34,11 +34,11 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  *
  * @author hamana
  * @param <E>
- * 			列挙型の型です。
+ *          列挙型の型です。
  * @param <C>
- * 			列挙型のコードの型です。
+ *          列挙型のコードの型です。
  * @param <D>
- * 			DB のデータ型に準拠した型です。
+ *          DB のデータ型に準拠した型です。
  */
 @ToString
 @EqualsAndHashCode
