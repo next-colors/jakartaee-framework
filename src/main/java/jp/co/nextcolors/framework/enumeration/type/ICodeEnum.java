@@ -68,12 +68,12 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 		}
 
 		return Arrays.stream( enumClass.getEnumConstants() )
-					.filter( constant -> Objects.equals( constant.getCode(), code ) )
-					.findFirst()
-					.orElseThrow( () ->
-						new IllegalArgumentException( String.format( "%s のコード %s に %s は含まれていません。",
-																		enumClass.getName(), codes( enumClass ), code ) )
-					);
+						.filter( constant -> Objects.equals( constant.getCode(), code ) )
+						.findFirst()
+						.orElseThrow( () ->
+							new IllegalArgumentException( String.format( "%s のコード %s に %s は含まれていません。",
+																			enumClass.getName(), codes( enumClass ), code ) )
+						);
 	}
 
 	/**
