@@ -132,7 +132,7 @@ tasks.register( 'delombok', DelombokTask ) {
 
     classpath += compileJava.classpath
 
-    ext.outputDir = file( "${buildDir}/${delombok.name}" )
+    ext.outputDir = file( "${buildDir}/${name}" )
 
     sourceSets.all {
         if ( it.name != SourceSet.TEST_SOURCE_SET_NAME ) {
