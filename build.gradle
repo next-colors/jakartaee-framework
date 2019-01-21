@@ -195,11 +195,6 @@ javadoc {
     }
 }
 
-// JaCoCo（Java Code Coverage Library）のタスク
-jacoco {
-    toolVersion = getProperty( 'jacoco.version' )
-}
-
 // Eclipse プロジェクトのタスク
 eclipse {
     // .classpath の設定
