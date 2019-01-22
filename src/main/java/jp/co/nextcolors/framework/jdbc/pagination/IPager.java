@@ -15,7 +15,7 @@
  */
 package jp.co.nextcolors.framework.jdbc.pagination;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
 
@@ -80,22 +80,22 @@ public interface IPager<T>
 	 *
 	 * @param pageRequest
 	 *         ページ付けの情報
-	 * @param sqlFile
-	 *         SQL ファイル
+	 * @param sqlFilePath
+	 *         SQL ファイルのパス
 	 * @return 検索結果
 	 */
-	IPage<T> fetchPageBySqlFile( IPageRequest pageRequest, File sqlFile );
+	IPage<T> fetchPageBySqlFile( IPageRequest pageRequest, Path sqlFilePath );
 
 	/**
 	 * SQL ファイルを使用してレコードをページング検索します。
 	 *
 	 * @param pageRequest
 	 *         ページ付けの情報
-	 * @param sqlFile
-	 *         SQL ファイル
+	 * @param sqlFilePath
+	 *         SQL ファイルのパス
 	 * @param params
 	 *         パラメータ
 	 * @return 検索結果
 	 */
-	IPage<T> fetchPageBySqlFile( IPageRequest pageRequest, File sqlFile, Map<String, Object> params );
+	IPage<T> fetchPageBySqlFile( IPageRequest pageRequest, Path sqlFilePath, Map<String, Object> params );
 }

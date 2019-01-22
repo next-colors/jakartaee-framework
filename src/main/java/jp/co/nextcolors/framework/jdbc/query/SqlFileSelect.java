@@ -15,7 +15,7 @@
  */
 package jp.co.nextcolors.framework.jdbc.query;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Map;
 
 import org.jooq.DSLContext;
@@ -44,27 +44,27 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
 	/**
 	 * @param dslContext
 	 *         DSL コンテキスト
-	 * @param sqlFile
-	 *         SQL ファイル
+	 * @param sqlFilePath
+	 *         SQL ファイルのパス
 	 */
-	public SqlFileSelect( @NonNull final DSLContext dslContext, @NonNull final File sqlFile )
+	public SqlFileSelect( @NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath )
 	{
-		super( dslContext, sqlFile );
+		super( dslContext, sqlFilePath );
 	}
 
 	/**
 	 * @param dslContext
 	 *         DSL コンテキスト
-	 * @param sqlFile
-	 *         SQL ファイル
+	 * @param sqlFilePath
+	 *         SQL ファイルのパス
 	 * @param params
 	 *         パラメータ
 	 */
 	public SqlFileSelect( @NonNull final DSLContext dslContext,
-							@NonNull final File sqlFile,
+							@NonNull final Path sqlFilePath,
 							@NonNull final Map<String, Object> params )
 	{
-		super( dslContext, sqlFile, params );
+		super( dslContext, sqlFilePath, params );
 	}
 
 	/**

@@ -15,9 +15,9 @@
  */
 package jp.co.nextcolors.framework.jdbc.query;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.IOUtils;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
@@ -67,11 +66,11 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	protected final DSLContext dslContext;
 
 	/**
-	 * SQL ファイルです。
+	 * SQL ファイルのパスです。
 	 *
 	 */
 	@NonNull
-	protected final File sqlFile;
+	protected final Path sqlFilePath;
 
 	/**
 	 * パラメータです。
@@ -85,16 +84,16 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	/**
 	 * @param dslContext
 	 *         DSL コンテキスト
-	 * @param sqlFile
-	 *         SQL ファイル
+	 * @param sqlFilePath
+	 *         SQL ファイルのパス
 	 * @param params
 	 *         パラメータ
 	 */
 	protected SqlFileQuery( @NonNull final DSLContext dslContext,
-							@NonNull final File sqlFile,
+							@NonNull final Path sqlFilePath,
 							@NonNull final Map<String, Object> params )
 	{
-		this( dslContext, sqlFile );
+		this( dslContext, sqlFilePath );
 		this.params.putAll( params );
 	}
 
@@ -106,7 +105,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	@SneakyThrows(IOException.class)
 	protected SqlParser createSqlParser()
 	{
-		String sql = IOUtils.toString( sqlFile.toURI(), StandardCharsets.UTF_8 );
+		String sql = String.join( System.lineSeparator(), Files.readAllLines( sqlFilePath ) );
 
 		return new SqlParserImpl( sql, new BeanDescFactory() );
 	}

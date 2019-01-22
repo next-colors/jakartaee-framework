@@ -15,7 +15,7 @@
  */
 package jp.co.nextcolors.framework.jdbc.pagination;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -115,9 +115,9 @@ public class Pager<T> implements IPager<T>
 	 *
 	 */
 	@Override
-	public IPage<T> fetchPageBySqlFile( @NonNull final IPageRequest pageRequest, @NonNull final File sqlFile )
+	public IPage<T> fetchPageBySqlFile( @NonNull final IPageRequest pageRequest, @NonNull final Path sqlFilePath )
 	{
-		return fetchPageBySqlFile( pageRequest, sqlFile, Collections.emptyMap() );
+		return fetchPageBySqlFile( pageRequest, sqlFilePath, Collections.emptyMap() );
 	}
 
 	/**
@@ -126,10 +126,10 @@ public class Pager<T> implements IPager<T>
 	 */
 	@Override
 	public IPage<T> fetchPageBySqlFile( @NonNull final IPageRequest pageRequest,
-										@NonNull final File sqlFile,
+										@NonNull final Path sqlFilePath,
 										@NonNull final Map<String, Object> params )
 	{
-		ISqlFileSelect select = new SqlFileSelect( dslContext, sqlFile, params );
+		ISqlFileSelect select = new SqlFileSelect( dslContext, sqlFilePath, params );
 
 		Query query = select.getQuery();
 
