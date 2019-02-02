@@ -17,6 +17,7 @@ package jp.co.nextcolors.framework.json.databind.deserializer;
 
 import java.io.IOException;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -82,7 +83,7 @@ public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, 
 		Class<C> enumCodeClass = ICodeEnum.getCodeClass( enumClass );
 
 		try {
-			C code = enumCodeClass.cast( _parseString( p, ctxt ) );
+			C code = enumCodeClass.cast( ConvertUtils.convert( _parseString( p, ctxt ), enumCodeClass ) );
 
 			return ICodeEnum.codeOf( enumClass, code );
 		}
