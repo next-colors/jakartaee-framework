@@ -27,6 +27,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.Temporal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -40,7 +41,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -180,7 +180,7 @@ public class DateConverter extends DateTimeConverter
 	 */
 	private Set<String> getTimeFormats()
 	{
-		Set<String> timeFormats = Sets.newHashSet();
+		Set<String> timeFormats = new HashSet<>();
 
 		Arrays.stream( TIME_SEPARATORS ).forEach( separator ->
 			IntStream.rangeClosed( 1, TIME_COMPONENTS.length ).forEach( length -> {
@@ -207,7 +207,7 @@ public class DateConverter extends DateTimeConverter
 		Set<String> dateFormats = getDateFormats();
 		Set<String> timeFormats = getTimeFormats();
 
-		Set<String> dateTimeFormats = Sets.newHashSet();
+		Set<String> dateTimeFormats = new HashSet<>();
 
 		dateFormats.forEach( dateFormat ->
 			timeFormats.forEach( timeFormat ->

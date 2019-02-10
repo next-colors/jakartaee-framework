@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,7 +29,6 @@ import java.util.stream.Collectors;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-import com.google.common.collect.Maps;
 import com.miragesql.miragesql.bean.BeanDescFactory;
 import com.miragesql.miragesql.parser.Node;
 import com.miragesql.miragesql.parser.SqlContext;
@@ -76,7 +76,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	 * パラメータです。
 	 *
 	 */
-	protected final Map<String, Object> params = Maps.newHashMap();
+	protected final Map<String, Object> params = new HashMap<>();
 
 	//-------------------------------------------------------------------------
 	//    Protected Methods
@@ -129,7 +129,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	 */
 	protected Map<String, Object> createBindParameters()
 	{
-		Map<String, Object> params = Maps.newHashMap();
+		Map<String, Object> params = new HashMap<>();
 
 		this.params.keySet().forEach( key -> {
 			Object value = this.params.get( key );

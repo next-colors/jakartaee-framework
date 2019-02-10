@@ -24,6 +24,7 @@ import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,8 +32,6 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.reflect.TypeUtils;
-
-import com.google.common.collect.Maps;
 
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -304,7 +303,7 @@ public class GenericUtil
 	 */
 	public static Map<TypeVariable<?>, Type> getTypeVariableMap( @NonNull final Class<?> clazz )
 	{
-		Map<TypeVariable<?>, Type> map = Maps.newLinkedHashMap();
+		Map<TypeVariable<?>, Type> map = new LinkedHashMap<>();
 
 		Arrays.stream( clazz.getTypeParameters() ).forEach( typeParameter ->
 			map.put( typeParameter, getActualClass( typeParameter.getBounds()[ 0 ], map ) )
