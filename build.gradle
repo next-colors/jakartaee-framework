@@ -197,12 +197,6 @@ javadoc {
 
 // Eclipse プロジェクトのタスク
 eclipse {
-    // Buildship の設定
-    file( '.settings/org.eclipse.buildship.core.prefs' ).withWriter {
-        it.println( "connection.project.dir=${projectDir.relativePath( rootDir )}" )
-        it.println( 'eclipse.preferences.version=1' )
-    }
-
     // .project の設定
     project {
         // Gradle ネーチャーを追加
@@ -258,6 +252,16 @@ eclipse {
                     }
                 }
             }
+        }
+    }
+}
+
+tasks.eclipse {
+    doFirst {
+        // Buildship の設定
+        file( '.settings/org.eclipse.buildship.core.prefs' ).withWriter {
+            it.println( "connection.project.dir=${projectDir.relativePath( rootDir )}" )
+            it.println( 'eclipse.preferences.version=1' )
         }
     }
 }
