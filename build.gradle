@@ -255,7 +255,9 @@ eclipse {
         }
     }
 }
-
+// Eclipse Plugin は eclipse という名前でタスクと拡張オブジェクトの 2 つを定義する。
+// project.eclipse で参照したオブジェクトは拡張オブジェクトの方になる。
+// タスクを参照したい場合は、 tasks.eclipse のように TaskContainer を経由する必要がある。
 tasks.eclipse {
     doFirst {
         // Buildship の設定
