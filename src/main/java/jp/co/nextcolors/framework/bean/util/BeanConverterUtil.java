@@ -47,7 +47,7 @@ public class BeanConverterUtil
 	 */
 	public static void registerConverters()
 	{
-		try ( ScanResult scanResult = new ClassGraph().enableClassInfo().scan() ) {
+		try ( ScanResult scanResult = new ClassGraph().verbose().enableClassInfo().scan() ) {
 			ClassInfoList converters = scanResult.getClassesImplementing( Converter.class.getName() );
 
 			converters.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
