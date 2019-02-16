@@ -74,7 +74,7 @@ dependencies {
         'commons-beanutils:commons-beanutils:latest.release',
         'commons-codec:commons-codec:latest.release',
         'commons-io:commons-io:latest.release',
-        'io.github.classgraph:classgraph:latest.release',
+        'io.github.classgraph:classgraph:4.6.+',
         'org.apache.commons:commons-collections4:latest.release',
         'org.apache.commons:commons-lang3:latest.release',
         'org.jooq:jool-java-8:latest.release',
