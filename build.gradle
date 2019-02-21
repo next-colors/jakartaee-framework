@@ -84,8 +84,8 @@ dependencies {
 
     // コンパイル時にのみ必要なライブラリ
     compileOnly(
-        'com.sun.faces:jsf-impl:latest.release',
-        'javax:javaee-api:latest.release'
+        'javax:javaee-api:latest.release',
+        'org.glassfish:jakarta.faces:latest.release'
     )
     // アノテーションプロセッサをパッケージから除外
     compileOnly(
