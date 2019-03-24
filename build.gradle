@@ -67,6 +67,7 @@ dependencies {
 
     // パッケージに含めるライブラリ
     api(
+        'com.fasterxml.jackson.core:jackson-annotations:latest.release',
         'com.fasterxml.jackson.core:jackson-databind:latest.release',
         'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:latest.release',
         'com.google.guava:guava:latest.release',
