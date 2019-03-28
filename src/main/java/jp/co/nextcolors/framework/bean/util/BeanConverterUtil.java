@@ -22,7 +22,6 @@ import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.jooq.lambda.Unchecked;
 
 import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 
 import lombok.experimental.UtilityClass;
@@ -48,9 +47,8 @@ public class BeanConverterUtil
 	public static void registerConverters()
 	{
 		try ( ScanResult scanResult = new ClassGraph().enableAllInfo().scan() ) {
-			ClassInfoList converters = scanResult.getClassesImplementing( Converter.class.getName() );
-
-			converters.filter( converter -> converter.hasAnnotation( BeanConverter.class.getName() ) )
+			scanResult.getClassesImplementing( Converter.class.getName() )
+						.filter( converteClassInfo -> converteClassInfo.hasAnnotation( BeanConverter.class.getName() ) )
 						.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
 				Converter converter = ConstructorUtils.invokeConstructor( converterClass );
 				Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
