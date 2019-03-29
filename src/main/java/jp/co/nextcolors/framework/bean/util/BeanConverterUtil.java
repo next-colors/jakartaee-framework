@@ -48,7 +48,7 @@ public class BeanConverterUtil
 	{
 		try ( ScanResult scanResult = new ClassGraph().enableAllInfo().scan() ) {
 			scanResult.getClassesImplementing( Converter.class.getName() )
-						.filter( converteClassInfo -> converteClassInfo.hasAnnotation( BeanConverter.class.getName() ) )
+						.filter( converterClassInfo -> converterClassInfo.hasAnnotation( BeanConverter.class.getName() ) )
 						.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
 				Converter converter = ConstructorUtils.invokeConstructor( converterClass );
 				Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
