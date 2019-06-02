@@ -105,7 +105,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	@SneakyThrows(IOException.class)
 	protected SqlParser createSqlParser()
 	{
-		String sql = Files.readString( sqlFilePath );
+		String sql = String.join( System.lineSeparator(), Files.readAllLines( sqlFilePath ) );
 
 		return new SqlParserImpl( sql, new BeanDescFactory() );
 	}

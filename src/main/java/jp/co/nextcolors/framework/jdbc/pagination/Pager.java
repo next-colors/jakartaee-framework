@@ -16,6 +16,7 @@
 package jp.co.nextcolors.framework.jdbc.pagination;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -85,7 +86,7 @@ public class Pager<T> implements IPager<T>
 															final Condition condition,
 															@NonNull final OrderField<?>... order )
 	{
-		return fetchPage( pageRequest, table, condition, List.of( order ) );
+		return fetchPage( pageRequest, table, condition, Arrays.asList( order ) );
 	}
 
 	/**

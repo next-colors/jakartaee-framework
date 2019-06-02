@@ -16,8 +16,8 @@
 package jp.co.nextcolors.framework.jdbc.query;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jooq.SortOrder;
@@ -128,7 +128,7 @@ public class Sort implements Serializable
 	 */
 	public static Sort by( @NonNull final Order... orders )
 	{
-		return by( List.of( orders ) );
+		return by( Arrays.asList( orders ) );
 	}
 
 	/**

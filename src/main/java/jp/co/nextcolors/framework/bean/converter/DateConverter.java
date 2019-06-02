@@ -32,7 +32,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.beanutils.ConversionException;
@@ -40,6 +39,8 @@ import org.apache.commons.beanutils.converters.DateTimeConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+
+import com.google.common.collect.ImmutableSet;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -169,7 +170,7 @@ public class DateConverter extends DateTimeConverter
 	{
 		return Arrays.stream( DATE_SEPARATORS )
 						.map( separator -> String.join( separator, DATE_COMPONENTS ) )
-						.collect( Collectors.toUnmodifiableSet() );
+						.collect( ImmutableSet.toImmutableSet() );
 	}
 
 	/**
@@ -193,7 +194,7 @@ public class DateConverter extends DateTimeConverter
 			} )
 		);
 
-		return Set.copyOf( timeFormats );
+		return ImmutableSet.copyOf( timeFormats );
 	}
 
 	/**

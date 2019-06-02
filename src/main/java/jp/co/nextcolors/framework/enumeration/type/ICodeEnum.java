@@ -21,9 +21,10 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.IterableUtils;
+
+import com.google.common.collect.ImmutableSet;
 
 import lombok.NonNull;
 
@@ -106,7 +107,7 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> Set<V> codes( @NonNull final Class<T> enumClass )
 	{
-		return Arrays.stream( enumClass.getEnumConstants() ).map( constant -> constant.getCode() ).collect( Collectors.toUnmodifiableSet() );
+		return Arrays.stream( enumClass.getEnumConstants() ).map( constant -> constant.getCode() ).collect( ImmutableSet.toImmutableSet() );
 	}
 
 	/**
