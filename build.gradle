@@ -41,8 +41,6 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 buildDir = getProperty( 'build.dir.output' )
 // コンパイル時の Java バージョン
 sourceCompatibility = JavaVersion.VERSION_1_8
-// クラス生成時の Java バージョン
-targetCompatibility = JavaVersion.VERSION_1_8
 // コンパイル時に使用する文字エンコーディング
 tasks.withType( AbstractCompile )*.options*.encoding = StandardCharsets.UTF_8
 
@@ -233,7 +231,7 @@ eclipse {
         facet {
             // Java
             facet( type: FacetType.fixed, name: 'java' )
-            facet( type: FacetType.installed, name: 'java', version: JavaVersion.VERSION_1_8 )
+            facet( type: FacetType.installed, name: 'java', version: sourceCompatibility )
 
             file {
                 beforeMerged {
