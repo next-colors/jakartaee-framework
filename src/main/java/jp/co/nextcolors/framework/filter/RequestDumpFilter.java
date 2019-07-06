@@ -90,7 +90,7 @@ public class RequestDumpFilter implements Filter
 		buffer.append( "*******************************************************************************" );
 		buffer.append( LF );
 
-		log.debug( buffer.toString() );
+		log.atDebug().log( buffer.toString() );
 	}
 
 	//-------------------------------------------------------------------------
