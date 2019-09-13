@@ -82,7 +82,7 @@ dependencies {
 
     // コンパイル時にのみ必要なライブラリ
     compileOnly(
-        'javax:javaee-api:latest.release',
+        'jakarta.platform:jakarta.jakartaee-api:latest.release',
         'org.glassfish:jakarta.faces:latest.release'
     )
     // アノテーションプロセッサをパッケージから除外
