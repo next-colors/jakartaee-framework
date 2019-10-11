@@ -178,7 +178,7 @@ javadoc {
             'https://commons.apache.org/proper/commons-lang/apidocs/',
             'https://docs.oracle.com/javase/jp/8/docs/api/',
             'https://google.github.io/guava/releases/28.1-jre/api/docs/',
-            'https://javaee.github.io/javaee-spec/javadocs/',
+            'https://jakarta.ee/specifications/platform/8/apidocs/',
             'https://projectlombok.org/api/',
             'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/',
             'https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-core/',
