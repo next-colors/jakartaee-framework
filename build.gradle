@@ -132,12 +132,8 @@ tasks.register( 'delombok', DelombokTask ) {
 
     ext.outputDir = file( "${buildDir}/${name}" )
 
-    sourceSets.all {
-        if ( it.name != SourceSet.TEST_SOURCE_SET_NAME ) {
-            it.allJava.srcDirs.each {
-                args( it, '-d', outputDir )
-            }
-        }
+    sourceSets.main.java.srcDirs.each {
+        args( it, '-d', outputDir )
     }
 
     doFirst {
