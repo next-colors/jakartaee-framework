@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * {@link ResourceBundleControl} の拡張クラスです。<br>
+ * {@link ResourceBundleControl} の拡張クラスです。<br />
  * *.properties ファイルからリソースを取得するための設定を行います。
  *
  * @author hamana

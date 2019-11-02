@@ -27,7 +27,7 @@ import lombok.NonNull;
 import lombok.ToString;
 
 /**
- * {@link ResourceBundle.Control} の拡張クラスです。<br>
+ * {@link ResourceBundle.Control} の拡張クラスです。<br />
  * キャッシュ期間、リソースのフォーマットを設定します。
  *
  * @author hamana
