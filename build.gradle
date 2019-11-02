@@ -40,7 +40,7 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 // ビルド出力ディレクトリ
 buildDir = getProperty( 'build.dir.output' )
 // コンパイル時の Java バージョン
-sourceCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
 // コンパイル時に使用する文字エンコーディング
 tasks.withType( AbstractCompile )*.options*.encoding = StandardCharsets.UTF_8
 
@@ -75,7 +75,7 @@ dependencies {
         'io.github.classgraph:classgraph:latest.release',
         'org.apache.commons:commons-collections4:latest.release',
         'org.apache.commons:commons-lang3:latest.release',
-        'org.jooq:jool-java-8:latest.release',
+        'org.jooq:jool:latest.release',
         'org.jooq:jooq:latest.release',
         'org.slf4j:slf4j-api:latest.release'
     )
@@ -172,7 +172,7 @@ javadoc {
             'https://commons.apache.org/proper/commons-collections/apidocs/',
             'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
             'https://commons.apache.org/proper/commons-lang/apidocs/',
-            'https://docs.oracle.com/javase/jp/8/docs/api/',
+            'https://docs.oracle.com/javase/jp/11/docs/api/',
             'https://google.github.io/guava/releases/28.1-jre/api/docs/',
             'https://jakarta.ee/specifications/platform/8/apidocs/',
             'https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/',
