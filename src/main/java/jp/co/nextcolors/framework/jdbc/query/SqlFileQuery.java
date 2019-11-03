@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -146,7 +147,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 			params.put( key, value );
 		} );
 
-		return Map.copyOf( params );
+		return Collections.unmodifiableMap( params );
 	}
 
 	/**
