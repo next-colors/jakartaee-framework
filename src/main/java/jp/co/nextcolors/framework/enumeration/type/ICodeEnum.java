@@ -23,8 +23,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.IterableUtils;
-
 import lombok.NonNull;
 
 import jp.co.nextcolors.framework.util.GenericUtil;
@@ -90,7 +88,9 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> boolean isValidCode( @NonNull final Class<T> enumClass, final V code )
 	{
-		return IterableUtils.contains( codes( enumClass ), code );
+		Set<V> codes = codes( enumClass );
+
+		return codes.contains( code );
 	}
 
 	/**
