@@ -16,7 +16,6 @@
 package jp.co.nextcolors.framework.data.pagination;
 
 import java.math.RoundingMode;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -77,7 +76,7 @@ public class Page<T> implements IPage<T>
 	public Page( @NonNull final IPageRequest pageRequest, @NonNull final List<T> elements, final int totalElements )
 	{
 		this.pageRequest = pageRequest;
-		this.elements = Collections.unmodifiableList( elements );
+		this.elements = List.copyOf( elements );
 		this.totalElements = totalElements;
 	}
 
