@@ -224,10 +224,6 @@ eclipse {
     wtp {
         // プロジェクト・ファセットの設定
         facet {
-            // Java
-            facet( type: FacetType.fixed, name: 'java' )
-            facet( type: FacetType.installed, name: 'java', version: sourceCompatibility )
-
             file {
                 beforeMerged {
                     // 既存の設定内容をクリア
