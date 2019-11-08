@@ -226,12 +226,12 @@ eclipse {
             file {
                 beforeMerged {
                     // 既存の設定内容をクリア
-                    it.facets.clear()
+                    facets.clear()
                 }
 
                 whenMerged {
                     // ファセットの種類、ファセット名でソート
-                    it.facets.sort { facet1, facet2 ->
+                    facets.sort { facet1, facet2 ->
                         if ( facet1.type == facet2.type ) {
                             facet1.name <=> facet2.name
                         }
