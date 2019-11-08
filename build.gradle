@@ -30,7 +30,6 @@ plugins {
 //-----------------------------------------------------------------------------
 import java.nio.charset.StandardCharsets
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
-import org.gradle.plugins.ide.eclipse.model.Facet.FacetType
 import org.gradle.plugins.ide.eclipse.model.Library
 import io.franzbecker.gradle.lombok.task.DelombokTask
 
