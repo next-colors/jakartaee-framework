@@ -16,6 +16,7 @@
 package jp.co.nextcolors.framework.jdbc.query;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,7 +25,6 @@ import org.jooq.SortOrder;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
 import com.miragesql.miragesql.naming.DefaultNameConverter;
 import com.miragesql.miragesql.naming.NameConverter;
 
@@ -140,11 +140,11 @@ public class Sort implements Serializable
 	 */
 	public Sort and( @NonNull final Sort sort )
 	{
-		ImmutableList.Builder<Order> builder = ImmutableList.builder();
-		builder.addAll( orders );
-		builder.addAll( sort.getOrders() );
+		List<Order> orders = new ArrayList<>();
+		orders.addAll( this.orders );
+		orders.addAll( sort.getOrders() );
 
-		return by( builder.build() );
+		return by( List.copyOf( orders ) );
 	}
 
 	/**
