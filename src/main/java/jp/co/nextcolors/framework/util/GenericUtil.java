@@ -350,13 +350,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualElementClassOfArray( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( !GenericArrayType.class.isInstance( type ) ) {
-			return null;
-		}
-
-		GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
-
-		return getActualClass( genericArrayType.getGenericComponentType(), map );
+		return getActualClass( TypeUtils.getArrayComponentType( type ), map );
 	}
 
 	/**
