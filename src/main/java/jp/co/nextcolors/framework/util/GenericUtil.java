@@ -30,6 +30,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.reflect.TypeUtils;
 
 import lombok.NonNull;
@@ -107,8 +108,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * 型の型引数の配列を返します。<br>
-	 * 型がパラメータ化された型ではない場合は {@code null} を返します。
+	 * 型の型引数の配列を返します。
 	 *
 	 * @param type
 	 *         型
@@ -123,12 +123,10 @@ public class GenericUtil
 		}
 
 		if ( GenericArrayType.class.isInstance( type ) ) {
-			GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
-
-			return getGenericParameters( genericArrayType.getGenericComponentType() );
+			return getGenericParameters( getElementTypeOfArray( type ) );
 		}
 
-		return null;
+		return ArrayUtils.toArray();
 	}
 
 	/**
@@ -147,13 +145,13 @@ public class GenericUtil
 			return null;
 		}
 
-		Type[] genericParameter = getGenericParameters( type );
+		Type[] genericParameters = getGenericParameters( type );
 
-		if ( Objects.isNull( genericParameter ) ) {
+		if ( !ArrayUtils.isArrayIndexValid( genericParameters, index ) ) {
 			return null;
 		}
 
-		return genericParameter[ index ];
+		return genericParameters[ index ];
 	}
 
 	/**
@@ -320,9 +318,7 @@ public class GenericUtil
 		}
 
 		if ( GenericArrayType.class.isInstance( type ) ) {
-			GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
-
-			Class<?> componentClass = getActualClass( genericArrayType.getGenericComponentType(), map );
+			Class<?> componentClass = getActualClass( getElementTypeOfArray( type ), map );
 
 			return Array.newInstance( componentClass, 0 ).getClass();
 		}
@@ -350,7 +346,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualElementClassOfArray( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		return getActualClass( TypeUtils.getArrayComponentType( type ), map );
+		return getActualClass( getElementTypeOfArray( type ), map );
 	}
 
 	/**
