@@ -39,7 +39,6 @@ public class ICodeEnumTest
 	public enum Foo implements ICodeEnum<Foo, Integer>
 	{
 		BAR( 0 ),
-
 		BAZ( 1 );
 
 		@Getter
