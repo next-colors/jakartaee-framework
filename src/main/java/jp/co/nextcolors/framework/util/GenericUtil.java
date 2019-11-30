@@ -17,7 +17,6 @@ package jp.co.nextcolors.framework.util;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -58,15 +57,7 @@ public class GenericUtil
 	private static void gatherTypeVariables( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
 		if ( ParameterizedType.class.isInstance( type ) ) {
-			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
-			GenericDeclaration genericDeclaration = GenericDeclaration.class.cast( parameterizedType.getRawType() );
-
-			TypeVariable<?>[] typeVariables = genericDeclaration.getTypeParameters();
-			Type[] actualTypes = parameterizedType.getActualTypeArguments();
-
-			IntStream.range( 0, actualTypes.length ).forEach( i ->
-				map.put( typeVariables[ i ], actualTypes[ i ] )
-			);
+			map.putAll( TypeUtils.getTypeArguments( ParameterizedType.class.cast( type ) ) );
 		}
 	}
 
@@ -112,32 +103,7 @@ public class GenericUtil
 	 */
 	public static Class<?> getRawClass( @NonNull final Type type )
 	{
-		if ( Class.class.isInstance( type ) ) {
-			return Class.class.cast( type );
-		}
-
-		if ( ParameterizedType.class.isInstance( type ) ) {
-			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
-
-			return getRawClass( parameterizedType.getRawType() );
-		}
-
-		if ( WildcardType.class.isInstance( type ) ) {
-			WildcardType wildcardType = WildcardType.class.cast( type );
-			Type[] types = wildcardType.getUpperBounds();
-
-			return getRawClass( types[ 0 ] );
-		}
-
-		if ( GenericArrayType.class.isInstance( type ) ) {
-			GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
-
-			Class<?> rawClass = getRawClass( genericArrayType.getGenericComponentType() );
-
-			return Array.newInstance( rawClass, 0 ).getClass();
-		}
-
-		return null;
+		return TypeUtils.getRawType( type, null );
 	}
 
 	/**

@@ -91,8 +91,8 @@ dependencies {
 
     // テスト時にのみ必要なライブラリ
     testImplementation(
+        'org.assertj:assertj-core:latest.release',
         'org.dbunit:dbunit:latest.release',
-        'org.hamcrest:hamcrest:latest.release',
         'org.jmockit:jmockit:latest.release',
         'org.junit.jupiter:junit-jupiter-api:latest.release'
     )
