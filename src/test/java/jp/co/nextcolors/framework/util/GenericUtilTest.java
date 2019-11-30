@@ -50,7 +50,6 @@ public class GenericUtilTest
 
 	public interface Bar extends Foo<Integer, Long>
 	{
-
 	}
 
 	public interface Baz<T1, T2>
@@ -66,7 +65,6 @@ public class GenericUtilTest
 
 	public static abstract class Qux implements Bar, Baz<String, Boolean>
 	{
-
 	}
 
 	public interface Quux
@@ -75,7 +73,7 @@ public class GenericUtilTest
 	}
 
 	//-------------------------------------------------------------------------
-	//    Test Cases
+	//    Test
 	//-------------------------------------------------------------------------
 	/**
 	 * クラスに関するテストです。
