@@ -101,7 +101,8 @@ public class GenericUtilTest
 		assertThat( map ).isEmpty();
 
 		Method method = Quux.class.getMethod( "getQuux" );
-		assertThat( GenericUtil.getActualClass( method.getGenericReturnType(), map ) ).isEqualTo( Object.class );
+		Class<?> actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
+		assertThat( actualClass ).isEqualTo( Object.class );
 	}
 
 	/**
@@ -113,9 +114,11 @@ public class GenericUtilTest
 	public void testArray()
 	{
 		Method method = ArrayType.class.getMethod( "arrayOfStringClass" );
-		Type type = GenericUtil.getElementTypeOfArray( method.getGenericReturnType() );
-		assertThat( GenericUtil.getRawClass( type ) ).isEqualTo( Class.class );
-		assertThat( GenericUtil.getGenericParameter( type, 0 ) ).isEqualTo( String.class );
+		Type elementType = GenericUtil.getElementTypeOfArray( method.getGenericReturnType() );
+		Class<?> rawClass = GenericUtil.getRawClass( elementType );
+		Type genericParameter = GenericUtil.getGenericParameter( elementType, 0 );
+		assertThat( rawClass ).isEqualTo( Class.class );
+		assertThat( genericParameter ).isEqualTo( String.class );
 	}
 
 	/**
@@ -142,20 +145,26 @@ public class GenericUtilTest
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 
 		Method method = Qux.class.getMethod( "foo", Object.class );
-		assertThat( GenericUtil.getActualClass( method.getGenericParameterTypes()[ 0 ], map ) ).isEqualTo( Integer.class );
-		assertThat( GenericUtil.getActualClass( method.getGenericReturnType(), map ) ).isEqualTo( Long.class );
+		Class<?> actualClass = GenericUtil.getActualClass( method.getGenericParameterTypes()[ 0 ], map );
+		assertThat( actualClass ).isEqualTo( Integer.class );
+		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
+		assertThat( actualClass ).isEqualTo( Long.class );
 
 		method = Qux.class.getMethod( "array" );
-		assertThat( GenericUtil.getActualClass( method.getGenericReturnType(), map ) ).isEqualTo( String[].class );
+		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
+		assertThat( actualClass ).isEqualTo( String[].class );
 
 		method = Qux.class.getMethod( "list" );
-		assertThat( GenericUtil.getActualClass( method.getGenericReturnType(), map ) ).isEqualTo( List.class );
+		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
+		assertThat( actualClass ).isEqualTo( List.class );
 
 		method = Qux.class.getMethod( "set" );
-		assertThat( GenericUtil.getActualClass( method.getGenericReturnType(), map ) ).isEqualTo( Set.class );
+		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
+		assertThat( actualClass ).isEqualTo( Set.class );
 
 		method = Qux.class.getMethod( "map" );
-		assertThat( GenericUtil.getActualClass( method.getGenericReturnType(), map ) ).isEqualTo( Map.class );
+		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
+		assertThat( actualClass ).isEqualTo( Map.class );
 	}
 
 	/**
@@ -168,7 +177,8 @@ public class GenericUtilTest
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "array" );
-		assertThat( GenericUtil.getActualElementClassOfArray( method.getGenericReturnType(), map ) ).isEqualTo( String.class );
+		Class<?> elementClass = GenericUtil.getActualElementClassOfArray( method.getGenericReturnType(), map );
+		assertThat( elementClass ).isEqualTo( String.class );
 	}
 
 	/**
@@ -181,7 +191,8 @@ public class GenericUtilTest
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "list" );
-		assertThat( GenericUtil.getActualElementClassOfList( method.getGenericReturnType(), map ) ).isEqualTo( Boolean.class );
+		Class<?> elementClass = GenericUtil.getActualElementClassOfList( method.getGenericReturnType(), map );
+		assertThat( elementClass ).isEqualTo( Boolean.class );
 	}
 
 	/**
@@ -194,7 +205,8 @@ public class GenericUtilTest
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "set" );
-		assertThat( GenericUtil.getActualElementClassOfSet( method.getGenericReturnType(), map ) ).isEqualTo( String.class );
+		Class<?> elementClass = GenericUtil.getActualElementClassOfSet( method.getGenericReturnType(), map );
+		assertThat( elementClass ).isEqualTo( String.class );
 	}
 
 	/**
@@ -207,7 +219,8 @@ public class GenericUtilTest
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "map" );
-		assertThat( GenericUtil.getActualKeyClassOfMap( method.getGenericReturnType(), map ) ).isEqualTo( String.class );
+		Class<?> keyClass = GenericUtil.getActualKeyClassOfMap( method.getGenericReturnType(), map );
+		assertThat( keyClass ).isEqualTo( String.class );
 	}
 
 	/**
@@ -220,6 +233,7 @@ public class GenericUtilTest
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "map" );
-		assertThat( GenericUtil.getActualValueClassOfMap( method.getGenericReturnType(), map ) ).isEqualTo( Boolean.class );
+		Class<?> valueClass = GenericUtil.getActualValueClassOfMap( method.getGenericReturnType(), map );
+		assertThat( valueClass ).isEqualTo( Boolean.class );
 	}
 }
