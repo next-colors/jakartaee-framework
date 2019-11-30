@@ -78,7 +78,7 @@ public class GenericUtilTest
 	//    Test Cases
 	//-------------------------------------------------------------------------
 	/**
-	 * クラスに関するのテストです。
+	 * クラスに関するテストです。
 	 *
 	 */
 	@Test
@@ -90,7 +90,7 @@ public class GenericUtilTest
 	}
 
 	/**
-	 * ジェネリクスメソッドに関するのテストです。
+	 * ジェネリクスメソッドに関するテストです。
 	 *
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
@@ -105,7 +105,7 @@ public class GenericUtilTest
 	}
 
 	/**
-	 * 配列に関するのテストです。
+	 * 配列に関するテストです。
 	 *
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
