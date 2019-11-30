@@ -166,13 +166,7 @@ public class GenericUtil
 	 */
 	public static Type getElementTypeOfArray( @NonNull final Type type )
 	{
-		if ( !GenericArrayType.class.isInstance( type ) ) {
-			return null;
-		}
-
-		GenericArrayType genericArrayType = GenericArrayType.class.cast( type );
-
-		return genericArrayType.getGenericComponentType();
+		return TypeUtils.getArrayComponentType( type );
 	}
 
 	/**
@@ -275,19 +269,7 @@ public class GenericUtil
 			map.put( typeParameter, getActualClass( typeParameter.getBounds()[ 0 ], map ) )
 		);
 
-		Class<?> superClass = clazz.getSuperclass();
-		Type superClassType = clazz.getGenericSuperclass();
-
-		if ( Objects.nonNull( superClass ) ) {
-			gatherTypeVariables( superClass, superClassType, map );
-		}
-
-		Class<?>[] interfaces = clazz.getInterfaces();
-		Type[] interfaceTypes = clazz.getGenericInterfaces();
-
-		IntStream.range( 0, interfaces.length ).forEach( i ->
-			gatherTypeVariables( interfaces[ i ], interfaceTypes[ i ], map )
-		);
+		gatherTypeVariables( clazz, clazz, map );
 
 		return map;
 	}
