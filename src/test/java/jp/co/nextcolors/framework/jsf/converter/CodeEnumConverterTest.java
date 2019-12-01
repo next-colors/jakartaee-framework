@@ -18,6 +18,8 @@ package jp.co.nextcolors.framework.jsf.converter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.util.Arrays;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -111,11 +113,11 @@ class CodeEnumConverterTest
 
 		assertThat( converter.getAsObject( context, component, StringUtils.SPACE ) ).isNull();
 
-		assertThat( converter.getAsObject( context, component, Foo.BAR.getCode().toString() ) ).isEqualTo( Foo.BAR );
+		Arrays.stream( Foo.values() ).forEach( value ->
+			assertThat( converter.getAsObject( context, component, value.getCode().toString() ) ).isEqualTo( value )
+		);
 
-		assertThat( converter.getAsObject( context, component, Foo.BAZ.getCode().toString() ) ).isEqualTo( Foo.BAZ );
-
-		assertThatExceptionOfType( ConverterException.class ).isThrownBy( () -> converter.getAsObject( context, component, "2" ) );
+		assertThatExceptionOfType( ConverterException.class ).isThrownBy( () -> converter.getAsObject( context, component, String.valueOf( 2 ) ) );
 	}
 
 	/**
@@ -127,8 +129,8 @@ class CodeEnumConverterTest
 	{
 		assertThat( converter.getAsString( context, component, null ) ).isEmpty();
 
-		assertThat( converter.getAsString( context, component, Foo.BAR ) ).isEqualTo( Foo.BAR.getCode().toString() );
-
-		assertThat( converter.getAsString( context, component, Foo.BAZ ) ).isEqualTo( Foo.BAZ.getCode().toString() );
+		Arrays.stream( Foo.values() ).forEach( value ->
+			assertThat( converter.getAsString( context, component, value ) ).isEqualTo( value.getCode().toString() )
+		);
 	}
 }

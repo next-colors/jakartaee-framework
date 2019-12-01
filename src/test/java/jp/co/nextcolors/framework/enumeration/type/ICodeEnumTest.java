@@ -18,6 +18,8 @@ package jp.co.nextcolors.framework.enumeration.type;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import lombok.AccessLevel;
@@ -58,9 +60,9 @@ class ICodeEnumTest
 	{
 		assertThat( ICodeEnum.codeOf( Foo.class, null ) ).isNull();
 
-		assertThat( ICodeEnum.codeOf( Foo.class, Foo.BAR.getCode() ) ).isEqualTo( Foo.BAR );
-
-		assertThat( ICodeEnum.codeOf( Foo.class, Foo.BAZ.getCode() ) ).isEqualTo( Foo.BAZ );
+		Arrays.stream( Foo.values() ).forEach( value ->
+			assertThat( ICodeEnum.codeOf( Foo.class, value.getCode() ) ).isEqualTo( value )
+		);
 
 		assertThatExceptionOfType( IllegalArgumentException.class ).isThrownBy( () -> ICodeEnum.codeOf( Foo.class, 2 ) );
 	}
@@ -72,9 +74,9 @@ class ICodeEnumTest
 	@Test
 	void testIsValidCode()
 	{
-		assertThat( ICodeEnum.isValidCode( Foo.class, Foo.BAR.getCode() ) ).isTrue();
-
-		assertThat( ICodeEnum.isValidCode( Foo.class, Foo.BAZ.getCode() ) ).isTrue();
+		Arrays.stream( Foo.values() ).forEach( value ->
+			assertThat( ICodeEnum.isValidCode( Foo.class, value.getCode() ) ).isTrue()
+		);
 
 		assertThat( ICodeEnum.isValidCode( Foo.class, 2 ) ).isFalse();
 	}
@@ -86,7 +88,7 @@ class ICodeEnumTest
 	@Test
 	void testCodes()
 	{
-		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( Foo.BAR.getCode(), Foo.BAZ.getCode() );
+		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( Arrays.stream( Foo.values() ).map( Foo::getCode ).toArray( Integer[]::new ) );
 	}
 
 	/**
