@@ -33,7 +33,7 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
-public class GenericUtilTest
+class GenericUtilTest
 {
 	//-------------------------------------------------------------------------
 	//    Test Preparation
@@ -80,7 +80,7 @@ public class GenericUtilTest
 	 *
 	 */
 	@Test
-	public void testClass()
+	void testClass()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Foo.class );
 		assertThat( map ).isNotEmpty();
@@ -93,7 +93,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGenericMethod()
+	void testGenericMethod()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Quux.class );
 		assertThat( map ).isEmpty();
@@ -109,7 +109,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testArray()
+	void testArray()
 	{
 		Method method = ArrayType.class.getMethod( "arrayOfStringClass" );
 		Type elementType = GenericUtil.getElementTypeOfArray( method.getGenericReturnType() );
@@ -124,7 +124,7 @@ public class GenericUtilTest
 	 *
 	 */
 	@Test
-	public void testGetTypeVariableMap()
+	void testGetTypeVariableMap()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		assertThat( map ).hasSize( 4 );
@@ -138,7 +138,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGetActualClass()
+	void testGetActualClass()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 
@@ -171,7 +171,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGetActualElementClassOfArray()
+	void testGetActualElementClassOfArray()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "array" );
@@ -185,7 +185,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGetActualElementClassOfList()
+	void testGetActualElementClassOfList()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "list" );
@@ -199,7 +199,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGetActualElementClassOfSet()
+	void testGetActualElementClassOfSet()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "set" );
@@ -213,7 +213,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGetActualKeyClassOfMap()
+	void testGetActualKeyClassOfMap()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "map" );
@@ -227,7 +227,7 @@ public class GenericUtilTest
 	 */
 	@SneakyThrows(NoSuchMethodException.class)
 	@Test
-	public void testGetActualValueClassOfMap()
+	void testGetActualValueClassOfMap()
 	{
 		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
 		Method method = Qux.class.getMethod( "map" );

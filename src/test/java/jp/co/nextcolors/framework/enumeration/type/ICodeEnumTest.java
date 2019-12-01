@@ -16,7 +16,7 @@
 package jp.co.nextcolors.framework.enumeration.type;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ import lombok.NonNull;
  *
  * @author hamana
  */
-public class ICodeEnumTest
+class ICodeEnumTest
 {
 	//-------------------------------------------------------------------------
 	//    Test Preparation
@@ -54,7 +54,7 @@ public class ICodeEnumTest
 	 *
 	 */
 	@Test
-	public void testCodeOf()
+	void testCodeOf()
 	{
 		assertThat( ICodeEnum.codeOf( Foo.class, null ) ).isNull();
 
@@ -62,7 +62,7 @@ public class ICodeEnumTest
 
 		assertThat( ICodeEnum.codeOf( Foo.class, 1 ) ).isEqualTo( Foo.BAZ );
 
-		assertThatIllegalArgumentException().isThrownBy( () -> ICodeEnum.codeOf( Foo.class, 2 ) );
+		assertThatExceptionOfType( IllegalArgumentException.class ).isThrownBy( () -> ICodeEnum.codeOf( Foo.class, 2 ) );
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class ICodeEnumTest
 	 *
 	 */
 	@Test
-	public void testIsValidCode()
+	void testIsValidCode()
 	{
 		assertThat( ICodeEnum.isValidCode( Foo.class, 0 ) ).isTrue();
 
@@ -84,7 +84,7 @@ public class ICodeEnumTest
 	 *
 	 */
 	@Test
-	public void testCodes()
+	void testCodes()
 	{
 		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( 0, 1 );
 	}
@@ -94,7 +94,7 @@ public class ICodeEnumTest
 	 *
 	 */
 	@Test
-	public void testGetCodeClass()
+	void testGetCodeClass()
 	{
 		assertThat( ICodeEnum.getCodeClass( Foo.class ) ).isEqualTo( Integer.class );
 	}

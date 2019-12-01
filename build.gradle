@@ -46,6 +46,15 @@ tasks.withType( AbstractCompile )*.options*.encoding = StandardCharsets.UTF_8
 //-----------------------------------------------------------------------------
 //    Dependency Management
 //-----------------------------------------------------------------------------
+// コンフィギュレーションの設定
+configurations {
+    // JMockit のためのコンフィギュレーション
+    jmockit
+
+    // テスト時にのみ必要なライブラリに、コンパイル時にのみ必要なライブラリを追加
+    testImplementation.extendsFrom( compileOnly )
+}
+
 // ライブラリ取得先リポジトリ
 repositories {
     // JCenter リポジトリ
@@ -84,22 +93,23 @@ dependencies {
         'jakarta.platform:jakarta.jakartaee-api:latest.release',
         'org.glassfish:jakarta.faces:latest.release'
     )
-    // アノテーションプロセッサをパッケージから除外
-    compileOnly(
-        configurations.annotationProcessor
-    )
 
     // テスト時にのみ必要なライブラリ
     testImplementation(
         'org.assertj:assertj-core:latest.release',
         'org.dbunit:dbunit:latest.release',
-        'org.jmockit:jmockit:latest.release',
-        'org.junit.jupiter:junit-jupiter-api:latest.release'
+        'org.junit.jupiter:junit-jupiter-api:latest.release',
+        configurations.jmockit
     )
 
     // テスト実行時にのみ必要なライブラリ
     testRuntimeOnly(
         'org.junit.jupiter:junit-jupiter-engine:latest.release'
+    )
+
+    // JMockit のライブラリ
+    jmockit(
+        'org.jmockit:jmockit:latest.release'
     )
 }
 
@@ -111,6 +121,9 @@ test {
     useJUnitPlatform()
 
     ignoreFailures = true
+
+    // JVM オプションに JMockit のモジュール読み込みを追加
+    jvmArgs( "-javaagent:${configurations.jmockit.files.first().path}" )
 
     jacoco {
         destinationFile = file( "${buildDir}/jacoco/jacocoTest.exec" )
