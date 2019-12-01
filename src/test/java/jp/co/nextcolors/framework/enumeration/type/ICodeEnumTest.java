@@ -58,9 +58,9 @@ class ICodeEnumTest
 	{
 		assertThat( ICodeEnum.codeOf( Foo.class, null ) ).isNull();
 
-		assertThat( ICodeEnum.codeOf( Foo.class, 0 ) ).isEqualTo( Foo.BAR );
+		assertThat( ICodeEnum.codeOf( Foo.class, Foo.BAR.getCode() ) ).isEqualTo( Foo.BAR );
 
-		assertThat( ICodeEnum.codeOf( Foo.class, 1 ) ).isEqualTo( Foo.BAZ );
+		assertThat( ICodeEnum.codeOf( Foo.class, Foo.BAZ.getCode() ) ).isEqualTo( Foo.BAZ );
 
 		assertThatExceptionOfType( IllegalArgumentException.class ).isThrownBy( () -> ICodeEnum.codeOf( Foo.class, 2 ) );
 	}
@@ -72,9 +72,9 @@ class ICodeEnumTest
 	@Test
 	void testIsValidCode()
 	{
-		assertThat( ICodeEnum.isValidCode( Foo.class, 0 ) ).isTrue();
+		assertThat( ICodeEnum.isValidCode( Foo.class, Foo.BAR.getCode() ) ).isTrue();
 
-		assertThat( ICodeEnum.isValidCode( Foo.class, 1 ) ).isTrue();
+		assertThat( ICodeEnum.isValidCode( Foo.class, Foo.BAZ.getCode() ) ).isTrue();
 
 		assertThat( ICodeEnum.isValidCode( Foo.class, 2 ) ).isFalse();
 	}
@@ -86,7 +86,7 @@ class ICodeEnumTest
 	@Test
 	void testCodes()
 	{
-		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( 0, 1 );
+		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( Foo.BAR.getCode(), Foo.BAZ.getCode() );
 	}
 
 	/**
