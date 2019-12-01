@@ -107,11 +107,9 @@ class CodeEnumConverterTest
 	@Test
 	void testGetAsObject()
 	{
-		assertThat( converter.getAsObject( context, component, null ) ).isNull();
-
-		assertThat( converter.getAsObject( context, component, StringUtils.EMPTY ) ).isNull();
-
-		assertThat( converter.getAsObject( context, component, StringUtils.SPACE ) ).isNull();
+		Arrays.asList( null, StringUtils.EMPTY, StringUtils.SPACE ).forEach( value ->
+			assertThat( converter.getAsObject( context, component, value ) ).isNull()
+		);
 
 		Arrays.stream( Foo.values() ).forEach( value ->
 			assertThat( converter.getAsObject( context, component, value.getCode().toString() ) ).isEqualTo( value )
