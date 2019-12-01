@@ -35,13 +35,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
-
 import mockit.Mock;
 import mockit.MockUp;
 import mockit.Mocked;
 import mockit.Tested;
 import mockit.integration.junit5.JMockitExtension;
+
+import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 
 /**
  * {@link CodeEnumConverter} のテストです。
