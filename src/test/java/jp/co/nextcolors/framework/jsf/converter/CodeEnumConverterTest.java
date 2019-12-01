@@ -92,7 +92,7 @@ class CodeEnumConverterTest
 		new MockUp<MessageFactory>()
 		{
 			@Mock
-			public FacesMessage getMessage( FacesContext context, String messageId, Object... params )
+			FacesMessage getMessage( FacesContext context, String messageId, Object... params )
 			{
 				return new FacesMessage();
 			}
