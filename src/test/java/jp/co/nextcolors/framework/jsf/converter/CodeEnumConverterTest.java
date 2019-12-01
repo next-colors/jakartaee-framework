@@ -26,7 +26,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.ConverterException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -84,11 +83,11 @@ class CodeEnumConverterTest
 	//    Test
 	//-------------------------------------------------------------------------
 	/**
-	 * すべてのテスト実行前に一度だけ行う処理です。
+	 * {@link CodeEnumConverter#getAsObject(FacesContext, UIComponent, String)} のテストです。
 	 *
 	 */
-	@BeforeAll
-	static void beforeAll()
+	@Test
+	void testGetAsObject()
 	{
 		new MockUp<MessageFactory>()
 		{
@@ -97,16 +96,8 @@ class CodeEnumConverterTest
 			{
 				return new FacesMessage();
 			}
-	    };
-	}
+		};
 
-	/**
-	 * {@link CodeEnumConverter#getAsObject(FacesContext, UIComponent, String)} のテストです。
-	 *
-	 */
-	@Test
-	void testGetAsObject()
-	{
 		Arrays.asList( null, StringUtils.EMPTY, StringUtils.SPACE ).forEach( value ->
 			assertThat( converter.getAsObject( context, component, value ) ).isNull()
 		);
