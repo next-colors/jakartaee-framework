@@ -131,9 +131,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	{
 		Map<String, Object> params = new HashMap<>();
 
-		this.params.keySet().forEach( key -> {
-			Object value = this.params.get( key );
-
+		this.params.forEach( ( key, value ) -> {
 			if ( Objects.nonNull( value ) ) {
 				if ( Collection.class.isInstance( value ) ) {
 					value = Collection.class.cast( value ).toArray();
