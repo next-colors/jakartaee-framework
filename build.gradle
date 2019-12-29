@@ -96,8 +96,9 @@ dependencies {
 
     // テスト時にのみ必要なライブラリ
     testImplementation(
+        'com.ninja-squad:DbSetup:latest.release',
         'org.assertj:assertj-core:latest.release',
-        'org.dbunit:dbunit:latest.release',
+        'org.assertj:assertj-db:latest.release',
         'org.junit.jupiter:junit-jupiter-api:latest.release',
         configurations.jmockit
     )
