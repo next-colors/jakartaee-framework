@@ -95,7 +95,7 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
 	 *
 	 */
 	@Override
-	public <Z extends Record> Z fetchOneInto( @NonNull final Table<Z> table )
+	public <R extends Record> R fetchOneInto( @NonNull final Table<R> table )
 	{
 		return getQuery().fetchOneInto( table );
 	}
@@ -115,7 +115,7 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
 	 *
 	 */
 	@Override
-	public <Z extends Record> Result<Z> fetchInto( @NonNull final Table<Z> table )
+	public <R extends Record> Result<R> fetchInto( @NonNull final Table<R> table )
 	{
 		return getQuery().fetchInto( table );
 	}
