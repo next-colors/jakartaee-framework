@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.jdbc.query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Table;
 
 /**
  * SQL ファイルを使用した検索です。
@@ -44,9 +45,33 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect>
 	Record fetchOne();
 
 	/**
+	 * レコードを検索します。<br>
+	 * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
+	 *
+	 * @param <R>
+	 *         レコードの型を表すクラス
+	 * @param table
+	 *         テーブル
+	 * @return 検索結果
+	 */
+	<R extends Record> R fetchOneInto( Table<R> table );
+
+	/**
 	 * レコードを検索します。
 	 *
 	 * @return 検索結果
 	 */
 	Result<Record> fetch();
+
+	/**
+	 * レコードを検索します。<br>
+	 * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
+	 *
+	 * @param <R>
+	 *         レコードの型を表すクラス
+	 * @param table
+	 *         テーブル
+	 * @return 検索結果
+	 */
+	<R extends Record> Result<R> fetchInto( Table<R> table );
 }

@@ -22,6 +22,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Table;
 
 import com.miragesql.miragesql.parser.SqlContext;
 
@@ -94,8 +95,28 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
 	 *
 	 */
 	@Override
+	public <Z extends Record> Z fetchOneInto( @NonNull final Table<Z> table )
+	{
+		return getQuery().fetchOneInto( table );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
 	public Result<Record> fetch()
 	{
 		return getQuery().fetch();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public <Z extends Record> Result<Z> fetchInto( @NonNull final Table<Z> table )
+	{
+		return getQuery().fetchInto( table );
 	}
 }
