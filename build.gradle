@@ -90,7 +90,7 @@ dependencies {
 
     // コンパイル時にのみ必要なライブラリ
     compileOnly(
-        'jakarta.platform:jakarta.jakartaee-api:latest.release',
+        'jakarta.platform:jakarta.jakartaee-api:8.+',
         'org.glassfish:javax.faces:latest.release'
     )
 
