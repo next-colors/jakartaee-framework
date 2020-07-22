@@ -41,7 +41,9 @@ buildDir = getProperty( 'build.dir.output' )
 // コンパイル時の Java バージョン
 sourceCompatibility = JavaVersion.VERSION_11
 // コンパイル時に使用する文字エンコーディング
-tasks.withType( AbstractCompile )*.options*.encoding = StandardCharsets.UTF_8
+tasks.withType( AbstractCompile ).configureEach {
+    options*.encoding = StandardCharsets.UTF_8
+}
 
 //-----------------------------------------------------------------------------
 //    Dependency Management
