@@ -75,8 +75,8 @@ dependencies {
 
     // パッケージに含めるライブラリ
     api(
-        'com.fasterxml.jackson.core:jackson-databind:latest.release',
-        'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:latest.release',
+        'com.fasterxml.jackson.core:jackson-databind:2.11.+',
+        'com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.11.+',
         'com.google.guava:guava:latest.release',
         'com.miragesql:miragesql:latest.release',
         'commons-beanutils:commons-beanutils:latest.release',
