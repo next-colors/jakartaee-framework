@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.jdbc.record.mapper;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.jooq.Configuration;
@@ -104,7 +105,7 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 				value = Convert.convert( value, dataType.getConverter() );
 			}
 
-			PropertyUtils.setProperty( bean, propertyName, value );
+			BeanUtils.setProperty( bean, propertyName, value );
 		} ) );
 
 		return bean;
