@@ -45,7 +45,7 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect>
 	Record fetchOne();
 
 	/**
-	 * レコードを検索します。<br>
+	 * レコードを検索します。<br />
 	 * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
 	 *
 	 * @param <R>
@@ -64,7 +64,7 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect>
 	Result<Record> fetch();
 
 	/**
-	 * レコードを検索します。<br>
+	 * レコードを検索します。<br />
 	 * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
 	 *
 	 * @param <R>

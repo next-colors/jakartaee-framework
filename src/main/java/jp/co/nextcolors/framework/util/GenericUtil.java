@@ -130,7 +130,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * 指定された位置の型の型引数を返します。<br>
+	 * 指定された位置の型の型引数を返します。<br />
 	 * 型がパラメータ化された型ではない場合は {@code null} を返します。
 	 *
 	 * @param type
@@ -155,7 +155,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * パラメータ化された型を要素とする配列の要素型を返します。<br>
+	 * パラメータ化された型を要素とする配列の要素型を返します。<br />
 	 * 型がパラメータ化された型の配列ではない場合は {@code null} を返します。
 	 *
 	 * @param type
@@ -168,7 +168,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * パラメータ化された {@link Collection} の要素型を返します。<br>
+	 * パラメータ化された {@link Collection} の要素型を返します。<br />
 	 * 型がパラメータ化された {@link Collection} ではない場合は {@code null} を返します。
 	 *
 	 * @param type
@@ -185,7 +185,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * パラメータ化された {@link List} の要素型を返します。<br>
+	 * パラメータ化された {@link List} の要素型を返します。<br />
 	 * 型がパラメータ化された {@link List} ではない場合は {@code null} を返します。
 	 *
 	 * @param type
@@ -202,7 +202,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * パラメータ化された {@link Set} の要素型を返します。<br>
+	 * パラメータ化された {@link Set} の要素型を返します。<br />
 	 * 型がパラメータ化された {@link Set} ではない場合は {@code null} を返します。
 	 *
 	 * @param type
@@ -219,7 +219,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * パラメータ化された {@link Map} のキーの型を返します。<br>
+	 * パラメータ化された {@link Map} のキーの型を返します。<br />
 	 * 型がパラメータ化された {@link Map} ではない場合は {@code null} を返します。
 	 *
 	 * @param type
@@ -236,7 +236,7 @@ public class GenericUtil
 	}
 
 	/**
-	 * パラメータ化された {@link Map} の値の型を返します。<br>
+	 * パラメータ化された {@link Map} の値の型を返します。<br />
 	 * 型がパラメータ化された {@link Map} ではない場合は {@code null} を返します。
 	 *
 	 * @param type
