@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp.co.nextcolors.framework.json.databind.deserializer;
+package jp.co.nextcolors.framework.json.bind.deserializer;
 
-import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Type;
+
+import javax.json.bind.JsonbException;
+import javax.json.bind.serializer.DeserializationContext;
+import javax.json.bind.serializer.JsonbDeserializer;
+import javax.json.stream.JsonParser;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -40,23 +43,12 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  * @param <C>
  *         列挙型のコードの型です。
  */
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@EqualsAndHashCode
 @SuppressWarnings("serial")
-public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, C> extends StdDeserializer<T>
+public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, C> implements JsonbDeserializer<T>, Serializable
 {
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param enumClass
-	 *         列挙型の型を表すクラス
-	 */
-	protected CodeEnumDeserializer( @NonNull final Class<T> enumClass )
-	{
-		super( enumClass );
-	}
-
 	//-------------------------------------------------------------------------
 	//    Public Methods
 	//-------------------------------------------------------------------------
@@ -66,29 +58,18 @@ public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Class<T> handledType()
+	public T deserialize( @NonNull final JsonParser parser, @NonNull final DeserializationContext ctx, @NonNull final Type rtType )
 	{
-		return (Class<T>) super.handledType();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public T deserialize( @NonNull final JsonParser p, @NonNull final DeserializationContext ctxt )
-				throws IOException, JsonMappingException
-	{
-		Class<T> enumClass = handledType();
+		Class<T> enumClass = (Class<T>) rtType;
 		Class<C> enumCodeClass = ICodeEnum.getCodeClass( enumClass );
 
 		try {
-			C code = enumCodeClass.cast( ConvertUtils.convert( _parseString( p, ctxt ), enumCodeClass ) );
+			C code = enumCodeClass.cast( ConvertUtils.convert( parser.getString(), enumCodeClass ) );
 
 			return ICodeEnum.codeOf( enumClass, code );
 		}
 		catch ( Exception e ) {
-			throw JsonMappingException.from( p, ExceptionUtils.getMessage( e ), e );
+			throw new JsonbException( ExceptionUtils.getMessage( e ), e );
 		}
 	}
 }
