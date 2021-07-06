@@ -27,7 +27,6 @@ import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.lambda.Unchecked;
-import org.jooq.tools.Convert;
 
 import com.miragesql.miragesql.naming.DefaultNameConverter;
 import com.miragesql.miragesql.naming.NameConverter;
@@ -95,15 +94,11 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 				return;
 			}
 
-			Object value = field.getValue( record );
+			Class<?> propertyType = PropertyUtils.getPropertyType( bean, propertyName );
 
-			if ( Objects.nonNull( value ) ) {
-				Class<?> propertyType = PropertyUtils.getPropertyType( bean, propertyName );
+			DataType<?> dataType = DefaultDataType.getDataType( configuration.dialect(), propertyType );
 
-				DataType<?> dataType = DefaultDataType.getDataType( configuration.dialect(), propertyType );
-
-				value = Convert.convert( value, dataType.getConverter() );
-			}
+			Object value = record.get( field.getQualifiedName(), dataType.getConverter() );
 
 			BeanUtils.setProperty( bean, propertyName, value );
 		} ) );
