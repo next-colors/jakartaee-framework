@@ -37,6 +37,13 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 public class BeanConverterUtil
 {
 	//-------------------------------------------------------------------------
+	//    Static Initializer
+	//-------------------------------------------------------------------------
+	static {
+		ClassGraph.CIRCUMVENT_ENCAPSULATION = true;
+	}
+
+	//-------------------------------------------------------------------------
 	//    Public Methods
 	//-------------------------------------------------------------------------
 	/**
