@@ -22,6 +22,7 @@ import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.jooq.lambda.Unchecked;
 
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassGraph.CircumventEncapsulationMethod;
 import io.github.classgraph.ScanResult;
 
 import lombok.experimental.UtilityClass;
@@ -40,7 +41,7 @@ public class BeanConverterUtil
 	//    Static Initializer
 	//-------------------------------------------------------------------------
 	static {
-		ClassGraph.CIRCUMVENT_ENCAPSULATION = true;
+		ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.NARCISSUS;
 	}
 
 	//-------------------------------------------------------------------------
