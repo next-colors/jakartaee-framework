@@ -41,7 +41,7 @@ public class BeanConverterUtil
 	//    Static Initializer
 	//-------------------------------------------------------------------------
 	static {
-		ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.NARCISSUS;
+		ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.JVM_DRIVER;
 	}
 
 	//-------------------------------------------------------------------------

@@ -78,7 +78,7 @@ dependencies {
         'commons-codec:commons-codec:latest.release',
         'commons-io:commons-io:latest.release',
         'io.github.classgraph:classgraph:latest.release',
-        'io.github.toolfactory:narcissus:latest.release',
+        'io.github.toolfactory:jvm-driver:latest.release',
         'org.apache.commons:commons-collections4:latest.release',
         'org.apache.commons:commons-lang3:latest.release',
         'org.jooq:jool:latest.release',
