@@ -115,6 +115,14 @@ dependencies {
 //-----------------------------------------------------------------------------
 //    Tasks
 //-----------------------------------------------------------------------------
+// JAR ファイルを構築するタスク
+jar {
+    manifest {
+        attributes('Created-By': GradleVersion.current(),
+                   'Build-Jdk': System.getProperty('java.version'))
+    }
+}
+
 // JUnit でテストするタスク
 test {
     useJUnitPlatform()
@@ -135,7 +143,7 @@ lombok {
     version = getProperty('lombok.version')
 }
 
-// Lombok による変換後のソースコードを生成するためのタスク
+// Lombok による変換後のソースコードを生成するタスク
 tasks.register('delombok', DelombokTask) {
     description = 'Generates delomboked sources.'
 
@@ -152,14 +160,14 @@ tasks.register('delombok', DelombokTask) {
     }
 }
 
-// Lombok による変換後のソースコードを生成する際のヘルプを表示するためのタスク
+// Lombok による変換後のソースコードを生成する際のヘルプを表示するタスク
 tasks.register('delombokHelp', DelombokTask) {
     description = 'Displays the help about delomboking.'
 
     args('--help')
 }
 
-// Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するためのタスク
+// Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するタスク
 tasks.register('delombokFormatHelp', DelombokTask) {
     description = 'Displays the help about the format of delomboking.'
 
