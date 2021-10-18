@@ -119,7 +119,7 @@ dependencies {
 jar {
     manifest {
         attributes('Created-By': GradleVersion.current(),
-                   'Build-Jdk': System.getProperty('java.version'))
+                   'Build-Jdk': System.getProperty('java.vm.version'))
     }
 }
 
