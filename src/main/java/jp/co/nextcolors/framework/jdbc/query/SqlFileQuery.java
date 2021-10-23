@@ -34,6 +34,7 @@ import org.jooq.impl.DSL;
 import jp.co.future.uroborosql.UroboroSQL;
 import jp.co.future.uroborosql.config.SqlConfig;
 import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.dialect.Dialect;
 import jp.co.future.uroborosql.parser.ContextTransformer;
 import jp.co.future.uroborosql.parser.SqlParser;
 import jp.co.future.uroborosql.parser.SqlParserImpl;
@@ -130,22 +131,24 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	 *
 	 * @return SQL のコンテキスト
 	 */
-	@SneakyThrows({ SQLException.class, IOException.class })
+	@SneakyThrows({ IOException.class, SQLException.class })
 	protected SqlContext createSqlContext()
 	{
+		String sql = Files.readString( sqlFilePath );
+		Map<String, Object> params = createBindParameters();
+
 		try ( Connection connection = dslContext.configuration().connectionProvider().acquire() ) {
 			SqlConfig sqlConfig = UroboroSQL.builder( connection ).build();
 
-			String sql = Files.readString( sqlFilePath );
+			Dialect dialect = sqlConfig.getDialect();
 
-			SqlParser sqlParser = new SqlParserImpl( sql, sqlConfig.getExpressionParser(), sqlConfig.getDialect().isRemoveTerminator(), false );
+			SqlParser sqlParser = new SqlParserImpl( sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false );
 
-			Map<String, Object> params = createBindParameters();
-
-			SqlContext sqlContext = sqlConfig.context().paramMap( params );
+			SqlContext sqlContext = sqlConfig.context();
+			sqlContext.paramMap( params );
+			sqlContext.param( Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar() );
 
 			ContextTransformer contextTransformer = sqlParser.parse();
-
 			contextTransformer.transform( sqlContext );
 
 			return sqlContext;
