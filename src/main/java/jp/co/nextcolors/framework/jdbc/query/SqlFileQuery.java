@@ -29,12 +29,12 @@ import java.util.stream.Collectors;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-import com.miragesql.miragesql.bean.BeanDescFactory;
-import com.miragesql.miragesql.parser.Node;
-import com.miragesql.miragesql.parser.SqlContext;
-import com.miragesql.miragesql.parser.SqlParser;
-import com.miragesql.miragesql.parser.SqlParserImpl;
-import com.miragesql.miragesql.util.MirageUtil;
+import jp.co.future.uroborosql.UroboroSQL;
+import jp.co.future.uroborosql.config.SqlConfig;
+import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.parser.ContextTransformer;
+import jp.co.future.uroborosql.parser.SqlParser;
+import jp.co.future.uroborosql.parser.SqlParserImpl;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -98,31 +98,6 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	}
 
 	/**
-	 * SQL のパーサを生成します。
-	 *
-	 * @return SQL のパーサ
-	 */
-	@SneakyThrows(IOException.class)
-	protected SqlParser createSqlParser()
-	{
-		String sql = Files.readString( sqlFilePath );
-
-		return new SqlParserImpl( sql, new BeanDescFactory() );
-	}
-
-	/**
-	 * SQL の構成要素を生成します。
-	 *
-	 * @return SQL の構成要素
-	 */
-	protected Node createSqlNode()
-	{
-		SqlParser sqlParser = createSqlParser();
-
-		return sqlParser.parse();
-	}
-
-	/**
 	 * SQL にバインドするパラメータを生成します。
 	 *
 	 * @return SQL にバインドするパラメータ
@@ -153,15 +128,22 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	 *
 	 * @return SQL のコンテキスト
 	 */
+	@SneakyThrows(IOException.class)
 	protected SqlContext createSqlContext()
 	{
-		Node sqlNode = createSqlNode();
+		String sql = Files.readString( sqlFilePath );
+
+		SqlConfig sqlConfig = UroboroSQL.builder( dslContext.configuration().connectionProvider().acquire() ).build();
+
+		SqlParser sqlParser = new SqlParserImpl( sql, sqlConfig.getExpressionParser(), sqlConfig.getDialect().isRemoveTerminator(), false );
 
 		Map<String, Object> params = createBindParameters();
 
-		SqlContext sqlContext = MirageUtil.getSqlContext( new BeanDescFactory(), params );
+		SqlContext sqlContext = sqlConfig.context().paramMap( params );
 
-		sqlNode.accept( sqlContext );
+		ContextTransformer contextTransformer = sqlParser.parse();
+
+		contextTransformer.transform( sqlContext );
 
 		return sqlContext;
 	}

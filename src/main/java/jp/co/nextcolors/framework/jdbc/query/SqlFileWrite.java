@@ -21,7 +21,7 @@ import java.util.Map;
 import org.jooq.DSLContext;
 import org.jooq.Query;
 
-import com.miragesql.miragesql.parser.SqlContext;
+import jp.co.future.uroborosql.context.SqlContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -74,7 +74,7 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
 	{
 		SqlContext sqlContext = createSqlContext();
 
-		return dslContext.query( sqlContext.getSql(), sqlContext.getBindVariables() );
+		return dslContext.query( sqlContext.getExecutableSql(), sqlContext.getBindVariables() );
 	}
 
 	/**

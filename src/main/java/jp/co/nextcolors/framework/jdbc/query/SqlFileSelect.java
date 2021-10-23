@@ -24,7 +24,7 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Table;
 
-import com.miragesql.miragesql.parser.SqlContext;
+import jp.co.future.uroborosql.context.SqlContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -77,7 +77,7 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
 	{
 		SqlContext sqlContext = createSqlContext();
 
-		return dslContext.resultQuery( sqlContext.getSql(), sqlContext.getBindVariables() );
+		return dslContext.resultQuery( sqlContext.getExecutableSql(), sqlContext.getBindVariables() );
 	}
 
 	/**

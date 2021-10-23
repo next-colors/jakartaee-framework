@@ -28,8 +28,7 @@ import org.jooq.RecordMapper;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.lambda.Unchecked;
 
-import com.miragesql.miragesql.naming.DefaultNameConverter;
-import com.miragesql.miragesql.naming.NameConverter;
+import jp.co.future.uroborosql.utils.CaseFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -83,12 +82,10 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 			return null;
 		}
 
-		NameConverter nameConverter = new DefaultNameConverter();
-
 		B bean = ConstructorUtils.invokeConstructor( beanClass );
 
 		Arrays.stream( record.fields() ).forEach( Unchecked.consumer( field -> {
-			String propertyName = nameConverter.columnToProperty( field.getName() );
+			String propertyName = CaseFormat.CAMEL_CASE.convert( field.getName() );
 
 			if ( !PropertyUtils.isWriteable( bean, propertyName ) ) {
 				return;
