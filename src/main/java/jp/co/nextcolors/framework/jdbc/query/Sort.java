@@ -25,8 +25,8 @@ import org.jooq.SortOrder;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.miragesql.miragesql.naming.DefaultNameConverter;
-import com.miragesql.miragesql.naming.NameConverter;
+
+import jp.co.future.uroborosql.utils.CaseFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -96,9 +96,7 @@ public class Sort implements Serializable
 		@Override
 		public String toString()
 		{
-			NameConverter nameConverter = new DefaultNameConverter();
-
-			String columnName = nameConverter.propertyToColumn( name ).toLowerCase();
+			String columnName = CaseFormat.LOWER_SNAKE_CASE.convert( name );
 
 			String direction = Strings.emptyToNull( sortOrder.toSQL().toUpperCase() );
 
