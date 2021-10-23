@@ -18,6 +18,8 @@ package jp.co.nextcolors.framework.jdbc.query;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -128,24 +130,26 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 	 *
 	 * @return SQL のコンテキスト
 	 */
-	@SneakyThrows(IOException.class)
+	@SneakyThrows({ SQLException.class, IOException.class })
 	protected SqlContext createSqlContext()
 	{
-		String sql = Files.readString( sqlFilePath );
+		try ( Connection connection = dslContext.configuration().connectionProvider().acquire() ) {
+			SqlConfig sqlConfig = UroboroSQL.builder( connection ).build();
 
-		SqlConfig sqlConfig = UroboroSQL.builder( dslContext.configuration().connectionProvider().acquire() ).build();
+			String sql = Files.readString( sqlFilePath );
 
-		SqlParser sqlParser = new SqlParserImpl( sql, sqlConfig.getExpressionParser(), sqlConfig.getDialect().isRemoveTerminator(), false );
+			SqlParser sqlParser = new SqlParserImpl( sql, sqlConfig.getExpressionParser(), sqlConfig.getDialect().isRemoveTerminator(), false );
 
-		Map<String, Object> params = createBindParameters();
+			Map<String, Object> params = createBindParameters();
 
-		SqlContext sqlContext = sqlConfig.context().paramMap( params );
+			SqlContext sqlContext = sqlConfig.context().paramMap( params );
 
-		ContextTransformer contextTransformer = sqlParser.parse();
+			ContextTransformer contextTransformer = sqlParser.parse();
 
-		contextTransformer.transform( sqlContext );
+			contextTransformer.transform( sqlContext );
 
-		return sqlContext;
+			return sqlContext;
+		}
 	}
 
 	//-------------------------------------------------------------------------
