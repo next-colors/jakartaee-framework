@@ -193,7 +193,7 @@ javadoc {
             'https://commons.apache.org/proper/commons-collections/apidocs/',
             'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
             'https://commons.apache.org/proper/commons-lang/apidocs/',
-            'https://docs.oracle.com/javase/jp/11/docs/api/',
+            'https://docs.oracle.com/javase/jp/17/docs/api/',
             'https://google.github.io/guava/releases/31.0.1-jre/api/docs/',
             'https://jakarta.ee/specifications/platform/8/apidocs/',
             'https://javadoc.io/doc/io.github.classgraph/classgraph/',
