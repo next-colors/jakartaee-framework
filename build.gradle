@@ -39,7 +39,7 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 // ビルド出力ディレクトリ
 buildDir = getProperty('build.dir.output')
 // コンパイル時の Java バージョン
-sourceCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
 // コンパイル時に使用する文字エンコーディング
 tasks.withType(AbstractCompile).configureEach {
     options*.encoding = StandardCharsets.UTF_8

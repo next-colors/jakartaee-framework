@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -116,7 +115,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 				}
 
 				if ( value.getClass().isArray() ) {
-					value = DSL.list( Arrays.stream( (Object[]) value ).map( DSL::val ).collect( Collectors.toList() ) );
+					value = DSL.list( Arrays.stream( (Object[]) value ).map( DSL::val ).toList() );
 				}
 			}
 
