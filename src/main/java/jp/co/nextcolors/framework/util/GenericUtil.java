@@ -57,8 +57,8 @@ public class GenericUtil
 	 */
 	private static void gatherTypeVariables( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( ParameterizedType.class.isInstance( type ) ) {
-			map.putAll( TypeUtils.getTypeArguments( ParameterizedType.class.cast( type ) ) );
+		if ( type instanceof ParameterizedType parameterizedType ) {
+			map.putAll( TypeUtils.getTypeArguments( parameterizedType ) );
 		}
 	}
 
@@ -116,9 +116,7 @@ public class GenericUtil
 	 */
 	public static Type[] getGenericParameters( @NonNull final Type type )
 	{
-		if ( ParameterizedType.class.isInstance( type ) ) {
-			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
-
+		if ( type instanceof ParameterizedType parameterizedType ) {
 			return parameterizedType.getActualTypeArguments();
 		}
 
@@ -291,25 +289,19 @@ public class GenericUtil
 	 */
 	public static Class<?> getActualClass( @NonNull final Type type, @NonNull final Map<TypeVariable<?>, Type> map )
 	{
-		if ( Class.class.isInstance( type ) ) {
-			return Class.class.cast( type );
+		if ( type instanceof Class<?> clazz ) {
+			return clazz;
 		}
 
-		if ( ParameterizedType.class.isInstance( type ) ) {
-			ParameterizedType parameterizedType = ParameterizedType.class.cast( type );
-
+		if ( type instanceof ParameterizedType parameterizedType ) {
 			return getActualClass( parameterizedType.getRawType(), map );
 		}
 
-		if ( WildcardType.class.isInstance( type ) ) {
-			WildcardType wildcardType = WildcardType.class.cast( type );
-
+		if ( type instanceof WildcardType wildcardType ) {
 			return getActualClass( wildcardType.getUpperBounds()[ 0 ], map );
 		}
 
-		if ( TypeVariable.class.isInstance( type ) ) {
-			TypeVariable<?> typeVariable = TypeVariable.class.cast( type );
-
+		if ( type instanceof TypeVariable<?> typeVariable ) {
 			if ( map.containsKey( typeVariable ) ) {
 				return getActualClass( map.get( typeVariable ), map );
 			}

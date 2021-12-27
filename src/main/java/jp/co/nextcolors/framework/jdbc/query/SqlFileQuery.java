@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.jooq.DSLContext;
@@ -109,14 +108,12 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 		Map<String, Object> params = new HashMap<>();
 
 		this.params.forEach( ( key, value ) -> {
-			if ( Objects.nonNull( value ) ) {
-				if ( Collection.class.isInstance( value ) ) {
-					value = Collection.class.cast( value ).toArray();
-				}
+			if ( value instanceof Collection<?> collection ) {
+				value = collection.toArray();
+			}
 
-				if ( value.getClass().isArray() ) {
-					value = DSL.list( Stream.of( (Object[]) value ).map( DSL::val ).toList() );
-				}
+			if ( value instanceof Object[] array ) {
+				value = DSL.list( Stream.of( array ).map( DSL::val ).toList() );
 			}
 
 			params.put( key, value );

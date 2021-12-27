@@ -114,19 +114,9 @@ public class RequestDumpFilter implements Filter
 	public void doFilter( @NonNull final ServletRequest request, @NonNull final ServletResponse response, @NonNull final FilterChain chain )
 				throws IOException, ServletException
 	{
-		if ( !log.isDebugEnabled() ) {
-			chain.doFilter( request, response );
-
-			return;
+		if ( log.isDebugEnabled() && request instanceof HttpServletRequest httpServletRequest ) {
+			dump( httpServletRequest );
 		}
-
-		if ( !HttpServletRequest.class.isInstance( request ) ) {
-			chain.doFilter( request, response );
-
-			return;
-		}
-
-		dump( HttpServletRequest.class.cast( request ) );
 
 		chain.doFilter( request, response );
 	}

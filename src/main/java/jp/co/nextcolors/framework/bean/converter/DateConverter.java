@@ -113,47 +113,35 @@ public class DateConverter extends DateTimeConverter
 	{
 		ZoneId zone = Optional.ofNullable( getTimeZone() ).map( TimeZone::toZoneId ).orElseGet( ZoneId::systemDefault );
 
-		if ( Instant.class.isInstance( value ) ) {
-			Instant instant = Instant.class.cast( value );
-
+		if ( value instanceof Instant instant ) {
 			return Date.from( instant );
 		}
 
-		if ( LocalDate.class.isInstance( value ) ) {
-			LocalDate localDate = LocalDate.class.cast( value );
-
+		if ( value instanceof LocalDate localDate ) {
 			return Date.from( localDate.atStartOfDay( zone ).toInstant() );
 		}
 
-		if ( LocalDateTime.class.isInstance( value ) ) {
-			LocalDateTime localDateTime = LocalDateTime.class.cast( value );
-
+		if ( value instanceof LocalDateTime localDateTime ) {
 			return Date.from( localDateTime.atZone( zone ).toInstant() );
 		}
 
-		if ( LocalTime.class.isInstance( value ) ) {
-			LocalTime localTime = LocalTime.class.cast( value );
+		if ( value instanceof LocalTime localTime ) {
 			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, zone ).toLocalDate();
 
 			return Date.from( localDate.atTime( localTime ).atZone( zone ).toInstant() );
 		}
 
-		if ( OffsetDateTime.class.isInstance( value ) ) {
-			OffsetDateTime offsetDateTime = OffsetDateTime.class.cast( value );
-
+		if ( value instanceof OffsetDateTime offsetDateTime ) {
 			return Date.from( offsetDateTime.toInstant() );
 		}
 
-		if ( OffsetTime.class.isInstance( value ) ) {
-			OffsetTime offsetTime = OffsetTime.class.cast( value );
+		if ( value instanceof OffsetTime offsetTime ) {
 			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, zone ).toLocalDate();
 
 			return Date.from( localDate.atTime( offsetTime ).toInstant() );
 		}
 
-		if ( ZonedDateTime.class.isInstance( value ) ) {
-			ZonedDateTime zonedDateTime = ZonedDateTime.class.cast( value );
-
+		if ( value instanceof ZonedDateTime zonedDateTime ) {
 			return Date.from( zonedDateTime.toInstant() );
 		}
 
@@ -233,8 +221,8 @@ public class DateConverter extends DateTimeConverter
 	@Override
 	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Exception
 	{
-		if ( Temporal.class.isInstance( value ) ) {
-			Date date = toDate( Temporal.class.cast( value ) );
+		if ( value instanceof Temporal temporal ) {
+			Date date = toDate( temporal );
 
 			return type.cast( date );
 		}
