@@ -17,11 +17,11 @@ package jp.co.nextcolors.framework.enumeration.type;
 
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.NonNull;
 
@@ -64,7 +64,7 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 			return null;
 		}
 
-		return Arrays.stream( enumClass.getEnumConstants() )
+		return Stream.of( enumClass.getEnumConstants() )
 						.filter( constant -> Objects.equals( constant.getCode(), code ) )
 						.findFirst()
 						.orElseThrow( () ->
@@ -106,7 +106,7 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 	 */
 	static <T extends Enum<T> & ICodeEnum<T, V>, V> Set<V> codes( @NonNull final Class<T> enumClass )
 	{
-		return Arrays.stream( enumClass.getEnumConstants() ).map( constant -> constant.getCode() ).collect( Collectors.toUnmodifiableSet() );
+		return Stream.of( enumClass.getEnumConstants() ).map( constant -> constant.getCode() ).collect( Collectors.toUnmodifiableSet() );
 	}
 
 	/**

@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -102,7 +103,7 @@ class CodeEnumConverterTest
 			assertThat( converter.getAsObject( context, component, value ) ).isNull()
 		);
 
-		Arrays.stream( Foo.values() ).forEach( value ->
+		Stream.of( Foo.values() ).forEach( value ->
 			assertThat( converter.getAsObject( context, component, value.getCode().toString() ) ).isEqualTo( value )
 		);
 
@@ -118,7 +119,7 @@ class CodeEnumConverterTest
 	{
 		assertThat( converter.getAsString( context, component, null ) ).isEmpty();
 
-		Arrays.stream( Foo.values() ).forEach( value ->
+		Stream.of( Foo.values() ).forEach( value ->
 			assertThat( converter.getAsString( context, component, value ) ).isEqualTo( value.getCode().toString() )
 		);
 	}

@@ -17,11 +17,11 @@ package jp.co.nextcolors.framework.bean.converter;
 
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.converters.AbstractConverter;
@@ -68,7 +68,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
 	 */
 	private E convert( final int ordinal )
 	{
-		Map<Integer, E> constants = Arrays.stream( enumClass.getEnumConstants() ).collect( Collectors.toMap( Enum::ordinal, Function.identity() ) );
+		Map<Integer, E> constants = Stream.of( enumClass.getEnumConstants() ).collect( Collectors.toMap( Enum::ordinal, Function.identity() ) );
 
 		if ( !constants.containsKey( ordinal ) ) {
 			throw new ConversionException( String.format( "序数 %s に %s は含まれていません。", constants.keySet(), ordinal ) );

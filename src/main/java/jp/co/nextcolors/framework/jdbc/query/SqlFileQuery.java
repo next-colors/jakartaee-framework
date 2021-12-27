@@ -20,12 +20,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
@@ -115,7 +115,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 				}
 
 				if ( value.getClass().isArray() ) {
-					value = DSL.list( Arrays.stream( (Object[]) value ).map( DSL::val ).toList() );
+					value = DSL.list( Stream.of( (Object[]) value ).map( DSL::val ).toList() );
 				}
 			}
 

@@ -15,8 +15,8 @@
  */
 package jp.co.nextcolors.framework.jdbc.record.mapper;
 
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -84,7 +84,7 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 
 		B bean = ConstructorUtils.invokeConstructor( beanClass );
 
-		Arrays.stream( record.fields() ).forEach( Unchecked.consumer( field -> {
+		Stream.of( record.fields() ).forEach( Unchecked.consumer( field -> {
 			String propertyName = CaseFormat.CAMEL_CASE.convert( field.getName() );
 
 			if ( !PropertyUtils.isWriteable( bean, propertyName ) ) {

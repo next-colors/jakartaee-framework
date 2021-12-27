@@ -21,7 +21,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,6 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.reflect.TypeUtils;
@@ -263,7 +263,7 @@ public class GenericUtil
 	{
 		Map<TypeVariable<?>, Type> map = new LinkedHashMap<>();
 
-		Arrays.stream( clazz.getTypeParameters() ).forEach( typeParameter ->
+		Stream.of( clazz.getTypeParameters() ).forEach( typeParameter ->
 			map.put( typeParameter, getActualClass( typeParameter.getBounds()[ 0 ], map ) )
 		);
 

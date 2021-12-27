@@ -18,7 +18,7 @@ package jp.co.nextcolors.framework.enumeration.type;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +60,7 @@ class ICodeEnumTest
 	{
 		assertThat( ICodeEnum.codeOf( Foo.class, null ) ).isNull();
 
-		Arrays.stream( Foo.values() ).forEach( value ->
+		Stream.of( Foo.values() ).forEach( value ->
 			assertThat( ICodeEnum.codeOf( Foo.class, value.getCode() ) ).isEqualTo( value )
 		);
 
@@ -74,7 +74,7 @@ class ICodeEnumTest
 	@Test
 	void testIsValidCode()
 	{
-		Arrays.stream( Foo.values() ).forEach( value ->
+		Stream.of( Foo.values() ).forEach( value ->
 			assertThat( ICodeEnum.isValidCode( Foo.class, value.getCode() ) ).isTrue()
 		);
 
@@ -88,7 +88,7 @@ class ICodeEnumTest
 	@Test
 	void testCodes()
 	{
-		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( Arrays.stream( Foo.values() ).map( Foo::getCode ).toArray( Integer[]::new ) );
+		assertThat( ICodeEnum.codes( Foo.class ) ).containsExactlyInAnyOrder( Stream.of( Foo.values() ).map( Foo::getCode ).toArray( Integer[]::new ) );
 	}
 
 	/**

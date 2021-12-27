@@ -34,6 +34,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.converters.DateTimeConverter;
@@ -167,7 +168,7 @@ public class DateConverter extends DateTimeConverter
 	 */
 	private Set<String> getDateFormats()
 	{
-		return Arrays.stream( DATE_SEPARATORS )
+		return Stream.of( DATE_SEPARATORS )
 						.map( separator -> String.join( separator, DATE_COMPONENTS ) )
 						.collect( Collectors.toUnmodifiableSet() );
 	}
@@ -181,13 +182,13 @@ public class DateConverter extends DateTimeConverter
 	{
 		Set<String> timeFormats = new HashSet<>();
 
-		Arrays.stream( TIME_SEPARATORS ).forEach( separator ->
+		Stream.of( TIME_SEPARATORS ).forEach( separator ->
 			IntStream.rangeClosed( 1, TIME_COMPONENTS.length ).forEach( length -> {
 				String[] timeComponents = Arrays.copyOf( TIME_COMPONENTS, length );
 
 				String timeFormat = String.join( separator, timeComponents );
 
-				Arrays.stream( TIME_ZONE_COMPONENTS ).forEach( timeZoneComponent ->
+				Stream.of( TIME_ZONE_COMPONENTS ).forEach( timeZoneComponent ->
 					timeFormats.add( timeFormat + timeZoneComponent )
 				);
 			} )
@@ -210,7 +211,7 @@ public class DateConverter extends DateTimeConverter
 
 		dateFormats.forEach( dateFormat ->
 			timeFormats.forEach( timeFormat ->
-				Arrays.stream( DATE_TIME_SEPARATORS ).forEach( separator ->
+				Stream.of( DATE_TIME_SEPARATORS ).forEach( separator ->
 					dateTimeFormats.add( String.join( separator, dateFormat, timeFormat ) )
 				)
 			)

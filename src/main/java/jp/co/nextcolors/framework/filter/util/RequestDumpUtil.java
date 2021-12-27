@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -197,7 +198,7 @@ public class RequestDumpUtil
 			return;
 		}
 
-		Arrays.stream( cookies ).sorted( Comparator.comparing( Cookie::getName ) ).forEach( cookie -> {
+		Stream.of( cookies ).sorted( Comparator.comparing( Cookie::getName ) ).forEach( cookie -> {
 			buffer.append( indent );
 			buffer.append( "[Cookie] " ).append( cookie.getName() ).append( " = " ).append( cookie.getValue() );
 			buffer.append( lf );
