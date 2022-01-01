@@ -51,7 +51,7 @@ public class RequestDumpFilter implements Filter
 	 * リクエスト（{@link HttpServletRequest}）の内容をダンプする際のインデントです。
 	 *
 	 */
-	private static final String INDENT = StringUtils.repeat( StringUtils.SPACE, 2 );
+	private static final String INDENT = StringUtils.SPACE.repeat( 2 );
 
 	/**
 	 * リクエスト（{@link HttpServletRequest}）の内容をダンプする際の改行文字です。

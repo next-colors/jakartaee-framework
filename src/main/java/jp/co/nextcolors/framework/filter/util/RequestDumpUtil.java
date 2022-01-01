@@ -172,7 +172,7 @@ public class RequestDumpUtil
 	{
 		Collections.list( request.getParameterNames() ).stream().sorted().forEach( paramName -> {
 			buffer.append( indent );
-			buffer.append( "[Parameter] " ).append( paramName ).append( " = " ).append( StringUtils.join( request.getParameterValues( paramName ), ", " ) );
+			buffer.append( "[Parameter] " ).append( paramName ).append( " = " ).append( String.join( ", ", request.getParameterValues( paramName ) ) );
 			buffer.append( lf );
 		} );
 	}
