@@ -18,7 +18,6 @@ package jp.co.nextcolors.framework.bean.util;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.Converter;
-import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.jooq.lambda.Unchecked;
 
 import io.github.classgraph.ClassGraph;
@@ -58,7 +57,7 @@ public class BeanConverterUtil
 			scanResult.getClassesImplementing( Converter.class )
 						.filter( converterClassInfo -> converterClassInfo.hasAnnotation( BeanConverter.class ) )
 						.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
-				Converter converter = ConstructorUtils.invokeConstructor( converterClass );
+				Converter converter = converterClass.getConstructor().newInstance();
 				Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
 
 				ConvertUtils.register( converter, targetClass );

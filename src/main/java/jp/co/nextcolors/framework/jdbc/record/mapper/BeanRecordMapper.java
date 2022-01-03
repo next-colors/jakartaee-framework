@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -82,7 +81,7 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
 			return null;
 		}
 
-		B bean = ConstructorUtils.invokeConstructor( beanClass );
+		B bean = beanClass.getConstructor().newInstance();
 
 		Stream.of( record.fields() ).forEach( Unchecked.consumer( field -> {
 			String propertyName = CaseFormat.CAMEL_CASE.convert( field.getName() );
