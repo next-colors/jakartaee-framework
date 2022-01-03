@@ -18,7 +18,6 @@ package jp.co.nextcolors.framework.jsf.converter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import javax.faces.application.FacesMessage;
@@ -99,7 +98,7 @@ class CodeEnumConverterTest
 			}
 		};
 
-		Arrays.asList( null, StringUtils.EMPTY, StringUtils.SPACE ).forEach( value ->
+		Stream.of( null, StringUtils.EMPTY, StringUtils.SPACE ).forEach( value ->
 			assertThat( converter.getAsObject( context, component, value ) ).isNull()
 		);
 
