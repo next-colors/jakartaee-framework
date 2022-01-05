@@ -114,99 +114,14 @@ dependencies {
 }
 
 //-----------------------------------------------------------------------------
-//    Tasks
+//    Plugin Configurations
 //-----------------------------------------------------------------------------
-// JAR ファイルを構築するタスク
-jar {
-    // マニフェストファイル
-    manifest {
-        attributes('Created-By': GradleVersion.current(),
-                   'Build-Jdk': System.getProperty('java.vm.version'))
-    }
-}
-
-// JUnit でテストするタスク
-test {
-    useJUnitPlatform()
-
-    ignoreFailures = true
-
-    // JVM オプションに JMockit のモジュール読み込みを追加
-    jvmArgs("-javaagent:${configurations.jmockit.files.first().path}")
-
-    jacoco {
-        destinationFile = file("${buildDir}/jacoco/jacocoTest.exec")
-        classDumpDir = file("${buildDir}/jacoco/classpathdumps")
-    }
-}
-
-// Lombok のタスク
+// Gradle Lombok Plugin の設定
 lombok {
     version = getProperty('lombok.version')
 }
 
-// Lombok による変換後のソースコードを生成するタスク
-tasks.register('delombok', DelombokTask) {
-    description = 'Generates delomboked sources.'
-
-    classpath += compileJava.classpath
-
-    ext.outputDir = file("${buildDir}/${name}")
-
-    sourceSets.main.java.srcDirs.each {
-        args(it, '-d', outputDir)
-    }
-
-    doFirst {
-        outputDir.deleteDir()
-    }
-}
-
-// Lombok による変換後のソースコードを生成する際のヘルプを表示するタスク
-tasks.register('delombokHelp', DelombokTask) {
-    description = 'Displays the help about delomboking.'
-
-    args('--help')
-}
-
-// Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するタスク
-tasks.register('delombokFormatHelp', DelombokTask) {
-    description = 'Displays the help about the format of delomboking.'
-
-    args('--format-help')
-}
-
-// Javadoc のタスク
-javadoc {
-    dependsOn(delombok)
-
-    source = delombok.outputDir
-    failOnError = false
-
-    options {
-        encoding = StandardCharsets.UTF_8
-        charSet = StandardCharsets.UTF_8
-        author = true
-        links(
-            'https://commons.apache.org/proper/commons-beanutils/apidocs/',
-            'https://commons.apache.org/proper/commons-codec/apidocs/',
-            'https://commons.apache.org/proper/commons-collections/apidocs/',
-            'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
-            'https://commons.apache.org/proper/commons-lang/apidocs/',
-            'https://docs.oracle.com/javase/jp/17/docs/api/',
-            'https://google.github.io/guava/releases/31.0.1-jre/api/docs/',
-            'https://jakarta.ee/specifications/platform/8/apidocs/',
-            'https://javadoc.io/doc/io.github.classgraph/classgraph/',
-            'https://javadoc.io/doc/jp.co.future/uroborosql/',
-            'https://projectlombok.org/api/',
-            'https://www.jooq.org/javadoc/latest/',
-            'https://www.jooq.org/products/jOO%CE%BB/javadoc/latest/',
-            'https://www.slf4j.org/apidocs/'
-        )
-    }
-}
-
-// Eclipse プロジェクトのタスク
+// Eclipse Plugin の設定
 eclipse {
     // .project の設定
     project {
@@ -262,9 +177,96 @@ eclipse {
         }
     }
 }
-// Eclipse プラグインは eclipse という名前でタスクと拡張オブジェクトの 2 つを定義する。
-// project.eclipse で参照した場合は、拡張オブジェクトの方になる。
-// タスクを参照したい場合は、 tasks.eclipse のように TaskContainer を経由する必要がある。
+
+//-----------------------------------------------------------------------------
+//    Tasks
+//-----------------------------------------------------------------------------
+// JAR ファイルを構築するタスク
+tasks.jar {
+    // マニフェストファイル
+    manifest {
+        attributes('Created-By': GradleVersion.current(),
+                   'Build-Jdk': System.getProperty('java.vm.version'))
+    }
+}
+
+// JUnit でテストするタスク
+tasks.test {
+    useJUnitPlatform()
+
+    ignoreFailures = true
+
+    // JVM オプションに JMockit のモジュール読み込みを追加
+    jvmArgs("-javaagent:${configurations.jmockit.files.first().path}")
+
+    jacoco {
+        destinationFile = file("${buildDir}/jacoco/jacocoTest.exec")
+        classDumpDir = file("${buildDir}/jacoco/classpathdumps")
+    }
+}
+
+// Lombok による変換後のソースコードを生成するタスク
+tasks.register('delombok', DelombokTask) {
+    description = 'Generates delomboked sources.'
+
+    classpath += compileJava.classpath
+
+    ext.outputDir = file("${buildDir}/${name}")
+
+    sourceSets.main.java.srcDirs.each {
+        args(it, '-d', outputDir)
+    }
+
+    doFirst {
+        outputDir.deleteDir()
+    }
+}
+
+// Lombok による変換後のソースコードを生成する際のヘルプを表示するタスク
+tasks.register('delombokHelp', DelombokTask) {
+    description = 'Displays the help about delomboking.'
+
+    args('--help')
+}
+
+// Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するタスク
+tasks.register('delombokFormatHelp', DelombokTask) {
+    description = 'Displays the help about the format of delomboking.'
+
+    args('--format-help')
+}
+
+// Javadoc のタスク
+tasks.javadoc {
+    dependsOn(delombok)
+
+    source = delombok.outputDir
+    failOnError = false
+
+    options {
+        encoding = StandardCharsets.UTF_8
+        charSet = StandardCharsets.UTF_8
+        author = true
+        links(
+            'https://commons.apache.org/proper/commons-beanutils/apidocs/',
+            'https://commons.apache.org/proper/commons-codec/apidocs/',
+            'https://commons.apache.org/proper/commons-collections/apidocs/',
+            'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
+            'https://commons.apache.org/proper/commons-lang/apidocs/',
+            'https://docs.oracle.com/javase/jp/17/docs/api/',
+            'https://google.github.io/guava/releases/31.0.1-jre/api/docs/',
+            'https://jakarta.ee/specifications/platform/8/apidocs/',
+            'https://javadoc.io/doc/io.github.classgraph/classgraph/',
+            'https://javadoc.io/doc/jp.co.future/uroborosql/',
+            'https://projectlombok.org/api/',
+            'https://www.jooq.org/javadoc/latest/',
+            'https://www.jooq.org/products/jOO%CE%BB/javadoc/latest/',
+            'https://www.slf4j.org/apidocs/'
+        )
+    }
+}
+
+// Eclipse プロジェクトのタスク
 tasks.eclipse {
     doFirst {
         // Buildship の設定
