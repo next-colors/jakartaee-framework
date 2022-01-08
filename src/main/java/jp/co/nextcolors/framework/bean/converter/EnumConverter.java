@@ -71,7 +71,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
 		Map<Integer, E> constants = Stream.of( enumClass.getEnumConstants() ).collect( Collectors.toMap( Enum::ordinal, Function.identity() ) );
 
 		if ( !constants.containsKey( ordinal ) ) {
-			throw new ConversionException( String.format( "序数 %s に %s は含まれていません。", constants.keySet(), ordinal ) );
+			throw new ConversionException( "序数 %s に %s は含まれていません。".formatted( constants.keySet(), ordinal ) );
 		}
 
 		return constants.get( ordinal );
@@ -91,7 +91,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
 		Map<String, E> constants = EnumUtils.getEnumMap( enumClass );
 
 		if ( !constants.containsKey( name ) ) {
-			throw new ConversionException( String.format( "名前 %s に %s は含まれていません。", constants.keySet(), name ) );
+			throw new ConversionException( "名前 %s に %s は含まれていません。".formatted( constants.keySet(), name ) );
 		}
 
 		return constants.get( name );

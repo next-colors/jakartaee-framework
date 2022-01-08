@@ -68,8 +68,8 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V>
 						.filter( constant -> Objects.equals( constant.getCode(), code ) )
 						.findFirst()
 						.orElseThrow( () ->
-							new IllegalArgumentException( String.format( "%s のコード %s に %s は含まれていません。",
-																			enumClass.getName(), codes( enumClass ), code ) )
+							new IllegalArgumentException( "%s のコード %s に %s は含まれていません。"
+															.formatted( enumClass.getName(), codes( enumClass ), code ) )
 						);
 	}
 

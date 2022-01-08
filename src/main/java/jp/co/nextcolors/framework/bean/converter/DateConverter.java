@@ -145,8 +145,8 @@ public class DateConverter extends DateTimeConverter
 			return Date.from( zonedDateTime.toInstant() );
 		}
 
-		throw new IllegalArgumentException( String.format( "%s はサポートされていない日付/時間の型です。",
-															value.getClass().getName() ) );
+		throw new IllegalArgumentException( "%s はサポートされていない日付/時間の型です。"
+											.formatted( value.getClass().getName() ) );
 	}
 
 	/**
@@ -237,8 +237,8 @@ public class DateConverter extends DateTimeConverter
 			return type.cast( date );
 		}
 		catch ( ParseException e ) {
-			throw new ConversionException( String.format( "%s を %s に変換できませんでした。使用した日時フォーマットは %s です。",
-															value, type.getName(), Arrays.toString( getPatterns() ) ),
+			throw new ConversionException( "%s を %s に変換できませんでした。使用した日時フォーマットは %s です。"
+											.formatted( value, type.getName(), Arrays.toString( getPatterns() ) ),
 											e );
 		}
 	}
