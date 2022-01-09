@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.converters.AbstractConverter;
-import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import lombok.EqualsAndHashCode;
@@ -88,7 +87,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
 	 */
 	private E convert( @NonNull final String name )
 	{
-		Map<String, E> constants = EnumUtils.getEnumMap( enumClass );
+		Map<String, E> constants = Stream.of( enumClass.getEnumConstants() ).collect( Collectors.toMap( Enum::name, Function.identity() ) );
 
 		if ( !constants.containsKey( name ) ) {
 			throw new ConversionException( "名前 %s に %s は含まれていません。".formatted( constants.keySet(), name ) );
