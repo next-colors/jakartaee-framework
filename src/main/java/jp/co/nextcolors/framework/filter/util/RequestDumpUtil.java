@@ -28,7 +28,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import lombok.NonNull;
@@ -192,13 +191,7 @@ public class RequestDumpUtil
 	public static void dumpCookies( @NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
 									@NonNull final String lf, @NonNull final String indent )
 	{
-		Cookie[] cookies = request.getCookies();
-
-		if ( ArrayUtils.isEmpty( cookies ) ) {
-			return;
-		}
-
-		Stream.of( cookies ).sorted( Comparator.comparing( Cookie::getName ) ).forEach( cookie -> {
+		Stream.ofNullable( request.getCookies() ).flatMap( Stream::of ).sorted( Comparator.comparing( Cookie::getName ) ).forEach( cookie -> {
 			buffer.append( indent );
 			buffer.append( "[Cookie] " ).append( cookie.getName() ).append( " = " ).append( cookie.getValue() );
 			buffer.append( lf );
