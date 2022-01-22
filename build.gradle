@@ -251,7 +251,6 @@ tasks.javadoc {
 
     options {
         encoding = StandardCharsets.UTF_8
-        charSet = StandardCharsets.UTF_8
         author = true
         links(
             'https://commons.apache.org/proper/commons-beanutils/apidocs/',
