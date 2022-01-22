@@ -38,8 +38,6 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 //-----------------------------------------------------------------------------
 // ビルド出力ディレクトリ
 buildDir = getProperty('build.dir.output')
-// コンパイル時の Java バージョン
-sourceCompatibility = JavaVersion.VERSION_17
 // コンパイル時に使用する文字エンコーディング
 tasks.withType(AbstractCompile).configureEach {
     options*.encoding = StandardCharsets.UTF_8
@@ -116,6 +114,14 @@ dependencies {
 //-----------------------------------------------------------------------------
 //    Plugin Configurations
 //-----------------------------------------------------------------------------
+// Java Plugin の設定
+java {
+    toolchain {
+        // ビルド時に使用する Java のバージョン
+        languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion)
+    }
+}
+
 // Gradle Lombok Plugin の設定
 lombok {
     version = getProperty('lombok.version')
