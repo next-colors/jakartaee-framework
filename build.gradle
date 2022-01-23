@@ -38,10 +38,6 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 //-----------------------------------------------------------------------------
 // ビルド出力ディレクトリ
 buildDir = getProperty('build.dir.output')
-// コンパイル時に使用する文字エンコーディング
-tasks.withType(AbstractCompile).configureEach {
-    options*.encoding = StandardCharsets.UTF_8
-}
 
 //-----------------------------------------------------------------------------
 //    Dependency Management
@@ -187,6 +183,11 @@ eclipse {
 //-----------------------------------------------------------------------------
 //    Tasks
 //-----------------------------------------------------------------------------
+// JVM 言語でコンパイルするタスク
+tasks.withType(AbstractCompile).configureEach {
+    options*.encoding = StandardCharsets.UTF_8
+}
+
 // JAR ファイルを構築するタスク
 tasks.jar {
     // マニフェストファイル
