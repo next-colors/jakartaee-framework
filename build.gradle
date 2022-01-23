@@ -185,7 +185,7 @@ eclipse {
 //-----------------------------------------------------------------------------
 // JVM 言語でコンパイルするタスク
 tasks.withType(AbstractCompile).configureEach {
-    options*.encoding = StandardCharsets.UTF_8
+    options.encoding = StandardCharsets.UTF_8
 }
 
 // JAR ファイルを構築するタスク
