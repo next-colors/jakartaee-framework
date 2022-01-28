@@ -204,7 +204,7 @@ tasks.test {
 tasks.register('delombok', DelombokTask) {
     description = 'Generates delomboked sources.'
 
-    classpath += compileJava.classpath
+    classpath += tasks.compileJava.classpath
 
     ext.outputDir = file("${buildDir}/${name}")
 
