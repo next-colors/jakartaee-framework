@@ -60,51 +60,39 @@ repositories {
 // 依存関係の設定
 dependencies {
     // アノテーションプロセッサ
-    annotationProcessor(
-        'org.projectlombok:lombok:latest.release'
-    )
+    annotationProcessor('org.projectlombok:lombok:latest.release')
 
     // パッケージに含めるライブラリ
-    api(
-        'com.google.guava:guava:latest.release',
-        'commons-beanutils:commons-beanutils:latest.release',
-        'commons-codec:commons-codec:latest.release',
-        'commons-io:commons-io:latest.release',
-        'io.github.classgraph:classgraph:latest.release',
-        'io.github.toolfactory:jvm-driver:latest.release',
-        'jp.co.future:uroborosql:latest.release',
-        'ognl:ognl:latest.release',
-        'org.apache.commons:commons-collections4:latest.release',
-        'org.apache.commons:commons-lang3:latest.release',
-        'org.jooq:jool:latest.release',
-        'org.jooq:jooq:latest.release',
-        'org.slf4j:slf4j-api:latest.release'
-    )
+    api('com.google.guava:guava:latest.release')
+    api('commons-beanutils:commons-beanutils:latest.release')
+    api('commons-codec:commons-codec:latest.release')
+    api('commons-io:commons-io:latest.release')
+    api('io.github.classgraph:classgraph:latest.release')
+    api('io.github.toolfactory:jvm-driver:latest.release')
+    api('jp.co.future:uroborosql:latest.release')
+    api('ognl:ognl:latest.release')
+    api('org.apache.commons:commons-collections4:latest.release')
+    api('org.apache.commons:commons-lang3:latest.release')
+    api('org.jooq:jool:latest.release')
+    api('org.jooq:jooq:latest.release')
+    api('org.slf4j:slf4j-api:latest.release')
 
     // コンパイル時にのみ必要なライブラリ
-    compileOnly(
-        'jakarta.platform:jakarta.jakartaee-api:8.+',
-        'org.glassfish:javax.faces:latest.release'
-    )
+    compileOnly('jakarta.platform:jakarta.jakartaee-api:8.+')
+    compileOnly('org.glassfish:javax.faces:latest.release')
 
     // テスト時にのみ必要なライブラリ
-    testImplementation(
-        'com.ninja-squad:DbSetup:latest.release',
-        'org.assertj:assertj-core:latest.release',
-        'org.assertj:assertj-db:latest.release',
-        'org.junit.jupiter:junit-jupiter-api:latest.release',
-        configurations.jmockit
-    )
+    testImplementation('com.ninja-squad:DbSetup:latest.release')
+    testImplementation('org.assertj:assertj-core:latest.release')
+    testImplementation('org.assertj:assertj-db:latest.release')
+    testImplementation('org.junit.jupiter:junit-jupiter-api:latest.release')
+    testImplementation(configurations.jmockit)
 
     // テスト実行時にのみ必要なライブラリ
-    testRuntimeOnly(
-        'org.junit.jupiter:junit-jupiter-engine:latest.release'
-    )
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:latest.release')
 
     // JMockit のライブラリ
-    jmockit(
-        'org.jmockit:jmockit:latest.release'
-    )
+    jmockit('org.jmockit:jmockit:latest.release')
 }
 
 //-----------------------------------------------------------------------------
@@ -192,8 +180,8 @@ tasks.withType(AbstractCompile).configureEach {
 tasks.jar {
     // マニフェストファイル
     manifest {
-        attributes('Created-By': GradleVersion.current(),
-                   'Build-Jdk': System.getProperty('java.vm.version'))
+        attributes['Created-By'] = GradleVersion.current()
+        attributes['Build-Jdk'] = System.getProperty("java.vm.version")
     }
 }
 
@@ -245,9 +233,9 @@ tasks.register('delombokFormatHelp', DelombokTask) {
 
 // Javadoc のタスク
 tasks.javadoc {
-    dependsOn(delombok)
+    dependsOn(tasks.delombok)
 
-    source = delombok.outputDir
+    source = tasks.delombok.outputDir
     failOnError = false
 
     options {
