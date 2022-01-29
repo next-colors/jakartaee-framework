@@ -213,7 +213,7 @@ tasks.register('delombok', DelombokTask) {
     }
 
     doFirst {
-        outputDir.deleteDir()
+        outputDir.delete()
     }
 }
 
