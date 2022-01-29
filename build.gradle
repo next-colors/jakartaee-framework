@@ -264,7 +264,7 @@ tasks.javadoc {
 tasks.eclipse {
     doFirst {
         // Buildship の設定
-        file('.settings/org.eclipse.buildship.core.prefs').withWriter {
+        layout.projectDirectory.file('.settings/org.eclipse.buildship.core.prefs').asFile.withWriter {
             it.println("connection.project.dir=${projectDir.relativePath(rootDir)}")
             it.println('eclipse.preferences.version=1')
         }
