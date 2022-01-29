@@ -206,7 +206,7 @@ tasks.register('delombok', DelombokTask) {
 
     group = lombok.NAME
 
-    classpath += tasks.compileJava.classpath
+    dependsOn(tasks.compileJava)
 
     ext.outputDir = layout.buildDirectory.dir(name).get().asFile
 
