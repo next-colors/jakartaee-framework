@@ -195,8 +195,8 @@ tasks.test {
     jvmArgs("-javaagent:${configurations.jmockit.files.first().path}")
 
     jacoco {
-        destinationFile = layout.buildDirectory.file("jacoco/jacocoTest.exec").get().asFile
-        classDumpDir = layout.buildDirectory.file("jacoco/classpathdumps").get().asFile
+        destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
+        classDumpDir = layout.buildDirectory.dir('jacoco/classpathdumps').get().asFile
     }
 }
 
