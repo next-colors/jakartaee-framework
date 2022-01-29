@@ -37,7 +37,7 @@ import io.franzbecker.gradle.lombok.task.DelombokTask
 //    Constant Properties
 //-----------------------------------------------------------------------------
 // ビルド出力ディレクトリ
-buildDir = getProperty('build.dir.output')
+layout.buildDirectory = layout.projectDirectory.dir(getProperty('build.dir.output'))
 
 //-----------------------------------------------------------------------------
 //    Dependency Management
@@ -195,8 +195,8 @@ tasks.test {
     jvmArgs("-javaagent:${configurations.jmockit.files.first().path}")
 
     jacoco {
-        destinationFile = file("${buildDir}/jacoco/jacocoTest.exec")
-        classDumpDir = file("${buildDir}/jacoco/classpathdumps")
+        destinationFile = layout.buildDirectory.file("jacoco/jacocoTest.exec").get().asFile
+        classDumpDir = layout.buildDirectory.file("jacoco/classpathdumps").get().asFile
     }
 }
 
@@ -206,7 +206,7 @@ tasks.register('delombok', DelombokTask) {
 
     classpath += tasks.compileJava.classpath
 
-    ext.outputDir = file("${buildDir}/${name}")
+    ext.outputDir = layout.buildDirectory.dir(name).get().asFile
 
     sourceSets.main.java.srcDirs.each {
         args(it, '-d', outputDir)
