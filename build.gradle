@@ -204,6 +204,8 @@ tasks.test {
 tasks.register('delombok', DelombokTask) {
     description = 'Generates delomboked sources.'
 
+    group = lombok.NAME
+
     classpath += tasks.compileJava.classpath
 
     ext.outputDir = layout.buildDirectory.dir(name).get().asFile
@@ -221,12 +223,16 @@ tasks.register('delombok', DelombokTask) {
 tasks.register('delombokHelp', DelombokTask) {
     description = 'Displays the help about delomboking.'
 
+    group = tasks.delombok.group
+
     args('--help')
 }
 
 // Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するタスク
 tasks.register('delombokFormatHelp', DelombokTask) {
     description = 'Displays the help about the format of delomboking.'
+
+    group = tasks.delombok.group
 
     args('--format-help')
 }
