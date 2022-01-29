@@ -181,7 +181,7 @@ tasks.jar {
     // マニフェストファイル
     manifest {
         attributes['Created-By'] = GradleVersion.current()
-        attributes['Build-Jdk'] = System.getProperty("java.vm.version")
+        attributes['Build-Jdk'] = System.getProperty('java.vm.version')
     }
 }
 
