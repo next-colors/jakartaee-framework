@@ -159,7 +159,7 @@ eclipse {
                             facet1.name <=> facet2.name
                         }
                         else {
-                            facet1.type.name() <=> facet2.type.name()
+                            facet2.type <=> facet1.type
                         }
                     }
                 }
