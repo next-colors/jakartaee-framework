@@ -17,12 +17,12 @@
 //    Plugins
 //-----------------------------------------------------------------------------
 plugins {
-    id 'java-library'
-    id 'jacoco'
-    id 'eclipse-wtp'
-    id 'com.github.ben-manes.versions' version 'latest.release'
-    id 'com.vanniktech.dependency.graph.generator' version 'latest.release'
-    id 'io.franzbecker.gradle-lombok' version 'latest.release'
+    id('java-library')
+    id('jacoco')
+    id('eclipse-wtp')
+    id('com.github.ben-manes.versions') version 'latest.release'
+    id('com.vanniktech.dependency.graph.generator') version 'latest.release'
+    id('io.franzbecker.gradle-lombok') version 'latest.release'
 }
 
 //-----------------------------------------------------------------------------
