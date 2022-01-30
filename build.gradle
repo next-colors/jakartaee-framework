@@ -210,7 +210,11 @@ tasks.register('delombok', DelombokTask) {
 
     ext.outputDir = layout.buildDirectory.dir(name).get().asFile
 
+    outputs.dir(outputDir)
+
     sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+
         args(it, '-d', outputDir)
     }
 
