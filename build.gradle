@@ -208,18 +208,20 @@ tasks.register('delombok', DelombokTask) {
 
     dependsOn(tasks.compileJava)
 
-    ext.outputDir = layout.buildDirectory.dir(name).get().asFile
+    ext.outputDir = layout.buildDirectory.dir(name).get()
 
     outputs.dir(outputDir)
 
     sourceSets.main.java.srcDirs.each {
-        inputs.dir(it)
+        if (it.exists()) {
+            inputs.dir(it)
 
-        args(it, '-d', outputDir)
+            args(it, '-d', outputDir)
+        }
     }
 
     doFirst {
-        outputDir.delete()
+        delete(outputDir)
     }
 }
 
@@ -275,7 +277,7 @@ tasks.eclipse {
     doFirst {
         // Buildship の設定
         layout.projectDirectory.file('.settings/org.eclipse.buildship.core.prefs').asFile.withWriter {
-            it.println("connection.project.dir=${projectDir.relativePath(rootDir)}")
+            it.println("connection.project.dir=${relativePath(rootDir)}")
             it.println('eclipse.preferences.version=1')
         }
     }
