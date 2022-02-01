@@ -192,7 +192,7 @@ tasks.test {
     ignoreFailures = true
 
     // JVM オプションに JMockit のモジュール読み込みを追加
-    jvmArgs("-javaagent:${configurations.jmockit.files.first().path}")
+    jvmArgs("-javaagent:${configurations.jmockit.files.first()}")
 
     jacoco {
         destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
