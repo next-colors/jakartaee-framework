@@ -109,6 +109,7 @@ java {
 // Gradle Lombok Plugin の設定
 lombok {
     version = getProperty('lombok.version')
+    sha256 = null
 }
 
 // Eclipse Plugin の設定
