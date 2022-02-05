@@ -131,14 +131,14 @@ eclipse {
                 }
 
                 // ライブラリ以外
-                List<ClasspathEntry> others = it.entries - libraries
+                it.entries -= libraries
 
                 // ファイル名でソート
                 libraries.sort {
                     it.library.file.name
                 }
 
-                it.entries = others + libraries
+                it.entries += libraries
             }
         }
     }
