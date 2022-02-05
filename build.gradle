@@ -135,7 +135,7 @@ eclipse {
 
                 // ファイル名でソート
                 libraries.sort {
-                    file(it.path).name
+                    it.library.file.name
                 }
 
                 it.entries = others + libraries
