@@ -148,11 +148,6 @@ eclipse {
         // プロジェクト・ファセットの設定
         facet {
             file {
-                beforeMerged {
-                    // 既存の設定内容をクリア
-                    facets.clear()
-                }
-
                 whenMerged {
                     // ファセットの種類、ファセット名でソート
                     facets.sort { facet1, facet2 ->
