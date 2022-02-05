@@ -126,7 +126,7 @@ eclipse {
         file {
             whenMerged {
                 // ライブラリ
-                Collection<ClasspathEntry> libraries = it.entries.findAll {
+                Collection<Library> libraries = it.entries.findAll {
                     it instanceof Library
                 }
 
