@@ -126,12 +126,12 @@ eclipse {
         file {
             whenMerged {
                 // ライブラリ
-                Collection<Library> libraries = it.entries.findAll {
+                List<Library> libraries = it.entries.findAll {
                     it instanceof Library
                 }
 
                 // ライブラリ以外
-                Collection<ClasspathEntry> others = it.entries - libraries
+                List<ClasspathEntry> others = it.entries - libraries
 
                 // ファイル名でソート
                 libraries.sort {
