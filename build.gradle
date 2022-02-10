@@ -29,7 +29,6 @@ plugins {
 //    Import Classes
 //-----------------------------------------------------------------------------
 import java.nio.charset.StandardCharsets
-import org.gradle.plugins.ide.eclipse.model.Library
 import io.franzbecker.gradle.lombok.task.DelombokTask
 
 //-----------------------------------------------------------------------------
@@ -118,28 +117,6 @@ eclipse {
         // Gradle ネーチャーを追加
         natures('org.eclipse.buildship.core.gradleprojectnature')
         buildCommand('org.eclipse.buildship.core.gradleprojectbuilder')
-    }
-
-    // .classpath の設定
-    classpath {
-        file {
-            whenMerged {
-                // ライブラリ
-                List<Library> libraries = it.entries.findAll {
-                    it instanceof Library
-                }
-
-                // ライブラリ以外
-                it.entries -= libraries
-
-                // ファイル名でソート
-                libraries.sort {
-                    it.library.file.name
-                }
-
-                it.entries += libraries
-            }
-        }
     }
 
     // WTP（Web Tools Platform）の設定
