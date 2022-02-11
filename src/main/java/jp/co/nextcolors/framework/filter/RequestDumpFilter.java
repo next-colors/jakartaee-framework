@@ -42,92 +42,83 @@ import jp.co.nextcolors.framework.filter.util.RequestDumpUtil;
 @Slf4j
 @ToString
 @EqualsAndHashCode
-public class RequestDumpFilter implements Filter
-{
-	//-------------------------------------------------------------------------
-	//    Private Constants
-	//-------------------------------------------------------------------------
-	/**
-	 * リクエスト（{@link HttpServletRequest}）の内容をダンプする際のインデントです。
-	 *
-	 */
-	private static final String INDENT = StringUtils.SPACE.repeat( 2 );
+public class RequestDumpFilter implements Filter {
+    //-------------------------------------------------------------------------
+    //    Private Constants
+    //-------------------------------------------------------------------------
+    /**
+     * リクエスト（{@link HttpServletRequest}）の内容をダンプする際のインデントです。
+     */
+    private static final String INDENT = StringUtils.SPACE.repeat(2);
 
-	/**
-	 * リクエスト（{@link HttpServletRequest}）の内容をダンプする際の改行文字です。
-	 *
-	 */
-	private static final String LF = System.lineSeparator();
+    /**
+     * リクエスト（{@link HttpServletRequest}）の内容をダンプする際の改行文字です。
+     */
+    private static final String LF = System.lineSeparator();
 
-	//-------------------------------------------------------------------------
-	//    Private Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * リクエスト（{@link HttpServletRequest}）の内容をダンプします。
-	 *
-	 * @param request
-	 *         リクエスト
-	 */
-	private void dump( @NonNull final HttpServletRequest request )
-	{
-		StringBuffer buffer = new StringBuffer();
-		buffer.append( LF );
-		buffer.append( LF );
-		buffer.append( "** Request Dump ***************************************************************" );
-		buffer.append( LF );
+    //-------------------------------------------------------------------------
+    //    Private Methods
+    //-------------------------------------------------------------------------
 
-		// リクエストのプロパティを文字列バッファにダンプ
-		RequestDumpUtil.dumpRequestProperties( buffer, request, LF, INDENT );
-		// セッションのプロパティを文字列バッファにダンプ
-		RequestDumpUtil.dumpSessionProperties( buffer, request, LF, INDENT );
-		// リクエストヘッダの内容を文字列バッファにダンプ
-		RequestDumpUtil.dumpRequestHeaders( buffer, request, LF, INDENT );
-		// リクエストパラメータの内容を文字列バッファにダンプ
-		RequestDumpUtil.dumpRequestParameters( buffer, request, LF, INDENT );
-		// クッキーの内容を文字列バッファにダンプ
-		RequestDumpUtil.dumpCookies( buffer, request, LF, INDENT );
+    /**
+     * リクエスト（{@link HttpServletRequest}）の内容をダンプします。
+     *
+     * @param request リクエスト
+     */
+    private void dump(@NonNull final HttpServletRequest request) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(LF);
+        buffer.append(LF);
+        buffer.append("** Request Dump ***************************************************************");
+        buffer.append(LF);
 
-		buffer.append( "*******************************************************************************" );
-		buffer.append( LF );
+        // リクエストのプロパティを文字列バッファにダンプ
+        RequestDumpUtil.dumpRequestProperties(buffer, request, LF, INDENT);
+        // セッションのプロパティを文字列バッファにダンプ
+        RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
+        // リクエストヘッダの内容を文字列バッファにダンプ
+        RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
+        // リクエストパラメータの内容を文字列バッファにダンプ
+        RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
+        // クッキーの内容を文字列バッファにダンプ
+        RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
 
-		log.atDebug().log( buffer.toString() );
-	}
+        buffer.append("*******************************************************************************");
+        buffer.append(LF);
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public void init( final FilterConfig filterConfig ) throws ServletException
-	{
-		// Do nothing.
-	}
+        log.atDebug().log(buffer.toString());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public void doFilter( @NonNull final ServletRequest request, @NonNull final ServletResponse response, @NonNull final FilterChain chain )
-				throws IOException, ServletException
-	{
-		if ( log.isDebugEnabled() && request instanceof HttpServletRequest httpServletRequest ) {
-			dump( httpServletRequest );
-		}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-		chain.doFilter( request, response );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init(final FilterConfig filterConfig) throws ServletException {
+        // Do nothing.
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public void destroy()
-	{
-		// Do nothing.
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doFilter(@NonNull final ServletRequest request, @NonNull final ServletResponse response, @NonNull final FilterChain chain)
+            throws IOException, ServletException {
+        if (log.isDebugEnabled() && request instanceof HttpServletRequest httpServletRequest) {
+            dump(httpServletRequest);
+        }
+
+        chain.doFilter(request, response);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void destroy() {
+        // Do nothing.
+    }
 }

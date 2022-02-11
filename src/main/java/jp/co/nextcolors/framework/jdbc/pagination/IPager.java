@@ -30,72 +30,56 @@ import jp.co.nextcolors.framework.data.pagination.IPageRequest;
 /**
  * レコードをページング検索するためのページャです。
  *
+ * @param <T> ページに含まれるレコードの型です。
  * @author hamana
- * @param <T>
- *         ページに含まれるレコードの型です。
  */
-public interface IPager<T>
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * レコードをページング検索します。
-	 *
-	 * @param <R>
-	 *         テーブルのレコードの型
-	 * @param pageRequest
-	 *         ページ付けの情報
-	 * @param table
-	 *         検索するテーブル
-	 * @param condition
-	 *         検索条件
-	 * @param order
-	 *         ソート順
-	 * @return 検索結果
-	 */
-	<R extends TableRecord<R>> IPage<T> fetchPage( IPageRequest pageRequest, Table<R> table,
-													Condition condition, OrderField<?>... order );
+public interface IPager<T> {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * レコードをページング検索します。
-	 *
-	 * @param <R>
-	 *         テーブルのレコードの型
-	 * @param pageRequest
-	 *         ページ付けの情報
-	 * @param table
-	 *         検索するテーブル
-	 * @param condition
-	 *         検索条件
-	 * @param order
-	 *         ソート順
-	 * @return 検索結果
-	 */
-	<R extends TableRecord<R>> IPage<T> fetchPage( IPageRequest pageRequest, Table<R> table,
-													Condition condition, Collection<? extends OrderField<?>> order );
+    /**
+     * レコードをページング検索します。
+     *
+     * @param <R>         テーブルのレコードの型
+     * @param pageRequest ページ付けの情報
+     * @param table       検索するテーブル
+     * @param condition   検索条件
+     * @param order       ソート順
+     * @return 検索結果
+     */
+    <R extends TableRecord<R>> IPage<T> fetchPage(IPageRequest pageRequest, Table<R> table,
+                                                  Condition condition, OrderField<?>... order);
 
-	/**
-	 * SQL ファイルを使用してレコードをページング検索します。
-	 *
-	 * @param pageRequest
-	 *         ページ付けの情報
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 * @return 検索結果
-	 */
-	IPage<T> fetchPageBySqlFile( IPageRequest pageRequest, Path sqlFilePath );
+    /**
+     * レコードをページング検索します。
+     *
+     * @param <R>         テーブルのレコードの型
+     * @param pageRequest ページ付けの情報
+     * @param table       検索するテーブル
+     * @param condition   検索条件
+     * @param order       ソート順
+     * @return 検索結果
+     */
+    <R extends TableRecord<R>> IPage<T> fetchPage(IPageRequest pageRequest, Table<R> table,
+                                                  Condition condition, Collection<? extends OrderField<?>> order);
 
-	/**
-	 * SQL ファイルを使用してレコードをページング検索します。
-	 *
-	 * @param pageRequest
-	 *         ページ付けの情報
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 * @param params
-	 *         パラメータ
-	 * @return 検索結果
-	 */
-	IPage<T> fetchPageBySqlFile( IPageRequest pageRequest, Path sqlFilePath, Map<String, Object> params );
+    /**
+     * SQL ファイルを使用してレコードをページング検索します。
+     *
+     * @param pageRequest ページ付けの情報
+     * @param sqlFilePath SQL ファイルのパス
+     * @return 検索結果
+     */
+    IPage<T> fetchPageBySqlFile(IPageRequest pageRequest, Path sqlFilePath);
+
+    /**
+     * SQL ファイルを使用してレコードをページング検索します。
+     *
+     * @param pageRequest ページ付けの情報
+     * @param sqlFilePath SQL ファイルのパス
+     * @param params      パラメータ
+     * @return 検索結果
+     */
+    IPage<T> fetchPageBySqlFile(IPageRequest pageRequest, Path sqlFilePath, Map<String, Object> params);
 }

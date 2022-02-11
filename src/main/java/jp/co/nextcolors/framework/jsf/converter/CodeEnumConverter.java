@@ -42,106 +42,93 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 /**
  * JSF でプロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
  *
+ * @param <E> 列挙型の型です。
+ * @param <C> 列挙型のコードの型です。
  * @author hamana
- * @param <E>
- *         列挙型の型です。
- * @param <C>
- *         列挙型のコードの型です。
  */
 @ToString
 @EqualsAndHashCode
-public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> implements Converter<E>
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 列挙型の型を表すクラスです。
-	 *
-	 */
-	private final Class<E> enumClass;
+public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> implements Converter<E> {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 列挙型の型を表すクラスです。
+     */
+    private final Class<E> enumClass;
 
-	/**
-	 * 列挙型のコードの型を表すクラスです。
-	 *
-	 */
-	private final Class<C> enumCodeClass;
+    /**
+     * 列挙型のコードの型を表すクラスです。
+     */
+    private final Class<C> enumCodeClass;
 
-	//-------------------------------------------------------------------------
-	//    Private Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * 変換に失敗した場合のメッセージを取得します。
-	 *
-	 * @param context
-	 *         Faces コンテキスト
-	 * @param component
-	 *         UI コンポーネント
-	 * @param value
-	 *         変換対象の値
-	 * @return 変換に失敗した場合のメッセージ
-	 */
-	private FacesMessage getConversionErrorMessage( @NonNull final FacesContext context,
-													@NonNull final UIComponent component,
-													@NonNull final Object value )
-	{
-		Object label = MessageFactory.getLabel( context, component );
+    //-------------------------------------------------------------------------
+    //    Private Methods
+    //-------------------------------------------------------------------------
 
-		return MessageFactory.getMessage( context, EnumConverter.ENUM_ID, value, null, label );
-	}
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    protected CodeEnumConverter() {
+        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	@SuppressWarnings("unchecked")
-	protected CodeEnumConverter()
-	{
-		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (clazz.getSuperclass() == CodeEnumConverter.class) {
+                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
+                enumClass = (Class<E>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
+                enumCodeClass = (Class<C>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
 
-		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
-			if ( clazz.getSuperclass() == CodeEnumConverter.class ) {
-				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				enumClass = (Class<E>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
-				enumCodeClass = (Class<C>) GenericUtil.getActualClass( paramTypes[ 1 ], typeVariableMap );
+                return;
+            }
+        }
 
-				return;
-			}
-		}
+        throw new RuntimeException("列挙型の型/列挙型のコードの型を表すクラスを設定できませんでした。");
+    }
 
-		throw new RuntimeException( "列挙型の型/列挙型のコードの型を表すクラスを設定できませんでした。" );
-	}
+    /**
+     * 変換に失敗した場合のメッセージを取得します。
+     *
+     * @param context   Faces コンテキスト
+     * @param component UI コンポーネント
+     * @param value     変換対象の値
+     * @return 変換に失敗した場合のメッセージ
+     */
+    private FacesMessage getConversionErrorMessage(@NonNull final FacesContext context,
+                                                   @NonNull final UIComponent component,
+                                                   @NonNull final Object value) {
+        Object label = MessageFactory.getLabel(context, component);
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public E getAsObject( @NonNull final FacesContext context, @NonNull final UIComponent component, final String value )
-	{
-		if ( StringUtils.isBlank( value ) ) {
-			return null;
-		}
+        return MessageFactory.getMessage(context, EnumConverter.ENUM_ID, value, null, label);
+    }
 
-		C code = enumCodeClass.cast( ConvertUtils.convert( value, enumCodeClass ) );
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-		try {
-			return ICodeEnum.codeOf( enumClass, code );
-		}
-		catch ( IllegalArgumentException e ) {
-			throw new ConverterException( getConversionErrorMessage( context, component, code ), e );
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public E getAsObject(@NonNull final FacesContext context, @NonNull final UIComponent component, final String value) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String getAsString( @NonNull final FacesContext context, @NonNull final UIComponent component, final E value )
-	{
-		return Optional.ofNullable( value ).map( val -> val.getCode().toString() ).orElse( StringUtils.EMPTY );
-	}
+        C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
+
+        try {
+            return ICodeEnum.codeOf(enumClass, code);
+        } catch (IllegalArgumentException e) {
+            throw new ConverterException(getConversionErrorMessage(context, component, code), e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getAsString(@NonNull final FacesContext context, @NonNull final UIComponent component, final E value) {
+        return Optional.ofNullable(value).map(val -> val.getCode().toString()).orElse(StringUtils.EMPTY);
+    }
 }

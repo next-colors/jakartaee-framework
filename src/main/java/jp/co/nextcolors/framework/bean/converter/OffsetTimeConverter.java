@@ -32,18 +32,16 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = OffsetTime.class)
-public class OffsetTimeConverter extends JavaTimeConverter<OffsetTime>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected OffsetTime getDateTime( @NonNull final OffsetDateTime offsetDateTime )
-	{
-		return offsetDateTime.toOffsetTime();
-	}
+public class OffsetTimeConverter extends JavaTimeConverter<OffsetTime> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected OffsetTime getDateTime(@NonNull final OffsetDateTime offsetDateTime) {
+        return offsetDateTime.toOffsetTime();
+    }
 }

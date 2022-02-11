@@ -35,30 +35,27 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = ULong.class)
-public class ULongConverter extends UnsignedNumberConverter<ULong, Long>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected ULong getUnsignedValue( @NonNull final Long signedValue ) throws NumberFormatException
-	{
-		return ULong.valueOf( BigInteger.valueOf( signedValue ) );
-	}
+public class ULongConverter extends UnsignedNumberConverter<ULong, Long> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param defaultValue
-	 *         デフォルト値
-	 */
-	public ULongConverter( final ULong defaultValue )
-	{
-		super( defaultValue );
-	}
+    /**
+     * @param defaultValue デフォルト値
+     */
+    public ULongConverter(final ULong defaultValue) {
+        super(defaultValue);
+    }
+
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ULong getUnsignedValue(@NonNull final Long signedValue) throws NumberFormatException {
+        return ULong.valueOf(BigInteger.valueOf(signedValue));
+    }
 }

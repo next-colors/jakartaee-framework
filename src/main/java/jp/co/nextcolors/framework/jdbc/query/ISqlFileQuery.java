@@ -22,48 +22,43 @@ import org.jooq.Query;
 /**
  * SQL ファイルを使用して問い合わせ行うためのベースとなるインターフェースです。
  *
+ * @param <S> {@link ISqlFileQuery} のサブタイプです。
  * @author hamana
- * @param <S>
- *         {@link ISqlFileQuery} のサブタイプです。
  */
-public interface ISqlFileQuery<S extends ISqlFileQuery<S>>
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * パラメータを追加します。
-	 *
-	 * @param name
-	 *         パラメータ名
-	 * @param value
-	 *         パラメータ値
-	 * @return このインスタンス自身
-	 */
-	S addParameter( String name, Object value );
+public interface ISqlFileQuery<S extends ISqlFileQuery<S>> {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * パラメータを追加します。
-	 *
-	 * @param params
-	 *         パラメータ
-	 * @return このインスタンス自身
-	 */
-	S addParameters( Map<String, Object> params );
+    /**
+     * パラメータを追加します。
+     *
+     * @param name  パラメータ名
+     * @param value パラメータ値
+     * @return このインスタンス自身
+     */
+    S addParameter(String name, Object value);
 
-	/**
-	 * パラメータを設定します。
-	 *
-	 * @param params
-	 *         パラメータ
-	 * @return このインスタンス自身
-	 */
-	S setParameters( Map<String, Object> params );
+    /**
+     * パラメータを追加します。
+     *
+     * @param params パラメータ
+     * @return このインスタンス自身
+     */
+    S addParameters(Map<String, Object> params);
 
-	/**
-	 * クエリを取得します。
-	 *
-	 * @return クエリ
-	 */
-	Query getQuery();
+    /**
+     * パラメータを設定します。
+     *
+     * @param params パラメータ
+     * @return このインスタンス自身
+     */
+    S setParameters(Map<String, Object> params);
+
+    /**
+     * クエリを取得します。
+     *
+     * @return クエリ
+     */
+    Query getQuery();
 }

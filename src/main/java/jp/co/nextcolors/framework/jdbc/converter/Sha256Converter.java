@@ -30,22 +30,20 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
-public class Sha256Converter extends HashConverter
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String to( final String userObject )
-	{
-		if ( Objects.isNull( userObject ) ) {
-			return null;
-		}
+public class Sha256Converter extends HashConverter {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-		return DigestUtils.sha256Hex( userObject );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String to(final String userObject) {
+        if (Objects.isNull(userObject)) {
+            return null;
+        }
+
+        return DigestUtils.sha256Hex(userObject);
+    }
 }

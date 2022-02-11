@@ -33,30 +33,27 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = UByte.class)
-public class UByteConverter extends UnsignedNumberConverter<UByte, Byte>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected UByte getUnsignedValue( @NonNull final Byte signedValue ) throws NumberFormatException
-	{
-		return UByte.valueOf( signedValue.shortValue() );
-	}
+public class UByteConverter extends UnsignedNumberConverter<UByte, Byte> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param defaultValue
-	 *         デフォルト値
-	 */
-	public UByteConverter( final UByte defaultValue )
-	{
-		super( defaultValue );
-	}
+    /**
+     * @param defaultValue デフォルト値
+     */
+    public UByteConverter(final UByte defaultValue) {
+        super(defaultValue);
+    }
+
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected UByte getUnsignedValue(@NonNull final Byte signedValue) throws NumberFormatException {
+        return UByte.valueOf(signedValue.shortValue());
+    }
 }

@@ -32,73 +32,63 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 /**
  * プロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
  *
+ * @param <E> 列挙型の型です。
+ * @param <C> 列挙型のコードの型です。
  * @author hamana
- * @param <E>
- *         列挙型の型です。
- * @param <C>
- *         列挙型のコードの型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> extends AbstractConverter
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 列挙型の型を表すクラスです。
-	 *
-	 */
-	private final Class<E> enumClass;
+public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> extends AbstractConverter {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 列挙型の型を表すクラスです。
+     */
+    private final Class<E> enumClass;
 
-	/**
-	 * 列挙型のコードの型を表すクラスです。
-	 *
-	 */
-	private final Class<C> enumCodeClass;
+    /**
+     * 列挙型のコードの型を表すクラスです。
+     */
+    private final Class<C> enumCodeClass;
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	@SuppressWarnings("unchecked")
-	protected CodeEnumConverter()
-	{
-		super( null );
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    protected CodeEnumConverter() {
+        super(null);
 
-		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
 
-		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
-			if ( clazz.getSuperclass() == CodeEnumConverter.class ) {
-				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				enumClass = (Class<E>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
-				enumCodeClass = (Class<C>) GenericUtil.getActualClass( paramTypes[ 1 ], typeVariableMap );
+        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (clazz.getSuperclass() == CodeEnumConverter.class) {
+                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
+                enumClass = (Class<E>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
+                enumCodeClass = (Class<C>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		throw new RuntimeException( "列挙型の型/列挙型のコードの型を表すクラスを設定できませんでした。" );
-	}
+        throw new RuntimeException("列挙型の型/列挙型のコードの型を表すクラスを設定できませんでした。");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Throwable
-	{
-		C code = enumCodeClass.cast( ConvertUtils.convert( value, enumCodeClass ) );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
+        C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
-		return type.cast( ICodeEnum.codeOf( enumClass, code ) );
-	}
+        return type.cast(ICodeEnum.codeOf(enumClass, code));
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected Class<E> getDefaultType()
-	{
-		return enumClass;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<E> getDefaultType() {
+        return enumClass;
+    }
 }

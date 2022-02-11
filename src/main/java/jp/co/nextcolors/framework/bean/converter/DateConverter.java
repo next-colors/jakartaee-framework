@@ -56,209 +56,193 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Date.class)
-public class DateConverter extends DateTimeConverter
-{
-	//-------------------------------------------------------------------------
-	//    Private Constants
-	//-------------------------------------------------------------------------
-	/**
-	 * 日付のコンポーネントです。
-	 *
-	 */
-	private static final String[] DATE_COMPONENTS =
-			StringUtils.split( DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.getPattern(), '-' );
+public class DateConverter extends DateTimeConverter {
+    //-------------------------------------------------------------------------
+    //    Private Constants
+    //-------------------------------------------------------------------------
+    /**
+     * 日付のコンポーネントです。
+     */
+    private static final String[] DATE_COMPONENTS =
+            StringUtils.split(DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.getPattern(), '-');
 
-	/**
-	 * 時間のコンポーネントです。
-	 *
-	 */
-	private static final String[] TIME_COMPONENTS =
-			StringUtils.split( DateFormatUtils.ISO_8601_EXTENDED_TIME_FORMAT.getPattern(), ':' );
+    /**
+     * 時間のコンポーネントです。
+     */
+    private static final String[] TIME_COMPONENTS =
+            StringUtils.split(DateFormatUtils.ISO_8601_EXTENDED_TIME_FORMAT.getPattern(), ':');
 
-	/**
-	 * タイムゾーンのコンポーネントです。
-	 *
-	 */
-	private static final String[] TIME_ZONE_COMPONENTS = { StringUtils.EMPTY, "Z", "ZZ", "ZZZ" };
+    /**
+     * タイムゾーンのコンポーネントです。
+     */
+    private static final String[] TIME_ZONE_COMPONENTS = {StringUtils.EMPTY, "Z", "ZZ", "ZZZ"};
 
-	/**
-	 * 日付のセパレータです。
-	 *
-	 */
-	private static final String[] DATE_SEPARATORS = { StringUtils.EMPTY, "-", "/" };
+    /**
+     * 日付のセパレータです。
+     */
+    private static final String[] DATE_SEPARATORS = {StringUtils.EMPTY, "-", "/"};
 
-	/**
-	 * 時間のセパレータです。
-	 *
-	 */
-	private static final String[] TIME_SEPARATORS = { StringUtils.EMPTY, ":" };
+    /**
+     * 時間のセパレータです。
+     */
+    private static final String[] TIME_SEPARATORS = {StringUtils.EMPTY, ":"};
 
-	/**
-	 * 日付と時間のセパレータです。
-	 *
-	 */
-	private static final String[] DATE_TIME_SEPARATORS = { StringUtils.EMPTY, StringUtils.SPACE, "'T'" };
+    /**
+     * 日付と時間のセパレータです。
+     */
+    private static final String[] DATE_TIME_SEPARATORS = {StringUtils.EMPTY, StringUtils.SPACE, "'T'"};
 
-	//-------------------------------------------------------------------------
-	//    Private Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@code java.time} の日付/時間を {@link Date} 型への日付に変換します。
-	 *
-	 * @param value
-	 *         {@code java.time} の日付/時間
-	 * @return {@link Date} 型の日付
-	 */
-	private Date toDate( @NonNull final Temporal value )
-	{
-		ZoneId zone = Optional.ofNullable( getTimeZone() ).map( TimeZone::toZoneId ).orElseGet( ZoneId::systemDefault );
+    //-------------------------------------------------------------------------
+    //    Private Methods
+    //-------------------------------------------------------------------------
 
-		if ( value instanceof Instant instant ) {
-			return Date.from( instant );
-		}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+    public DateConverter() {
+        super(null);
+        setPatterns(getDateTimeFormats());
+    }
 
-		if ( value instanceof LocalDate localDate ) {
-			return Date.from( localDate.atStartOfDay( zone ).toInstant() );
-		}
+    /**
+     * {@code java.time} の日付/時間を {@link Date} 型への日付に変換します。
+     *
+     * @param value {@code java.time} の日付/時間
+     * @return {@link Date} 型の日付
+     */
+    private Date toDate(@NonNull final Temporal value) {
+        ZoneId zone = Optional.ofNullable(getTimeZone()).map(TimeZone::toZoneId).orElseGet(ZoneId::systemDefault);
 
-		if ( value instanceof LocalDateTime localDateTime ) {
-			return Date.from( localDateTime.atZone( zone ).toInstant() );
-		}
+        if (value instanceof Instant instant) {
+            return Date.from(instant);
+        }
 
-		if ( value instanceof LocalTime localTime ) {
-			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, zone ).toLocalDate();
+        if (value instanceof LocalDate localDate) {
+            return Date.from(localDate.atStartOfDay(zone).toInstant());
+        }
 
-			return Date.from( localDate.atTime( localTime ).atZone( zone ).toInstant() );
-		}
+        if (value instanceof LocalDateTime localDateTime) {
+            return Date.from(localDateTime.atZone(zone).toInstant());
+        }
 
-		if ( value instanceof OffsetDateTime offsetDateTime ) {
-			return Date.from( offsetDateTime.toInstant() );
-		}
+        if (value instanceof LocalTime localTime) {
+            LocalDate localDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
 
-		if ( value instanceof OffsetTime offsetTime ) {
-			LocalDate localDate = LocalDateTime.ofInstant( Instant.EPOCH, zone ).toLocalDate();
+            return Date.from(localDate.atTime(localTime).atZone(zone).toInstant());
+        }
 
-			return Date.from( localDate.atTime( offsetTime ).toInstant() );
-		}
+        if (value instanceof OffsetDateTime offsetDateTime) {
+            return Date.from(offsetDateTime.toInstant());
+        }
 
-		if ( value instanceof ZonedDateTime zonedDateTime ) {
-			return Date.from( zonedDateTime.toInstant() );
-		}
+        if (value instanceof OffsetTime offsetTime) {
+            LocalDate localDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
 
-		throw new IllegalArgumentException( "%s はサポートされていない日付/時間の型です。"
-											.formatted( value.getClass().getName() ) );
-	}
+            return Date.from(localDate.atTime(offsetTime).toInstant());
+        }
 
-	/**
-	 * 日付のフォーマットを取得します。
-	 *
-	 * @return 日付のフォーマット
-	 */
-	private Set<String> getDateFormats()
-	{
-		return Stream.of( DATE_SEPARATORS )
-						.map( separator -> String.join( separator, DATE_COMPONENTS ) )
-						.collect( Collectors.toUnmodifiableSet() );
-	}
+        if (value instanceof ZonedDateTime zonedDateTime) {
+            return Date.from(zonedDateTime.toInstant());
+        }
 
-	/**
-	 * 時間のフォーマットを取得します。
-	 *
-	 * @return 時間のフォーマット
-	 */
-	private Set<String> getTimeFormats()
-	{
-		Set<String> timeFormats = new HashSet<>();
+        throw new IllegalArgumentException("%s はサポートされていない日付/時間の型です。"
+                .formatted(value.getClass().getName()));
+    }
 
-		Stream.of( TIME_SEPARATORS ).forEach( separator ->
-			IntStream.rangeClosed( 1, TIME_COMPONENTS.length ).forEach( length -> {
-				String[] timeComponents = Arrays.copyOf( TIME_COMPONENTS, length );
+    /**
+     * 日付のフォーマットを取得します。
+     *
+     * @return 日付のフォーマット
+     */
+    private Set<String> getDateFormats() {
+        return Stream.of(DATE_SEPARATORS)
+                .map(separator -> String.join(separator, DATE_COMPONENTS))
+                .collect(Collectors.toUnmodifiableSet());
+    }
 
-				String timeFormat = String.join( separator, timeComponents );
+    /**
+     * 時間のフォーマットを取得します。
+     *
+     * @return 時間のフォーマット
+     */
+    private Set<String> getTimeFormats() {
+        Set<String> timeFormats = new HashSet<>();
 
-				Stream.of( TIME_ZONE_COMPONENTS ).forEach( timeZoneComponent ->
-					timeFormats.add( timeFormat + timeZoneComponent )
-				);
-			} )
-		);
+        Stream.of(TIME_SEPARATORS).forEach(separator ->
+                IntStream.rangeClosed(1, TIME_COMPONENTS.length).forEach(length -> {
+                    String[] timeComponents = Arrays.copyOf(TIME_COMPONENTS, length);
 
-		return Set.copyOf( timeFormats );
-	}
+                    String timeFormat = String.join(separator, timeComponents);
 
-	/**
-	 * 日時のフォーマットを取得します。
-	 *
-	 * @return 日時のフォーマット
-	 */
-	private String[] getDateTimeFormats()
-	{
-		Set<String> dateFormats = getDateFormats();
-		Set<String> timeFormats = getTimeFormats();
+                    Stream.of(TIME_ZONE_COMPONENTS).forEach(timeZoneComponent ->
+                            timeFormats.add(timeFormat + timeZoneComponent)
+                    );
+                })
+        );
 
-		Set<String> dateTimeFormats = new HashSet<>();
+        return Set.copyOf(timeFormats);
+    }
 
-		dateFormats.forEach( dateFormat ->
-			timeFormats.forEach( timeFormat ->
-				Stream.of( DATE_TIME_SEPARATORS ).forEach( separator ->
-					dateTimeFormats.add( String.join( separator, dateFormat, timeFormat ) )
-				)
-			)
-		);
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-		dateTimeFormats.addAll( dateFormats );
-		dateTimeFormats.addAll( timeFormats );
+    /**
+     * 日時のフォーマットを取得します。
+     *
+     * @return 日時のフォーマット
+     */
+    private String[] getDateTimeFormats() {
+        Set<String> dateFormats = getDateFormats();
+        Set<String> timeFormats = getTimeFormats();
 
-		return dateTimeFormats.toArray( String[]::new );
-	}
+        Set<String> dateTimeFormats = new HashSet<>();
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Exception
-	{
-		if ( value instanceof Temporal temporal ) {
-			Date date = toDate( temporal );
+        dateFormats.forEach(dateFormat ->
+                timeFormats.forEach(timeFormat ->
+                        Stream.of(DATE_TIME_SEPARATORS).forEach(separator ->
+                                dateTimeFormats.add(String.join(separator, dateFormat, timeFormat))
+                        )
+                )
+        );
 
-			return type.cast( date );
-		}
+        dateTimeFormats.addAll(dateFormats);
+        dateTimeFormats.addAll(timeFormats);
 
-		if ( !String.class.isInstance( value ) ) {
-			return super.convertToType( type, value );
-		}
+        return dateTimeFormats.toArray(String[]::new);
+    }
 
-		try {
-			Date date = DateUtils.parseDateStrictly( Objects.toString( value ), getPatterns() );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Exception {
+        if (value instanceof Temporal temporal) {
+            Date date = toDate(temporal);
 
-			return type.cast( date );
-		}
-		catch ( ParseException e ) {
-			throw new ConversionException( "%s を %s に変換できませんでした。使用した日時フォーマットは %s です。"
-											.formatted( value, type.getName(), Arrays.toString( getPatterns() ) ),
-											e );
-		}
-	}
+            return type.cast(date);
+        }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected Class<Date> getDefaultType()
-	{
-		return Date.class;
-	}
+        if (!(value instanceof String)) {
+            return super.convertToType(type, value);
+        }
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	public DateConverter()
-	{
-		super( null );
-		setPatterns( getDateTimeFormats() );
-	}
+        try {
+            Date date = DateUtils.parseDateStrictly(Objects.toString(value), getPatterns());
+
+            return type.cast(date);
+        } catch (ParseException e) {
+            throw new ConversionException("%s を %s に変換できませんでした。使用した日時フォーマットは %s です。"
+                    .formatted(value, type.getName(), Arrays.toString(getPatterns())),
+                    e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<Date> getDefaultType() {
+        return Date.class;
+    }
 }

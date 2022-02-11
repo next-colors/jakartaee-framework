@@ -47,148 +47,133 @@ import lombok.ToString;
 /**
  * SQL ファイルを使用して問い合わせ行うための抽象クラスです。
  *
+ * @param <S> {@link ISqlFileQuery} のサブタイプです。
  * @author hamana
- * @param <S>
- *         {@link ISqlFileQuery} のサブタイプです。
  */
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode
-public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFileQuery<S>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * DSL コンテキストです。
-	 *
-	 */
-	@NonNull
-	protected final DSLContext dslContext;
+public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFileQuery<S> {
+    //-------------------------------------------------------------------------
+    //    Protected Properties
+    //-------------------------------------------------------------------------
+    /**
+     * DSL コンテキストです。
+     */
+    @NonNull
+    protected final DSLContext dslContext;
 
-	/**
-	 * SQL ファイルのパスです。
-	 *
-	 */
-	@NonNull
-	protected final Path sqlFilePath;
+    /**
+     * SQL ファイルのパスです。
+     */
+    @NonNull
+    protected final Path sqlFilePath;
 
-	/**
-	 * パラメータです。
-	 *
-	 */
-	protected final Map<String, Object> params = new HashMap<>();
+    /**
+     * パラメータです。
+     */
+    protected final Map<String, Object> params = new HashMap<>();
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param dslContext
-	 *         DSL コンテキスト
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 * @param params
-	 *         パラメータ
-	 */
-	protected SqlFileQuery( @NonNull final DSLContext dslContext,
-							@NonNull final Path sqlFilePath,
-							@NonNull final Map<String, Object> params )
-	{
-		this( dslContext, sqlFilePath );
-		this.params.putAll( params );
-	}
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * SQL にバインドするパラメータを生成します。
-	 *
-	 * @return SQL にバインドするパラメータ
-	 */
-	protected Map<String, Object> createBindParameters()
-	{
-		Map<String, Object> params = new HashMap<>();
+    /**
+     * @param dslContext  DSL コンテキスト
+     * @param sqlFilePath SQL ファイルのパス
+     * @param params      パラメータ
+     */
+    protected SqlFileQuery(@NonNull final DSLContext dslContext,
+                           @NonNull final Path sqlFilePath,
+                           @NonNull final Map<String, Object> params) {
+        this(dslContext, sqlFilePath);
+        this.params.putAll(params);
+    }
 
-		this.params.forEach( ( key, value ) -> {
-			if ( value instanceof Collection<?> collection ) {
-				value = collection.toArray();
-			}
+    /**
+     * SQL にバインドするパラメータを生成します。
+     *
+     * @return SQL にバインドするパラメータ
+     */
+    protected Map<String, Object> createBindParameters() {
+        Map<String, Object> params = new HashMap<>();
 
-			if ( value instanceof Object[] array ) {
-				value = DSL.list( Stream.of( array ).map( DSL::val ).toList() );
-			}
+        this.params.forEach((key, value) -> {
+            if (value instanceof Collection<?> collection) {
+                value = collection.toArray();
+            }
 
-			params.put( key, value );
-		} );
+            if (value instanceof Object[] array) {
+                value = DSL.list(Stream.of(array).map(DSL::val).toList());
+            }
 
-		return Collections.unmodifiableMap( params );
-	}
+            params.put(key, value);
+        });
 
-	/**
-	 * SQL のコンテキストを生成します。
-	 *
-	 * @return SQL のコンテキスト
-	 */
-	@SneakyThrows({ IOException.class, SQLException.class })
-	protected SqlContext createSqlContext()
-	{
-		String sql = Files.readString( sqlFilePath );
-		Map<String, Object> params = createBindParameters();
+        return Collections.unmodifiableMap(params);
+    }
 
-		try ( Connection connection = dslContext.configuration().connectionProvider().acquire() ) {
-			SqlConfig sqlConfig = UroboroSQL.builder( connection ).build();
+    /**
+     * SQL のコンテキストを生成します。
+     *
+     * @return SQL のコンテキスト
+     */
+    @SneakyThrows({IOException.class, SQLException.class})
+    protected SqlContext createSqlContext() {
+        String sql = Files.readString(sqlFilePath);
+        Map<String, Object> params = createBindParameters();
 
-			Dialect dialect = sqlConfig.getDialect();
+        try (Connection connection = dslContext.configuration().connectionProvider().acquire()) {
+            SqlConfig sqlConfig = UroboroSQL.builder(connection).build();
 
-			SqlParser sqlParser = new SqlParserImpl( sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false );
+            Dialect dialect = sqlConfig.getDialect();
 
-			SqlContext sqlContext = sqlConfig.context();
-			sqlContext.paramMap( params );
-			sqlContext.param( Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar() );
+            SqlParser sqlParser = new SqlParserImpl(sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false);
 
-			ContextTransformer contextTransformer = sqlParser.parse();
-			contextTransformer.transform( sqlContext );
+            SqlContext sqlContext = sqlConfig.context();
+            sqlContext.paramMap(params);
+            sqlContext.param(Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar());
 
-			return sqlContext;
-		}
-	}
+            ContextTransformer contextTransformer = sqlParser.parse();
+            contextTransformer.transform(sqlContext);
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public S addParameter( @NonNull final String name, final Object value )
-	{
-		params.put( name, value );
+            return sqlContext;
+        }
+    }
 
-		return (S) this;
-	}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public S addParameters( @NonNull final Map<String, Object> params )
-	{
-		this.params.putAll( params );
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public S addParameter(@NonNull final String name, final Object value) {
+        params.put(name, value);
 
-		return (S) this;
-	}
+        return (S) this;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public S setParameters( @NonNull final Map<String, Object> params )
-	{
-		this.params.clear();
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public S addParameters(@NonNull final Map<String, Object> params) {
+        this.params.putAll(params);
 
-		return addParameters( params );
-	}
+        return (S) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public S setParameters(@NonNull final Map<String, Object> params) {
+        this.params.clear();
+
+        return addParameters(params);
+    }
 }

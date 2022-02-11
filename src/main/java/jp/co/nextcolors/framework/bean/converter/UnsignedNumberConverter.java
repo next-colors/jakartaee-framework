@@ -32,98 +32,85 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 /**
  * 符号なし整数に変換するための抽象クラスです。
  *
+ * @param <U> 符号なし整数の型です。
+ * @param <S> 符号あり整数の型です。
  * @author hamana
- * @param <U>
- *         符号なし整数の型です。
- * @param <S>
- *         符号あり整数の型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class UnsignedNumberConverter<U extends UNumber, S extends Number> extends NumberConverter
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 符号なし整数の型を表すクラスです。
-	 *
-	 */
-	private final Class<U> unsignedNumberClass;
+public abstract class UnsignedNumberConverter<U extends UNumber, S extends Number> extends NumberConverter {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 符号なし整数の型を表すクラスです。
+     */
+    private final Class<U> unsignedNumberClass;
 
-	/**
-	 * 符号あり整数の型を表すクラスです。
-	 *
-	 */
-	private final Class<S> signedNumberClass;
+    /**
+     * 符号あり整数の型を表すクラスです。
+     */
+    private final Class<S> signedNumberClass;
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * 符号なし整数を取得します。
-	 *
-	 * @param signedValue
-	 *         符号あり整数
-	 * @return 符号なし整数
-	 * @throws NumberFormatException
-	 *         符号あり整数が符号なし整数に変換できない場合
-	 */
-	protected abstract U getUnsignedValue( S signedValue ) throws NumberFormatException;
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	@SuppressWarnings("unchecked")
-	protected UnsignedNumberConverter()
-	{
-		super( false );
+    @SuppressWarnings("unchecked")
+    protected UnsignedNumberConverter() {
+        super(false);
 
-		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
 
-		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
-			if ( clazz.getSuperclass() == UnsignedNumberConverter.class ) {
-				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				unsignedNumberClass = (Class<U>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
-				signedNumberClass = (Class<S>) GenericUtil.getActualClass( paramTypes[ 1 ], typeVariableMap );
+        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (clazz.getSuperclass() == UnsignedNumberConverter.class) {
+                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
+                unsignedNumberClass = (Class<U>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
+                signedNumberClass = (Class<S>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		throw new RuntimeException( "符号なし整数の型/符号あり整数の型を表すクラスを設定できませんでした。" );
-	}
+        throw new RuntimeException("符号なし整数の型/符号あり整数の型を表すクラスを設定できませんでした。");
+    }
 
-	/**
-	 * @param defaultValue
-	 *         デフォルト値
-	 */
-	protected UnsignedNumberConverter( final U defaultValue )
-	{
-		this();
-		setDefaultValue( defaultValue );
-	}
+    /**
+     * @param defaultValue デフォルト値
+     */
+    protected UnsignedNumberConverter(final U defaultValue) {
+        this();
+        setDefaultValue(defaultValue);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected <T> T convertToType( @NonNull final Class<T> type, final Object value ) throws Throwable
-	{
-		S signedValue = super.convertToType( signedNumberClass, value );
+    /**
+     * 符号なし整数を取得します。
+     *
+     * @param signedValue 符号あり整数
+     * @return 符号なし整数
+     * @throws NumberFormatException 符号あり整数が符号なし整数に変換できない場合
+     */
+    protected abstract U getUnsignedValue(S signedValue) throws NumberFormatException;
 
-		if ( Objects.isNull( signedValue ) ) {
-			return null;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected <T> T convertToType(@NonNull final Class<T> type, final Object value) throws Throwable {
+        S signedValue = super.convertToType(signedNumberClass, value);
 
-		return type.cast( getUnsignedValue( signedValue ) );
-	}
+        if (Objects.isNull(signedValue)) {
+            return null;
+        }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected Class<U> getDefaultType()
-	{
-		return unsignedNumberClass;
-	}
+        return type.cast(getUnsignedValue(signedValue));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<U> getDefaultType() {
+        return unsignedNumberClass;
+    }
 }

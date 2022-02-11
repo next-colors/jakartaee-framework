@@ -32,41 +32,35 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
-public class UrlConverter extends AbstractConverter<String, URL>
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	public UrlConverter()
-	{
-		super( String.class, URL.class );
-	}
+public class UrlConverter extends AbstractConverter<String, URL> {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+    public UrlConverter() {
+        super(String.class, URL.class);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public URL from( final String databaseObject )
-	{
-		if ( Objects.isNull( databaseObject ) ) {
-			return null;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public URL from(final String databaseObject) {
+        if (Objects.isNull(databaseObject)) {
+            return null;
+        }
 
-		return URL.class.cast( ConvertUtils.convert( databaseObject, URL.class ) );
-	}
+        return (URL) ConvertUtils.convert(databaseObject, URL.class);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String to( final URL userObject )
-	{
-		if ( Objects.isNull( userObject ) ) {
-			return null;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String to(final URL userObject) {
+        if (Objects.isNull(userObject)) {
+            return null;
+        }
 
-		return userObject.toString();
-	}
+        return userObject.toString();
+    }
 }

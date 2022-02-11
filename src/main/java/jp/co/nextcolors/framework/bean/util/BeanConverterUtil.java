@@ -34,34 +34,33 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  * @author hamana
  */
 @UtilityClass
-public class BeanConverterUtil
-{
-	//-------------------------------------------------------------------------
-	//    Static Initializer
-	//-------------------------------------------------------------------------
-	static {
-		ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.JVM_DRIVER;
-	}
+public class BeanConverterUtil {
+    //-------------------------------------------------------------------------
+    //    Static Initializer
+    //-------------------------------------------------------------------------
+    static {
+        ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.JVM_DRIVER;
+    }
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@link ConvertUtilsBean} にコンバータを登録します。
-	 *
-	 * @see ConvertUtils#register(Converter, Class)
-	 */
-	public static void registerConverters()
-	{
-		try ( ScanResult scanResult = new ClassGraph().enableAllInfo().scan() ) {
-			scanResult.getClassesImplementing( Converter.class )
-						.filter( converterClassInfo -> converterClassInfo.hasAnnotation( BeanConverter.class ) )
-						.loadClasses( Converter.class ).forEach( Unchecked.consumer( converterClass -> {
-				Converter converter = converterClass.getConstructor().newInstance();
-				Class<?> targetClass = converterClass.getAnnotation( BeanConverter.class ).forClass();
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-				ConvertUtils.register( converter, targetClass );
-			} ) );
-		}
-	}
+    /**
+     * {@link ConvertUtilsBean} にコンバータを登録します。
+     *
+     * @see ConvertUtils#register(Converter, Class)
+     */
+    public static void registerConverters() {
+        try (ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
+            scanResult.getClassesImplementing(Converter.class)
+                    .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class))
+                    .loadClasses(Converter.class).forEach(Unchecked.consumer(converterClass -> {
+                        Converter converter = converterClass.getConstructor().newInstance();
+                        Class<?> targetClass = converterClass.getAnnotation(BeanConverter.class).forClass();
+
+                        ConvertUtils.register(converter, targetClass);
+                    }));
+        }
+    }
 }

@@ -37,39 +37,34 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 /**
  * JSON のプロパティをプロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
  *
+ * @param <T> 列挙型の型です。
+ * @param <C> 列挙型のコードの型です。
  * @author hamana
- * @param <T>
- *         列挙型の型です。
- * @param <C>
- *         列挙型のコードの型です。
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode
 @SuppressWarnings("serial")
-public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, C> implements JsonbDeserializer<T>, Serializable
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public T deserialize( @NonNull final JsonParser parser, @NonNull final DeserializationContext ctx, @NonNull final Type rtType )
-	{
-		Class<T> enumClass = (Class<T>) rtType;
-		Class<C> enumCodeClass = ICodeEnum.getCodeClass( enumClass );
+public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, C> implements JsonbDeserializer<T>, Serializable {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-		try {
-			C code = enumCodeClass.cast( ConvertUtils.convert( parser.getString(), enumCodeClass ) );
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public T deserialize(@NonNull final JsonParser parser, @NonNull final DeserializationContext ctx, @NonNull final Type rtType) {
+        Class<T> enumClass = (Class<T>) rtType;
+        Class<C> enumCodeClass = ICodeEnum.getCodeClass(enumClass);
 
-			return ICodeEnum.codeOf( enumClass, code );
-		}
-		catch ( Exception e ) {
-			throw new JsonbException( ExceptionUtils.getMessage( e ), e );
-		}
-	}
+        try {
+            C code = enumCodeClass.cast(ConvertUtils.convert(parser.getString(), enumCodeClass));
+
+            return ICodeEnum.codeOf(enumClass, code);
+        } catch (Exception e) {
+            throw new JsonbException(ExceptionUtils.getMessage(e), e);
+        }
+    }
 }

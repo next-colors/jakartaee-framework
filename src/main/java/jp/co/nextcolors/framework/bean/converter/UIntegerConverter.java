@@ -33,30 +33,27 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = UInteger.class)
-public class UIntegerConverter extends UnsignedNumberConverter<UInteger, Integer>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected UInteger getUnsignedValue( @NonNull final Integer signedValue ) throws NumberFormatException
-	{
-		return UInteger.valueOf( signedValue.longValue() );
-	}
+public class UIntegerConverter extends UnsignedNumberConverter<UInteger, Integer> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param defaultValue
-	 *         デフォルト値
-	 */
-	public UIntegerConverter( final UInteger defaultValue )
-	{
-		super( defaultValue );
-	}
+    /**
+     * @param defaultValue デフォルト値
+     */
+    public UIntegerConverter(final UInteger defaultValue) {
+        super(defaultValue);
+    }
+
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected UInteger getUnsignedValue(@NonNull final Integer signedValue) throws NumberFormatException {
+        return UInteger.valueOf(signedValue.longValue());
+    }
 }

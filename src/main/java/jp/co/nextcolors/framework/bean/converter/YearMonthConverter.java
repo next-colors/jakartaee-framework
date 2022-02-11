@@ -32,18 +32,16 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = YearMonth.class)
-public class YearMonthConverter extends JavaTimeConverter<YearMonth>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected YearMonth getDateTime( @NonNull final OffsetDateTime offsetDateTime )
-	{
-		return YearMonth.from( offsetDateTime );
-	}
+public class YearMonthConverter extends JavaTimeConverter<YearMonth> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected YearMonth getDateTime(@NonNull final OffsetDateTime offsetDateTime) {
+        return YearMonth.from(offsetDateTime);
+    }
 }

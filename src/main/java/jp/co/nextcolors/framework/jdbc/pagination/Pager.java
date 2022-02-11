@@ -46,101 +46,91 @@ import jp.co.nextcolors.framework.jdbc.record.mapper.BeanRecordMapper;
 /**
  * {@link IPager} の実装クラスです。
  *
+ * @param <T> ページに含まれるレコードの型です。
  * @author hamana
- * @param <T>
- *         ページに含まれるレコードの型です。
  */
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Pager<T> implements IPager<T>
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * DSL コンテキストです。
-	 *
-	 */
-	@NonNull
-	private final DSLContext dslContext;
+public class Pager<T> implements IPager<T> {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * DSL コンテキストです。
+     */
+    @NonNull
+    private final DSLContext dslContext;
 
-	/**
-	 * ページに含まれるレコードの型を表すクラスです。
-	 *
-	 */
-	@NonNull
-	private final Class<T> resultClass;
+    /**
+     * ページに含まれるレコードの型を表すクラスです。
+     */
+    @NonNull
+    private final Class<T> resultClass;
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public <R extends TableRecord<R>> IPage<T> fetchPage( @NonNull final IPageRequest pageRequest,
-															@NonNull final Table<R> table,
-															final Condition condition,
-															@NonNull final OrderField<?>... order )
-	{
-		return fetchPage( pageRequest, table, condition, List.of( order ) );
-	}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public <R extends TableRecord<R>> IPage<T> fetchPage( @NonNull final IPageRequest pageRequest,
-															@NonNull final Table<R> table,
-															final Condition condition,
-															@NonNull final Collection<? extends OrderField<?>> order )
-	{
-		SelectSeekStepN<R> query = dslContext.selectFrom( table ).where( condition ).orderBy( order );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <R extends TableRecord<R>> IPage<T> fetchPage(@NonNull final IPageRequest pageRequest,
+                                                         @NonNull final Table<R> table,
+                                                         final Condition condition,
+                                                         @NonNull final OrderField<?>... order) {
+        return fetchPage(pageRequest, table, condition, List.of(order));
+    }
 
-		int totalElements = dslContext.fetchCount( query );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <R extends TableRecord<R>> IPage<T> fetchPage(@NonNull final IPageRequest pageRequest,
+                                                         @NonNull final Table<R> table,
+                                                         final Condition condition,
+                                                         @NonNull final Collection<? extends OrderField<?>> order) {
+        SelectSeekStepN<R> query = dslContext.selectFrom(table).where(condition).orderBy(order);
 
-		List<T> elements = query.offset( pageRequest.getOffset() )
-								.limit( pageRequest.getPageSize() )
-							.fetchInto( resultClass );
+        int totalElements = dslContext.fetchCount(query);
 
-		return new Page<>( pageRequest, elements, totalElements );
-	}
+        List<T> elements = query.offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize())
+                .fetchInto(resultClass);
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public IPage<T> fetchPageBySqlFile( @NonNull final IPageRequest pageRequest, @NonNull final Path sqlFilePath )
-	{
-		return fetchPageBySqlFile( pageRequest, sqlFilePath, Collections.emptyMap() );
-	}
+        return new Page<>(pageRequest, elements, totalElements);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public IPage<T> fetchPageBySqlFile( @NonNull final IPageRequest pageRequest,
-										@NonNull final Path sqlFilePath,
-										@NonNull final Map<String, Object> params )
-	{
-		ISqlFileSelect select = new SqlFileSelect( dslContext, sqlFilePath, params );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IPage<T> fetchPageBySqlFile(@NonNull final IPageRequest pageRequest,
+                                       @NonNull final Path sqlFilePath) {
+        return fetchPageBySqlFile(pageRequest, sqlFilePath, Collections.emptyMap());
+    }
 
-		Query query = select.getQuery();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IPage<T> fetchPageBySqlFile(@NonNull final IPageRequest pageRequest,
+                                       @NonNull final Path sqlFilePath,
+                                       @NonNull final Map<String, Object> params) {
+        ISqlFileSelect select = new SqlFileSelect(dslContext, sqlFilePath, params);
 
-		Table<Record> table = DSL.table( '(' + query.getSQL() + ')', query.getBindValues().toArray() );
+        Query query = select.getQuery();
 
-		int totalElements = dslContext.fetchCount( table.as( "q" ) );
+        Table<Record> table = DSL.table('(' + query.getSQL() + ')', query.getBindValues().toArray());
 
-		select.addParameter( "offset", pageRequest.getOffset() );
-		select.addParameter( "limit", pageRequest.getPageSize() );
+        int totalElements = dslContext.fetchCount(table.as("q"));
 
-		List<T> elements = select.fetch().map( new BeanRecordMapper<>( resultClass, dslContext.configuration() ) );
+        select.addParameter("offset", pageRequest.getOffset());
+        select.addParameter("limit", pageRequest.getPageSize());
 
-		return new Page<>( pageRequest, elements, totalElements );
-	}
+        List<T> elements = select.fetch().map(new BeanRecordMapper<>(resultClass, dslContext.configuration()));
+
+        return new Page<>(pageRequest, elements, totalElements);
+    }
 }

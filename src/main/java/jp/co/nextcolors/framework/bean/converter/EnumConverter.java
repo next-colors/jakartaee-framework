@@ -36,111 +36,98 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 /**
  * 列挙型の列挙型定数に変換するための抽象クラスです。
  *
+ * @param <E> 列挙型の型です。
  * @author hamana
- * @param <E>
- *         列挙型の型です。
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 列挙型の型を表すクラスです。
-	 *
-	 */
-	private final Class<E> enumClass;
+public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 列挙型の型を表すクラスです。
+     */
+    private final Class<E> enumClass;
 
-	//-------------------------------------------------------------------------
-	//    Private Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * 指定した序数の列挙型定数に変換します。
-	 *
-	 * @param ordinal
-	 *         序数
-	 * @return 列挙型定数
-	 * @throws ConversionException
-	 *         指定した序数の列挙型定数がない場合
-	 */
-	private E convert( final int ordinal )
-	{
-		Map<Integer, E> constants = Stream.of( enumClass.getEnumConstants() ).collect( Collectors.toMap( Enum::ordinal, Function.identity() ) );
+    //-------------------------------------------------------------------------
+    //    Private Methods
+    //-------------------------------------------------------------------------
 
-		if ( !constants.containsKey( ordinal ) ) {
-			throw new ConversionException( "序数 %s に %s は含まれていません。".formatted( constants.keySet(), ordinal ) );
-		}
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    protected EnumConverter() {
+        super(null);
 
-		return constants.get( ordinal );
-	}
+        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
 
-	/**
-	 * 指定した名前の列挙型定数に変換します。
-	 *
-	 * @param name
-	 *         名前
-	 * @return 列挙型定数
-	 * @throws ConversionException
-	 *         指定した名前の列挙型定数がない場合
-	 */
-	private E convert( @NonNull final String name )
-	{
-		Map<String, E> constants = Stream.of( enumClass.getEnumConstants() ).collect( Collectors.toMap( Enum::name, Function.identity() ) );
+        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (clazz.getSuperclass() == EnumConverter.class) {
+                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
+                enumClass = (Class<E>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
 
-		if ( !constants.containsKey( name ) ) {
-			throw new ConversionException( "名前 %s に %s は含まれていません。".formatted( constants.keySet(), name ) );
-		}
+                return;
+            }
+        }
 
-		return constants.get( name );
-	}
+        throw new RuntimeException("列挙型の型を表すクラスを設定できませんでした。");
+    }
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	@SuppressWarnings("unchecked")
-	protected EnumConverter()
-	{
-		super( null );
+    /**
+     * 指定した序数の列挙型定数に変換します。
+     *
+     * @param ordinal 序数
+     * @return 列挙型定数
+     * @throws ConversionException 指定した序数の列挙型定数がない場合
+     */
+    private E convert(final int ordinal) {
+        Map<Integer, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
 
-		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+        if (!constants.containsKey(ordinal)) {
+            throw new ConversionException("序数 %s に %s は含まれていません。".formatted(constants.keySet(), ordinal));
+        }
 
-		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
-			if ( clazz.getSuperclass() == EnumConverter.class ) {
-				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				enumClass = (Class<E>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
+        return constants.get(ordinal);
+    }
 
-				return;
-			}
-		}
+    /**
+     * 指定した名前の列挙型定数に変換します。
+     *
+     * @param name 名前
+     * @return 列挙型定数
+     * @throws ConversionException 指定した名前の列挙型定数がない場合
+     */
+    private E convert(@NonNull final String name) {
+        Map<String, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::name, Function.identity()));
 
-		throw new RuntimeException( "列挙型の型を表すクラスを設定できませんでした。" );
-	}
+        if (!constants.containsKey(name)) {
+            throw new ConversionException("名前 %s に %s は含まれていません。".formatted(constants.keySet(), name));
+        }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Throwable
-	{
-		String key = Objects.toString( value );
+        return constants.get(name);
+    }
 
-		if ( NumberUtils.isDigits( key ) ) {
-			return type.cast( convert( NumberUtils.toInt( key ) ) );
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
+        String key = Objects.toString(value);
 
-		return type.cast( convert( key ) );
-	}
+        if (NumberUtils.isDigits(key)) {
+            return type.cast(convert(NumberUtils.toInt(key)));
+        }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected Class<E> getDefaultType()
-	{
-		return enumClass;
-	}
+        return type.cast(convert(key));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<E> getDefaultType() {
+        return enumClass;
+    }
 }

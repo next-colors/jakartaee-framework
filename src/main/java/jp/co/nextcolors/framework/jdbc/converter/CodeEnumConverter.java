@@ -32,114 +32,99 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 /**
  * プロパティにコードを持つ列挙型の値を DB のデータ型に準拠した値に変換するための抽象クラスです。
  *
+ * @param <E> 列挙型の型です。
+ * @param <C> 列挙型のコードの型です。
+ * @param <D> DB のデータ型に準拠した型です。
  * @author hamana
- * @param <E>
- *         列挙型の型です。
- * @param <C>
- *         列挙型のコードの型です。
- * @param <D>
- *         DB のデータ型に準拠した型です。
  */
 @ToString
 @EqualsAndHashCode
 @SuppressWarnings("serial")
-public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, D> implements Converter<D, E>
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 列挙型の型を表すクラスです。
-	 *
-	 */
-	private final Class<E> enumClass;
+public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, D> implements Converter<D, E> {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 列挙型の型を表すクラスです。
+     */
+    private final Class<E> enumClass;
 
-	/**
-	 * 列挙型のコードの型を表すクラスです。
-	 *
-	 */
-	private final Class<C> enumCodeClass;
+    /**
+     * 列挙型のコードの型を表すクラスです。
+     */
+    private final Class<C> enumCodeClass;
 
-	/**
-	 * DB のデータ型に準拠した型を表すクラスです。
-	 *
-	 */
-	private final Class<D> databaseObjectClass;
+    /**
+     * DB のデータ型に準拠した型を表すクラスです。
+     */
+    private final Class<D> databaseObjectClass;
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	@SuppressWarnings("unchecked")
-	protected CodeEnumConverter()
-	{
-		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    protected CodeEnumConverter() {
+        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
 
-		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
-			if ( clazz.getSuperclass() == CodeEnumConverter.class ) {
-				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				enumClass = (Class<E>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
-				enumCodeClass = (Class<C>) GenericUtil.getActualClass( paramTypes[ 1 ], typeVariableMap );
-				databaseObjectClass = (Class<D>) GenericUtil.getActualClass( paramTypes[ 2 ], typeVariableMap );
+        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (clazz.getSuperclass() == CodeEnumConverter.class) {
+                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
+                enumClass = (Class<E>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
+                enumCodeClass = (Class<C>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
+                databaseObjectClass = (Class<D>) GenericUtil.getActualClass(paramTypes[2], typeVariableMap);
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		throw new RuntimeException( "列挙型の型/列挙型のコードの型/DB のデータ型に準拠した型を表すクラスを設定できませんでした。" );
-	}
+        throw new RuntimeException("列挙型の型/列挙型のコードの型/DB のデータ型に準拠した型を表すクラスを設定できませんでした。");
+    }
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public E from( final D databaseObject )
-	{
-		if ( Objects.isNull( databaseObject ) ) {
-			return null;
-		}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-		C code = enumCodeClass.cast( ConvertUtils.convert( databaseObject, enumCodeClass ) );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public E from(final D databaseObject) {
+        if (Objects.isNull(databaseObject)) {
+            return null;
+        }
 
-		return ICodeEnum.codeOf( enumClass, code );
-	}
+        C code = enumCodeClass.cast(ConvertUtils.convert(databaseObject, enumCodeClass));
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public D to( final E userObject )
-	{
-		if ( Objects.isNull( userObject ) ) {
-			return null;
-		}
+        return ICodeEnum.codeOf(enumClass, code);
+    }
 
-		C code = userObject.getCode();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public D to(final E userObject) {
+        if (Objects.isNull(userObject)) {
+            return null;
+        }
 
-		return databaseObjectClass.cast( ConvertUtils.convert( code, databaseObjectClass ) );
-	}
+        C code = userObject.getCode();
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public Class<D> fromType()
-	{
-		return databaseObjectClass;
-	}
+        return databaseObjectClass.cast(ConvertUtils.convert(code, databaseObjectClass));
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public Class<E> toType()
-	{
-		return enumClass;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<D> fromType() {
+        return databaseObjectClass;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<E> toType() {
+        return enumClass;
+    }
 }

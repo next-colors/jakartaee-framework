@@ -32,18 +32,16 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Instant.class)
-public class InstantConverter extends JavaTimeConverter<Instant>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected Instant getDateTime( @NonNull final OffsetDateTime offsetDateTime )
-	{
-		return offsetDateTime.toInstant();
-	}
+public class InstantConverter extends JavaTimeConverter<Instant> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Instant getDateTime(@NonNull final OffsetDateTime offsetDateTime) {
+        return offsetDateTime.toInstant();
+    }
 }

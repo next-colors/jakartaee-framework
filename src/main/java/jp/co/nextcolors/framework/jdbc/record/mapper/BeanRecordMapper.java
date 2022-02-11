@@ -38,67 +38,61 @@ import lombok.ToString;
 /**
  * レコードを Bean（JavaBeans）に変換するための {@link RecordMapper} の実装クラスです。
  *
+ * @param <R> レコードの型です。
+ * @param <B> 変換する Bean（JavaBeans）の型です。
  * @author hamana
- * @param <R>
- *         レコードの型です。
- * @param <B>
- *         変換する Bean（JavaBeans）の型です。
  */
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 変換する Bean（JavaBeans）の型を表すクラスです。
-	 *
-	 */
-	@NonNull
-	private final Class<B> beanClass;
+public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B> {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 変換する Bean（JavaBeans）の型を表すクラスです。
+     */
+    @NonNull
+    private final Class<B> beanClass;
 
-	/**
-	 * {@link RecordMapper} が動作する構成です。
-	 *
-	 */
-	@NonNull
-	private final Configuration configuration;
+    /**
+     * {@link RecordMapper} が動作する構成です。
+     */
+    @NonNull
+    private final Configuration configuration;
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@SneakyThrows(ReflectiveOperationException.class)
-	@Override
-	public B map( final R record )
-	{
-		if ( Objects.isNull( record ) ) {
-			return null;
-		}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-		B bean = beanClass.getConstructor().newInstance();
+    /**
+     * {@inheritDoc}
+     */
+    @SneakyThrows(ReflectiveOperationException.class)
+    @Override
+    public B map(final R record) {
+        if (Objects.isNull(record)) {
+            return null;
+        }
 
-		Stream.of( record.fields() ).forEach( Unchecked.consumer( field -> {
-			String propertyName = CaseFormat.CAMEL_CASE.convert( field.getName() );
+        B bean = beanClass.getConstructor().newInstance();
 
-			if ( !PropertyUtils.isWriteable( bean, propertyName ) ) {
-				return;
-			}
+        Stream.of(record.fields()).forEach(Unchecked.consumer(field -> {
+            String propertyName = CaseFormat.CAMEL_CASE.convert(field.getName());
 
-			Class<?> propertyType = PropertyUtils.getPropertyType( bean, propertyName );
+            if (!PropertyUtils.isWriteable(bean, propertyName)) {
+                return;
+            }
 
-			DataType<?> dataType = DefaultDataType.getDataType( configuration.dialect(), propertyType );
+            Class<?> propertyType = PropertyUtils.getPropertyType(bean, propertyName);
 
-			Object value = record.get( field.getQualifiedName(), dataType.getConverter() );
+            DataType<?> dataType = DefaultDataType.getDataType(configuration.dialect(), propertyType);
 
-			BeanUtils.setProperty( bean, propertyName, value );
-		} ) );
+            Object value = record.get(field.getQualifiedName(), dataType.getConverter());
 
-		return bean;
-	}
+            BeanUtils.setProperty(bean, propertyName, value);
+        }));
+
+        return bean;
+    }
 }

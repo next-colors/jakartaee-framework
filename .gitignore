@@ -7,6 +7,9 @@
 /.settings/*
 !/.settings/org.eclipse.jdt.ui.prefs
 
+# IntelliJ IDEA
+/.idea/
+
 # Gradle
 /.gradle/
 

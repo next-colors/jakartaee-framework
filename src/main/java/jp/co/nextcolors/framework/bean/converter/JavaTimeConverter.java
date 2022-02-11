@@ -36,86 +36,77 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 /**
  * {@code java.time} の日付/時間に変換するための抽象クラスです。
  *
+ * @param <JT> 日付/時間の型です。
  * @author hamana
- * @param <JT>
- *         日付/時間の型です。
  */
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractConverter
-{
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * 日付/時間の型を表すクラスです。
-	 *
-	 */
-	private final Class<JT> javaTimeClass;
+public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractConverter {
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * 日付/時間の型を表すクラスです。
+     */
+    private final Class<JT> javaTimeClass;
 
-	//-------------------------------------------------------------------------
-	//    Protected Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * タイムゾーン ID です。
-	 *
-	 */
-	@NonNull
-	protected ZoneId zone = ZoneId.systemDefault();
+    //-------------------------------------------------------------------------
+    //    Protected Properties
+    //-------------------------------------------------------------------------
+    /**
+     * タイムゾーン ID です。
+     */
+    @NonNull
+    protected ZoneId zone = ZoneId.systemDefault();
 
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * 日付/時間を取得します。
-	 *
-	 * @param offsetDateTime
-	 *         UTC/グリニッジからのオフセット付きの日時
-	 * @return 日付/時間
-	 */
-	protected abstract JT getDateTime( OffsetDateTime offsetDateTime );
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	@SuppressWarnings("unchecked")
-	protected JavaTimeConverter()
-	{
-		super( null );
+    @SuppressWarnings("unchecked")
+    protected JavaTimeConverter() {
+        super(null);
 
-		Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap( getClass() );
+        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
 
-		for ( Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass() ) {
-			if ( clazz.getSuperclass() == JavaTimeConverter.class ) {
-				Type[] paramTypes = GenericUtil.getGenericParameters( clazz.getGenericSuperclass() );
-				javaTimeClass = (Class<JT>) GenericUtil.getActualClass( paramTypes[ 0 ], typeVariableMap );
+        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (clazz.getSuperclass() == JavaTimeConverter.class) {
+                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
+                javaTimeClass = (Class<JT>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
 
-				return;
-			}
-		}
+                return;
+            }
+        }
 
-		throw new RuntimeException( "日付/時間の型を表すクラスを設定できませんでした。" );
-	}
+        throw new RuntimeException("日付/時間の型を表すクラスを設定できませんでした。");
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected <T> T convertToType( @NonNull final Class<T> type, @NonNull final Object value ) throws Throwable
-	{
-		Date date = Date.class.cast( ConvertUtils.convert( value, Date.class ) );
+    /**
+     * 日付/時間を取得します。
+     *
+     * @param offsetDateTime UTC/グリニッジからのオフセット付きの日時
+     * @return 日付/時間
+     */
+    protected abstract JT getDateTime(OffsetDateTime offsetDateTime);
 
-		OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant( date.toInstant(), zone );
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
+        Date date = (Date) ConvertUtils.convert(value, Date.class);
 
-		return type.cast( getDateTime( offsetDateTime ) );
-	}
+        OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(date.toInstant(), zone);
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected Class<JT> getDefaultType()
-	{
-		return javaTimeClass;
-	}
+        return type.cast(getDateTime(offsetDateTime));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Class<JT> getDefaultType() {
+        return javaTimeClass;
+    }
 }

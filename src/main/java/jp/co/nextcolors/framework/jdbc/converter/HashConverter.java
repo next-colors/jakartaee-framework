@@ -28,26 +28,23 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
-public abstract class HashConverter extends AbstractConverter<String, String>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	protected HashConverter()
-	{
-		super( String.class, String.class );
-	}
+public abstract class HashConverter extends AbstractConverter<String, String> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+    protected HashConverter() {
+        super(String.class, String.class);
+    }
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String from( final String databaseObject )
-	{
-		return databaseObject;
-	}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String from(final String databaseObject) {
+        return databaseObject;
+    }
 }

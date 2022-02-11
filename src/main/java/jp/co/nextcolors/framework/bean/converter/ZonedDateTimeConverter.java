@@ -32,18 +32,16 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = ZonedDateTime.class)
-public class ZonedDateTimeConverter extends JavaTimeConverter<ZonedDateTime>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected ZonedDateTime getDateTime( @NonNull final OffsetDateTime offsetDateTime )
-	{
-		return offsetDateTime.toZonedDateTime();
-	}
+public class ZonedDateTimeConverter extends JavaTimeConverter<ZonedDateTime> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ZonedDateTime getDateTime(@NonNull final OffsetDateTime offsetDateTime) {
+        return offsetDateTime.toZonedDateTime();
+    }
 }

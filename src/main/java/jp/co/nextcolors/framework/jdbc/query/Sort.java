@@ -42,116 +42,105 @@ import lombok.NonNull;
 @Getter
 @EqualsAndHashCode
 @SuppressWarnings("serial")
-public class Sort implements Serializable
-{
-	//-------------------------------------------------------------------------
-	//    Public Classes
-	//-------------------------------------------------------------------------
-	/**
-	 * ソート順です。
-	 *
-	 * @author hamana
-	 */
-	@AllArgsConstructor(staticName = "by")
-	@Getter
-	@EqualsAndHashCode
-	public static class Order implements Serializable
-	{
-		//---------------------------------------------------------------------
-		//    Private Properties
-		//---------------------------------------------------------------------
-		/**
-		 * プロパティ名/カラム名です。
-		 *
-		 */
-		@NonNull
-		private final String name;
+public class Sort implements Serializable {
+    //-------------------------------------------------------------------------
+    //    Public Classes
+    //-------------------------------------------------------------------------
 
-		/**
-		 * ソートの順序です。
-		 *
-		 */
-		@NonNull
-		private final SortOrder sortOrder;
+    /**
+     * ソート順です。
+     */
+    @NonNull
+    private final Collection<Order> orders;
 
-		//---------------------------------------------------------------------
-		//    Public Methods
-		//---------------------------------------------------------------------
-		/**
-		 * ソート順を生成します。
-		 *
-		 * @param name
-		 *         プロパティ名/カラム名
-		 * @return ソート順
-		 */
-		public static Order by( @NonNull final String name )
-		{
-			return by( name, SortOrder.DEFAULT );
-		}
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 */
-		@Override
-		public String toString()
-		{
-			String columnName = CaseFormat.LOWER_SNAKE_CASE.convert( name );
+    /**
+     * ソートを生成します。
+     *
+     * @param orders ソート順
+     * @return ソート
+     */
+    public static Sort by(@NonNull final Order... orders) {
+        return by(List.of(orders));
+    }
 
-			String direction = Strings.emptyToNull( sortOrder.toSQL().toUpperCase() );
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-			return Joiner.on( StringUtils.SPACE ).skipNulls().join( columnName, direction );
-		}
-	}
+    /**
+     * ソートを結合します。
+     *
+     * @param sort 結合するソート
+     * @return 結合したソート
+     */
+    public Sort and(@NonNull final Sort sort) {
+        List<Order> orders = new ArrayList<>();
+        orders.addAll(this.orders);
+        orders.addAll(sort.getOrders());
 
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * ソート順です。
-	 *
-	 */
-	@NonNull
-	private final Collection<Order> orders;
+        return by(List.copyOf(orders));
+    }
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * ソートを生成します。
-	 *
-	 * @param orders
-	 *         ソート順
-	 * @return ソート
-	 */
-	public static Sort by( @NonNull final Order... orders )
-	{
-		return by( List.of( orders ) );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return StringUtils.join(orders, ", ");
+    }
 
-	/**
-	 * ソートを結合します。
-	 *
-	 * @param sort
-	 *         結合するソート
-	 * @return 結合したソート
-	 */
-	public Sort and( @NonNull final Sort sort )
-	{
-		List<Order> orders = new ArrayList<>();
-		orders.addAll( this.orders );
-		orders.addAll( sort.getOrders() );
+    /**
+     * ソート順です。
+     *
+     * @author hamana
+     */
+    @AllArgsConstructor(staticName = "by")
+    @Getter
+    @EqualsAndHashCode
+    public static class Order implements Serializable {
+        //---------------------------------------------------------------------
+        //    Private Properties
+        //---------------------------------------------------------------------
+        /**
+         * プロパティ名/カラム名です。
+         */
+        @NonNull
+        private final String name;
 
-		return by( List.copyOf( orders ) );
-	}
+        /**
+         * ソートの順序です。
+         */
+        @NonNull
+        private final SortOrder sortOrder;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String toString()
-	{
-		return StringUtils.join( orders, ", " );
-	}
+        //---------------------------------------------------------------------
+        //    Public Methods
+        //---------------------------------------------------------------------
+
+        /**
+         * ソート順を生成します。
+         *
+         * @param name プロパティ名/カラム名
+         * @return ソート順
+         */
+        public static Order by(@NonNull final String name) {
+            return by(name, SortOrder.DEFAULT);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            String columnName = CaseFormat.LOWER_SNAKE_CASE.convert(name);
+
+            String direction = Strings.emptyToNull(sortOrder.toSQL().toUpperCase());
+
+            return Joiner.on(StringUtils.SPACE).skipNulls().join(columnName, direction);
+        }
+    }
 }

@@ -34,56 +34,45 @@ import lombok.ToString;
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFileWrite
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param dslContext
-	 *         DSL コンテキスト
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 */
-	public SqlFileWrite( @NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath )
-	{
-		super( dslContext, sqlFilePath );
-	}
+public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFileWrite {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * @param dslContext
-	 *         DSL コンテキスト
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 * @param params
-	 *         パラメータ
-	 */
-	public SqlFileWrite( @NonNull final DSLContext dslContext,
-							@NonNull final Path sqlFilePath,
-							@NonNull final Map<String, Object> params )
-	{
-		super( dslContext, sqlFilePath, params );
-	}
+    /**
+     * @param dslContext  DSL コンテキスト
+     * @param sqlFilePath SQL ファイルのパス
+     */
+    public SqlFileWrite(@NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath) {
+        super(dslContext, sqlFilePath);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public Query getQuery()
-	{
-		SqlContext sqlContext = createSqlContext();
+    /**
+     * @param dslContext  DSL コンテキスト
+     * @param sqlFilePath SQL ファイルのパス
+     * @param params      パラメータ
+     */
+    public SqlFileWrite(@NonNull final DSLContext dslContext,
+                        @NonNull final Path sqlFilePath,
+                        @NonNull final Map<String, Object> params) {
+        super(dslContext, sqlFilePath, params);
+    }
 
-		return dslContext.query( sqlContext.getExecutableSql(), sqlContext.getBindVariables() );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Query getQuery() {
+        SqlContext sqlContext = createSqlContext();
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public int execute()
-	{
-		return getQuery().execute();
-	}
+        return dslContext.query(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int execute() {
+        return getQuery().execute();
+    }
 }

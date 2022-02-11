@@ -50,76 +50,66 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  * @author hamana
  */
 @ExtendWith(JMockitExtension.class)
-class CodeEnumConverterTest
-{
-	//-------------------------------------------------------------------------
-	//    Test Preparation
-	//-------------------------------------------------------------------------
-	@AllArgsConstructor(access = AccessLevel.PRIVATE)
-	public enum Foo implements ICodeEnum<Foo, Integer>
-	{
-		BAR( 0 ),
-		BAZ( 1 );
+class CodeEnumConverterTest {
+    @Tested
+    private FooConverter converter;
+    @Mocked
+    private FacesContext context;
+    @Mocked
+    private UIComponent component;
 
-		@Getter
-		@NonNull
-		private final Integer code;
-	}
+    /**
+     * {@link CodeEnumConverter#getAsObject(FacesContext, UIComponent, String)} のテストです。
+     */
+    @Test
+    void testGetAsObject() {
+        new MockUp<MessageFactory>() {
+            @Mock
+            FacesMessage getMessage(FacesContext context, String messageId, Object... params) {
+                return new FacesMessage();
+            }
+        };
 
-	public static class FooConverter extends CodeEnumConverter<Foo, Integer>
-	{
-	}
+        Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->
+                assertThat(converter.getAsObject(context, component, value)).isNull()
+        );
 
-	@Tested
-	private FooConverter converter;
+        Stream.of(Foo.values()).forEach(value ->
+                assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)
+        );
 
-	@Mocked
-	private FacesContext context;
+        assertThatExceptionOfType(ConverterException.class).isThrownBy(() -> converter.getAsObject(context, component, String.valueOf(2)));
+    }
 
-	@Mocked
-	private UIComponent component;
+    /**
+     * {@link CodeEnumConverter#getAsString(FacesContext, UIComponent, Enum)} のテストです。
+     */
+    @Test
+    void testGetAsString() {
+        assertThat(converter.getAsString(context, component, null)).isEmpty();
 
-	//-------------------------------------------------------------------------
-	//    Test
-	//-------------------------------------------------------------------------
-	/**
-	 * {@link CodeEnumConverter#getAsObject(FacesContext, UIComponent, String)} のテストです。
-	 *
-	 */
-	@Test
-	void testGetAsObject()
-	{
-		new MockUp<MessageFactory>()
-		{
-			@Mock
-			FacesMessage getMessage( FacesContext context, String messageId, Object... params )
-			{
-				return new FacesMessage();
-			}
-		};
+        Stream.of(Foo.values()).forEach(value ->
+                assertThat(converter.getAsString(context, component, value)).isEqualTo(value.getCode().toString())
+        );
+    }
 
-		Stream.of( null, StringUtils.EMPTY, StringUtils.SPACE ).forEach( value ->
-			assertThat( converter.getAsObject( context, component, value ) ).isNull()
-		);
+    //-------------------------------------------------------------------------
+    //    Test
+    //-------------------------------------------------------------------------
 
-		Stream.of( Foo.values() ).forEach( value ->
-			assertThat( converter.getAsObject( context, component, value.getCode().toString() ) ).isEqualTo( value )
-		);
+    //-------------------------------------------------------------------------
+    //    Test Preparation
+    //-------------------------------------------------------------------------
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
+    public enum Foo implements ICodeEnum<Foo, Integer> {
+        BAR(0),
+        BAZ(1);
 
-		assertThatExceptionOfType( ConverterException.class ).isThrownBy( () -> converter.getAsObject( context, component, String.valueOf( 2 ) ) );
-	}
+        @Getter
+        @NonNull
+        private final Integer code;
+    }
 
-	/**
-	 * {@link CodeEnumConverter#getAsString(FacesContext, UIComponent, Enum)} のテストです。
-	 *
-	 */
-	@Test
-	void testGetAsString()
-	{
-		assertThat( converter.getAsString( context, component, null ) ).isEmpty();
-
-		Stream.of( Foo.values() ).forEach( value ->
-			assertThat( converter.getAsString( context, component, value ) ).isEqualTo( value.getCode().toString() )
-		);
-	}
+    public static class FooConverter extends CodeEnumConverter<Foo, Integer> {
+    }
 }

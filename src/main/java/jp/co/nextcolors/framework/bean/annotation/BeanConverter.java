@@ -31,15 +31,15 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BeanConverter
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * 変換の対象となるクラスです。
-	 *
-	 * @return 変換の対象となるクラス
-	 */
-	Class<?> forClass();
+public @interface BeanConverter {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * 変換の対象となるクラスです。
+     *
+     * @return 変換の対象となるクラス
+     */
+    Class<?> forClass();
 }

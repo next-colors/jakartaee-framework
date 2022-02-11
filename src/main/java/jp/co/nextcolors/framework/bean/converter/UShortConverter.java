@@ -33,30 +33,27 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = UShort.class)
-public class UShortConverter extends UnsignedNumberConverter<UShort, Short>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected UShort getUnsignedValue( @NonNull final Short signedValue ) throws NumberFormatException
-	{
-		return UShort.valueOf( signedValue.intValue() );
-	}
+public class UShortConverter extends UnsignedNumberConverter<UShort, Short> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param defaultValue
-	 *         デフォルト値
-	 */
-	public UShortConverter( final UShort defaultValue )
-	{
-		super( defaultValue );
-	}
+    /**
+     * @param defaultValue デフォルト値
+     */
+    public UShortConverter(final UShort defaultValue) {
+        super(defaultValue);
+    }
+
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected UShort getUnsignedValue(@NonNull final Short signedValue) throws NumberFormatException {
+        return UShort.valueOf(signedValue.intValue());
+    }
 }

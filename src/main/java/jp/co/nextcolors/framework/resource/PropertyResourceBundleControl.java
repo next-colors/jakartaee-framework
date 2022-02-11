@@ -28,17 +28,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class PropertyResourceBundleControl extends ResourceBundleControl
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param timeToLive
-	 *         キャッシュ期間
-	 */
-	public PropertyResourceBundleControl( final long timeToLive )
-	{
-		super( timeToLive, FORMAT_PROPERTIES );
-	}
+public class PropertyResourceBundleControl extends ResourceBundleControl {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * @param timeToLive キャッシュ期間
+     */
+    public PropertyResourceBundleControl(final long timeToLive) {
+        super(timeToLive, FORMAT_PROPERTIES);
+    }
 }

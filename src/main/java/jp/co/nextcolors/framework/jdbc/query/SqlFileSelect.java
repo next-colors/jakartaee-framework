@@ -37,86 +37,69 @@ import lombok.ToString;
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlFileSelect
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * @param dslContext
-	 *         DSL コンテキスト
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 */
-	public SqlFileSelect( @NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath )
-	{
-		super( dslContext, sqlFilePath );
-	}
+public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlFileSelect {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * @param dslContext
-	 *         DSL コンテキスト
-	 * @param sqlFilePath
-	 *         SQL ファイルのパス
-	 * @param params
-	 *         パラメータ
-	 */
-	public SqlFileSelect( @NonNull final DSLContext dslContext,
-							@NonNull final Path sqlFilePath,
-							@NonNull final Map<String, Object> params )
-	{
-		super( dslContext, sqlFilePath, params );
-	}
+    /**
+     * @param dslContext  DSL コンテキスト
+     * @param sqlFilePath SQL ファイルのパス
+     */
+    public SqlFileSelect(@NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath) {
+        super(dslContext, sqlFilePath);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public ResultQuery<Record> getQuery()
-	{
-		SqlContext sqlContext = createSqlContext();
+    /**
+     * @param dslContext  DSL コンテキスト
+     * @param sqlFilePath SQL ファイルのパス
+     * @param params      パラメータ
+     */
+    public SqlFileSelect(@NonNull final DSLContext dslContext,
+                         @NonNull final Path sqlFilePath,
+                         @NonNull final Map<String, Object> params) {
+        super(dslContext, sqlFilePath, params);
+    }
 
-		return dslContext.resultQuery( sqlContext.getExecutableSql(), sqlContext.getBindVariables() );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ResultQuery<Record> getQuery() {
+        SqlContext sqlContext = createSqlContext();
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public Record fetchOne()
-	{
-		return getQuery().fetchOne();
-	}
+        return dslContext.resultQuery(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public <R extends Record> R fetchOneInto( @NonNull final Table<R> table )
-	{
-		return getQuery().fetchOneInto( table );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Record fetchOne() {
+        return getQuery().fetchOne();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public Result<Record> fetch()
-	{
-		return getQuery().fetch();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <R extends Record> R fetchOneInto(@NonNull final Table<R> table) {
+        return getQuery().fetchOneInto(table);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public <R extends Record> Result<R> fetchInto( @NonNull final Table<R> table )
-	{
-		return getQuery().fetchInto( table );
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Result<Record> fetch() {
+        return getQuery().fetch();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <R extends Record> Result<R> fetchInto(@NonNull final Table<R> table) {
+        return getQuery().fetchInto(table);
+    }
 }

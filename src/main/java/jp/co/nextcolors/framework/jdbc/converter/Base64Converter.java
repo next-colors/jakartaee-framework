@@ -33,41 +33,35 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
-public class Base64Converter extends AbstractConverter<String, String>
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	public Base64Converter()
-	{
-		super( String.class, String.class );
-	}
+public class Base64Converter extends AbstractConverter<String, String> {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+    public Base64Converter() {
+        super(String.class, String.class);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String from( final String databaseObject )
-	{
-		if ( Objects.isNull( databaseObject ) ) {
-			return null;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String from(final String databaseObject) {
+        if (Objects.isNull(databaseObject)) {
+            return null;
+        }
 
-		return StringUtils.toEncodedString( Base64.decodeBase64( databaseObject ), StandardCharsets.UTF_8 );
-	}
+        return StringUtils.toEncodedString(Base64.decodeBase64(databaseObject), StandardCharsets.UTF_8);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public String to( final String userObject )
-	{
-		if ( Objects.isNull( userObject ) ) {
-			return null;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String to(final String userObject) {
+        if (Objects.isNull(userObject)) {
+            return null;
+        }
 
-		return Base64.encodeBase64String( userObject.getBytes( StandardCharsets.UTF_8 ) );
-	}
+        return Base64.encodeBase64String(userObject.getBytes(StandardCharsets.UTF_8));
+    }
 }

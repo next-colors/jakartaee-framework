@@ -33,205 +33,179 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
-class GenericUtilTest
-{
-	//-------------------------------------------------------------------------
-	//    Test Preparation
-	//-------------------------------------------------------------------------
-	public interface ArrayType
-	{
-		Class<String>[] arrayOfStringClass();
-	}
+class GenericUtilTest {
+    /**
+     * クラスに関するテストです。
+     */
+    @Test
+    void testClass() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Foo.class);
+        assertThat(map).isNotEmpty();
+        assertThat(map.get(Foo.class.getTypeParameters()[0])).isEqualTo(Object.class);
+    }
 
-	public interface Foo<T1, T2>
-	{
-		T2 foo( T1 foo );
-	}
+    /**
+     * ジェネリクスメソッドに関するテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGenericMethod() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Quux.class);
+        assertThat(map).isEmpty();
 
-	public interface Bar extends Foo<Integer, Long>
-	{
-	}
+        Method method = Quux.class.getMethod("getQuux");
+        Class<?> actualClass = GenericUtil.getActualClass(method.getGenericReturnType(), map);
+        assertThat(actualClass).isEqualTo(Object.class);
+    }
 
-	public interface Baz<T1, T2>
-	{
-		T1[] array();
+    /**
+     * 配列に関するテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testArray() {
+        Method method = ArrayType.class.getMethod("arrayOfStringClass");
+        Type elementType = GenericUtil.getElementTypeOfArray(method.getGenericReturnType());
+        Class<?> rawClass = GenericUtil.getRawClass(elementType);
+        Type genericParameter = GenericUtil.getGenericParameter(elementType, 0);
+        assertThat(rawClass).isEqualTo(Class.class);
+        assertThat(genericParameter).isEqualTo(String.class);
+    }
 
-		List<T2> list();
+    /**
+     * {@link GenericUtil#getTypeVariableMap(Class)} のテストです。
+     */
+    @Test
+    void testGetTypeVariableMap() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
+        assertThat(map).hasSize(4);
+        assertThat(map.keySet()).extracting(TypeVariable::getName).containsExactlyInAnyOrder("T1", "T2", "T1", "T2");
+        assertThat(map).containsValues(Integer.class, Long.class, String.class, Boolean.class);
+    }
 
-		Set<T1> set();
+    /**
+     * {@link GenericUtil#getActualClass(Type, Map)} のテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGetActualClass() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
 
-		Map<T1, T2> map();
-	}
+        Method method = Qux.class.getMethod("foo", Object.class);
+        Class<?> actualClass = GenericUtil.getActualClass(method.getGenericParameterTypes()[0], map);
+        assertThat(actualClass).isEqualTo(Integer.class);
+        actualClass = GenericUtil.getActualClass(method.getGenericReturnType(), map);
+        assertThat(actualClass).isEqualTo(Long.class);
 
-	public static abstract class Qux implements Bar, Baz<String, Boolean>
-	{
-	}
+        method = Qux.class.getMethod("array");
+        actualClass = GenericUtil.getActualClass(method.getGenericReturnType(), map);
+        assertThat(actualClass).isEqualTo(String[].class);
 
-	public interface Quux
-	{
-		<T> T getQuux();
-	}
+        method = Qux.class.getMethod("list");
+        actualClass = GenericUtil.getActualClass(method.getGenericReturnType(), map);
+        assertThat(actualClass).isEqualTo(List.class);
 
-	//-------------------------------------------------------------------------
-	//    Test
-	//-------------------------------------------------------------------------
-	/**
-	 * クラスに関するテストです。
-	 *
-	 */
-	@Test
-	void testClass()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Foo.class );
-		assertThat( map ).isNotEmpty();
-		assertThat( map.get( Foo.class.getTypeParameters()[ 0 ] ) ).isEqualTo( Object.class );
-	}
+        method = Qux.class.getMethod("set");
+        actualClass = GenericUtil.getActualClass(method.getGenericReturnType(), map);
+        assertThat(actualClass).isEqualTo(Set.class);
 
-	/**
-	 * ジェネリクスメソッドに関するテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGenericMethod()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Quux.class );
-		assertThat( map ).isEmpty();
+        method = Qux.class.getMethod("map");
+        actualClass = GenericUtil.getActualClass(method.getGenericReturnType(), map);
+        assertThat(actualClass).isEqualTo(Map.class);
+    }
 
-		Method method = Quux.class.getMethod( "getQuux" );
-		Class<?> actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
-		assertThat( actualClass ).isEqualTo( Object.class );
-	}
+    /**
+     * {@link GenericUtil#getActualElementClassOfArray(Type, Map)} のテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGetActualElementClassOfArray() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
+        Method method = Qux.class.getMethod("array");
+        Class<?> elementClass = GenericUtil.getActualElementClassOfArray(method.getGenericReturnType(), map);
+        assertThat(elementClass).isEqualTo(String.class);
+    }
 
-	/**
-	 * 配列に関するテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testArray()
-	{
-		Method method = ArrayType.class.getMethod( "arrayOfStringClass" );
-		Type elementType = GenericUtil.getElementTypeOfArray( method.getGenericReturnType() );
-		Class<?> rawClass = GenericUtil.getRawClass( elementType );
-		Type genericParameter = GenericUtil.getGenericParameter( elementType, 0 );
-		assertThat( rawClass ).isEqualTo( Class.class );
-		assertThat( genericParameter ).isEqualTo( String.class );
-	}
+    //-------------------------------------------------------------------------
+    //    Test
+    //-------------------------------------------------------------------------
 
-	/**
-	 * {@link GenericUtil#getTypeVariableMap(Class)} のテストです。
-	 *
-	 */
-	@Test
-	void testGetTypeVariableMap()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
-		assertThat( map ).hasSize( 4 );
-		assertThat( map.keySet() ).extracting( TypeVariable::getName ).containsExactlyInAnyOrder( "T1", "T2", "T1", "T2" );
-		assertThat( map ).containsValues( Integer.class, Long.class, String.class, Boolean.class );
-	}
+    /**
+     * {@link GenericUtil#getActualElementClassOfList(Type, Map)} のテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGetActualElementClassOfList() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
+        Method method = Qux.class.getMethod("list");
+        Class<?> elementClass = GenericUtil.getActualElementClassOfList(method.getGenericReturnType(), map);
+        assertThat(elementClass).isEqualTo(Boolean.class);
+    }
 
-	/**
-	 * {@link GenericUtil#getActualClass(Type, Map)} のテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGetActualClass()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
+    /**
+     * {@link GenericUtil#getActualElementClassOfSet(Type, Map)} のテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGetActualElementClassOfSet() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
+        Method method = Qux.class.getMethod("set");
+        Class<?> elementClass = GenericUtil.getActualElementClassOfSet(method.getGenericReturnType(), map);
+        assertThat(elementClass).isEqualTo(String.class);
+    }
 
-		Method method = Qux.class.getMethod( "foo", Object.class );
-		Class<?> actualClass = GenericUtil.getActualClass( method.getGenericParameterTypes()[ 0 ], map );
-		assertThat( actualClass ).isEqualTo( Integer.class );
-		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
-		assertThat( actualClass ).isEqualTo( Long.class );
+    /**
+     * {@link GenericUtil#getActualKeyClassOfMap(Type, Map)} のテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGetActualKeyClassOfMap() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
+        Method method = Qux.class.getMethod("map");
+        Class<?> keyClass = GenericUtil.getActualKeyClassOfMap(method.getGenericReturnType(), map);
+        assertThat(keyClass).isEqualTo(String.class);
+    }
 
-		method = Qux.class.getMethod( "array" );
-		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
-		assertThat( actualClass ).isEqualTo( String[].class );
+    /**
+     * {@link GenericUtil#getActualValueClassOfMap(Type, Map)} のテストです。
+     */
+    @SneakyThrows(NoSuchMethodException.class)
+    @Test
+    void testGetActualValueClassOfMap() {
+        Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap(Qux.class);
+        Method method = Qux.class.getMethod("map");
+        Class<?> valueClass = GenericUtil.getActualValueClassOfMap(method.getGenericReturnType(), map);
+        assertThat(valueClass).isEqualTo(Boolean.class);
+    }
 
-		method = Qux.class.getMethod( "list" );
-		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
-		assertThat( actualClass ).isEqualTo( List.class );
+    //-------------------------------------------------------------------------
+    //    Test Preparation
+    //-------------------------------------------------------------------------
+    public interface ArrayType {
+        Class<String>[] arrayOfStringClass();
+    }
 
-		method = Qux.class.getMethod( "set" );
-		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
-		assertThat( actualClass ).isEqualTo( Set.class );
+    public interface Foo<T1, T2> {
+        T2 foo(T1 foo);
+    }
 
-		method = Qux.class.getMethod( "map" );
-		actualClass = GenericUtil.getActualClass( method.getGenericReturnType(), map );
-		assertThat( actualClass ).isEqualTo( Map.class );
-	}
+    public interface Bar extends Foo<Integer, Long> {
+    }
 
-	/**
-	 * {@link GenericUtil#getActualElementClassOfArray(Type, Map)} のテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGetActualElementClassOfArray()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
-		Method method = Qux.class.getMethod( "array" );
-		Class<?> elementClass = GenericUtil.getActualElementClassOfArray( method.getGenericReturnType(), map );
-		assertThat( elementClass ).isEqualTo( String.class );
-	}
+    public interface Baz<T1, T2> {
+        T1[] array();
 
-	/**
-	 * {@link GenericUtil#getActualElementClassOfList(Type, Map)} のテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGetActualElementClassOfList()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
-		Method method = Qux.class.getMethod( "list" );
-		Class<?> elementClass = GenericUtil.getActualElementClassOfList( method.getGenericReturnType(), map );
-		assertThat( elementClass ).isEqualTo( Boolean.class );
-	}
+        List<T2> list();
 
-	/**
-	 * {@link GenericUtil#getActualElementClassOfSet(Type, Map)} のテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGetActualElementClassOfSet()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
-		Method method = Qux.class.getMethod( "set" );
-		Class<?> elementClass = GenericUtil.getActualElementClassOfSet( method.getGenericReturnType(), map );
-		assertThat( elementClass ).isEqualTo( String.class );
-	}
+        Set<T1> set();
 
-	/**
-	 * {@link GenericUtil#getActualKeyClassOfMap(Type, Map)} のテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGetActualKeyClassOfMap()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
-		Method method = Qux.class.getMethod( "map" );
-		Class<?> keyClass = GenericUtil.getActualKeyClassOfMap( method.getGenericReturnType(), map );
-		assertThat( keyClass ).isEqualTo( String.class );
-	}
+        Map<T1, T2> map();
+    }
 
-	/**
-	 * {@link GenericUtil#getActualValueClassOfMap(Type, Map)} のテストです。
-	 *
-	 */
-	@SneakyThrows(NoSuchMethodException.class)
-	@Test
-	void testGetActualValueClassOfMap()
-	{
-		Map<TypeVariable<?>, Type> map = GenericUtil.getTypeVariableMap( Qux.class );
-		Method method = Qux.class.getMethod( "map" );
-		Class<?> valueClass = GenericUtil.getActualValueClassOfMap( method.getGenericReturnType(), map );
-		assertThat( valueClass ).isEqualTo( Boolean.class );
-	}
+    public interface Quux {
+        <T> T getQuux();
+    }
+
+    public static abstract class Qux implements Bar, Baz<String, Boolean> {
+    }
 }

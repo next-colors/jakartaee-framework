@@ -35,83 +35,70 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class ResourceBundleControl extends Control
-{
-	//-------------------------------------------------------------------------
-	//    Public Constants
-	//-------------------------------------------------------------------------
-	/**
-	 * キャッシュ期間 1 分を表します。
-	 *
-	 */
-	public static final long TTL_1MIN = Duration.ofMinutes( 1 ).toMillis();
+public class ResourceBundleControl extends Control {
+    //-------------------------------------------------------------------------
+    //    Public Constants
+    //-------------------------------------------------------------------------
+    /**
+     * キャッシュ期間 1 分を表します。
+     */
+    public static final long TTL_1MIN = Duration.ofMinutes(1).toMillis();
 
-	/**
-	 * キャッシュ期間 5 分を表します。
-	 *
-	 */
-	public static final long TTL_5MIN = Duration.ofMinutes( 5 ).toMillis();
+    /**
+     * キャッシュ期間 5 分を表します。
+     */
+    public static final long TTL_5MIN = Duration.ofMinutes(5).toMillis();
 
-	/**
-	 * キャッシュ期間 10 分を表します。
-	 *
-	 */
-	public static final long TTL_10MIN = Duration.ofMinutes( 10 ).toMillis();
+    /**
+     * キャッシュ期間 10 分を表します。
+     */
+    public static final long TTL_10MIN = Duration.ofMinutes(10).toMillis();
 
-	/**
-	 * キャッシュ期間 30 分を表します。
-	 *
-	 */
-	public static final long TTL_30MIN = Duration.ofMinutes( 30 ).toMillis();
+    /**
+     * キャッシュ期間 30 分を表します。
+     */
+    public static final long TTL_30MIN = Duration.ofMinutes(30).toMillis();
 
-	/**
-	 * キャッシュ期間 1 時間を表します。
-	 *
-	 */
-	public static final long TTL_1H = Duration.ofHours( 1 ).toMillis();
+    /**
+     * キャッシュ期間 1 時間を表します。
+     */
+    public static final long TTL_1H = Duration.ofHours(1).toMillis();
 
-	//-------------------------------------------------------------------------
-	//    Private Properties
-	//-------------------------------------------------------------------------
-	/**
-	 * リソースのキャッシュ期間です。
-	 *
-	 */
-	private final long timeToLive;
+    //-------------------------------------------------------------------------
+    //    Private Properties
+    //-------------------------------------------------------------------------
+    /**
+     * リソースのキャッシュ期間です。
+     */
+    private final long timeToLive;
 
-	/**
-	 * リソースのフォーマットです。
-	 *
-	 */
-	@NonNull
-	private final List<String> format;
+    /**
+     * リソースのフォーマットです。
+     */
+    @NonNull
+    private final List<String> format;
 
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	public ResourceBundleControl()
-	{
-		timeToLive = TTL_NO_EXPIRATION_CONTROL;
-		format = FORMAT_DEFAULT;
-	}
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
+    public ResourceBundleControl() {
+        timeToLive = TTL_NO_EXPIRATION_CONTROL;
+        format = FORMAT_DEFAULT;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public long getTimeToLive( @NonNull final String baseName, @NonNull final Locale locale )
-	{
-		return timeToLive;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getTimeToLive(@NonNull final String baseName, @NonNull final Locale locale) {
+        return timeToLive;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	public List<String> getFormats( @NonNull final String baseName )
-	{
-		return format;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<String> getFormats(@NonNull final String baseName) {
+        return format;
+    }
 }

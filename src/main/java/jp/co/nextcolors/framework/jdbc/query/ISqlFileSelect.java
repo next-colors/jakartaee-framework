@@ -25,53 +25,48 @@ import org.jooq.Table;
  *
  * @author hamana
  */
-public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect>
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	ResultQuery<Record> getQuery();
+public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * レコードを検索します。
-	 *
-	 * @return 検索結果
-	 */
-	Record fetchOne();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ResultQuery<Record> getQuery();
 
-	/**
-	 * レコードを検索します。<br />
-	 * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
-	 *
-	 * @param <R>
-	 *         レコードの型を表すクラス
-	 * @param table
-	 *         テーブル
-	 * @return 検索結果
-	 */
-	<R extends Record> R fetchOneInto( Table<R> table );
+    /**
+     * レコードを検索します。
+     *
+     * @return 検索結果
+     */
+    Record fetchOne();
 
-	/**
-	 * レコードを検索します。
-	 *
-	 * @return 検索結果
-	 */
-	Result<Record> fetch();
+    /**
+     * レコードを検索します。<br />
+     * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
+     *
+     * @param <R>   レコードの型を表すクラス
+     * @param table テーブル
+     * @return 検索結果
+     */
+    <R extends Record> R fetchOneInto(Table<R> table);
 
-	/**
-	 * レコードを検索します。<br />
-	 * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
-	 *
-	 * @param <R>
-	 *         レコードの型を表すクラス
-	 * @param table
-	 *         テーブル
-	 * @return 検索結果
-	 */
-	<R extends Record> Result<R> fetchInto( Table<R> table );
+    /**
+     * レコードを検索します。
+     *
+     * @return 検索結果
+     */
+    Result<Record> fetch();
+
+    /**
+     * レコードを検索します。<br />
+     * 検索結果のレコードは指定したテーブルのレコードにマッピングします。
+     *
+     * @param <R>   レコードの型を表すクラス
+     * @param table テーブル
+     * @return 検索結果
+     */
+    <R extends Record> Result<R> fetchInto(Table<R> table);
 }

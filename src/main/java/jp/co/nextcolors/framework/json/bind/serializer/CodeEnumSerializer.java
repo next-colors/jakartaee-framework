@@ -35,40 +35,36 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 /**
  * プロパティにコードを持つ列挙型の列挙型定数を JSON のプロパティに変換するための抽象クラスです。
  *
+ * @param <T> 列挙型の型です。
+ * @param <C> 列挙型のコードの型です。
  * @author hamana
- * @param <T>
- *         列挙型の型です。
- * @param <C>
- *         列挙型のコードの型です。
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @EqualsAndHashCode
 @SuppressWarnings("serial")
-public abstract class CodeEnumSerializer<T extends Enum<T> & ICodeEnum<T, C>, C> implements JsonbSerializer<T>, Serializable
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void serialize( final T obj, @NonNull final JsonGenerator generator, @NonNull final SerializationContext ctx )
-	{
-		if ( Objects.isNull( obj ) ) {
-			ctx.serialize( obj, generator );
+public abstract class CodeEnumSerializer<T extends Enum<T> & ICodeEnum<T, C>, C> implements JsonbSerializer<T>, Serializable {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-			return;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void serialize(final T obj, @NonNull final JsonGenerator generator, @NonNull final SerializationContext ctx) {
+        if (Objects.isNull(obj)) {
+            ctx.serialize(obj, generator);
 
-		Class<T> enumClass = (Class<T>) obj.getClass();
-		Class<C> enumCodeClass = ICodeEnum.getCodeClass( enumClass );
+            return;
+        }
 
-		C code = enumCodeClass.cast( ConvertUtils.convert( obj, enumCodeClass ) );
+        Class<T> enumClass = (Class<T>) obj.getClass();
+        Class<C> enumCodeClass = ICodeEnum.getCodeClass(enumClass);
 
-		ctx.serialize( code, generator );
-	}
+        C code = enumCodeClass.cast(ConvertUtils.convert(obj, enumCodeClass));
+
+        ctx.serialize(code, generator);
+    }
 }

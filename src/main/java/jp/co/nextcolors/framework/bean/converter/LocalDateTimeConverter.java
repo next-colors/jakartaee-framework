@@ -32,18 +32,16 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = LocalDateTime.class)
-public class LocalDateTimeConverter extends JavaTimeConverter<LocalDateTime>
-{
-	//-------------------------------------------------------------------------
-	//    Protected Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * {@inheritDoc}
-	 *
-	 */
-	@Override
-	protected LocalDateTime getDateTime( @NonNull final OffsetDateTime offsetDateTime )
-	{
-		return offsetDateTime.toLocalDateTime();
-	}
+public class LocalDateTimeConverter extends JavaTimeConverter<LocalDateTime> {
+    //-------------------------------------------------------------------------
+    //    Protected Methods
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected LocalDateTime getDateTime(@NonNull final OffsetDateTime offsetDateTime) {
+        return offsetDateTime.toLocalDateTime();
+    }
 }

@@ -21,121 +21,118 @@ import java.util.function.Function;
 /**
  * ページです。
  *
+ * @param <T> ページに含まれる要素の型です。
  * @author hamana
- * @param <T>
- *         ページに含まれる要素の型です。
  */
-public interface IPage<T>
-{
-	//-------------------------------------------------------------------------
-	//    Public Methods
-	//-------------------------------------------------------------------------
-	/**
-	 * ページ番号を取得します。
-	 *
-	 * @return ページ番号
-	 */
-	int getNumber();
+public interface IPage<T> {
+    //-------------------------------------------------------------------------
+    //    Public Methods
+    //-------------------------------------------------------------------------
 
-	/**
-	 * ページに含まれる要素の最大数を取得します。
-	 *
-	 * @return ページに含める要素の最大数
-	 */
-	int getSize();
+    /**
+     * ページ番号を取得します。
+     *
+     * @return ページ番号
+     */
+    int getNumber();
 
-	/**
-	 * ページに含まれる要素の数を取得します。
-	 *
-	 * @return ページに含まれる要素の数を取得します。
-	 */
-	int getNumberOfElements();
+    /**
+     * ページに含まれる要素の最大数を取得します。
+     *
+     * @return ページに含める要素の最大数
+     */
+    int getSize();
 
-	/**
-	 * ページの総数を取得します。
-	 *
-	 * @return ページの総数
-	 */
-	int getTotalPages();
+    /**
+     * ページに含まれる要素の数を取得します。
+     *
+     * @return ページに含まれる要素の数を取得します。
+     */
+    int getNumberOfElements();
 
-	/**
-	 * 要素の総数を取得します。
-	 *
-	 * @return 要素の総数
-	 */
-	int getTotalElements();
+    /**
+     * ページの総数を取得します。
+     *
+     * @return ページの総数
+     */
+    int getTotalPages();
 
-	/**
-	 * ページに含まれる要素を取得します。
-	 *
-	 * @return ページに含まれる要素
-	 */
-	List<T> getElements();
+    /**
+     * 要素の総数を取得します。
+     *
+     * @return 要素の総数
+     */
+    int getTotalElements();
 
-	/**
-	 * ページに要素が含まれているかどうかを判定します。
-	 *
-	 * @return ページに要素が含まれている場合は {@code true}、そうではない場合は {@code false}
-	 */
-	boolean hasElements();
+    /**
+     * ページに含まれる要素を取得します。
+     *
+     * @return ページに含まれる要素
+     */
+    List<T> getElements();
 
-	/**
-	 * 最初のページであるかどうかを判定します。
-	 *
-	 * @return 最初のページである場合は {@code true}、そうではない場合は {@code false}
-	 */
-	boolean isFirst();
+    /**
+     * ページに要素が含まれているかどうかを判定します。
+     *
+     * @return ページに要素が含まれている場合は {@code true}、そうではない場合は {@code false}
+     */
+    boolean hasElements();
 
-	/**
-	 * 最後のページであるかどうかを判定します。
-	 *
-	 * @return 最後のページである場合は {@code true}、そうではない場合は {@code false}
-	 */
-	boolean isLast();
+    /**
+     * 最初のページであるかどうかを判定します。
+     *
+     * @return 最初のページである場合は {@code true}、そうではない場合は {@code false}
+     */
+    boolean isFirst();
 
-	/**
-	 * 前のページが存在するかどうかを判定します。
-	 *
-	 * @return 前のページが存在する場合は {@code true}、そうではない場合は {@code false}
-	 */
-	boolean hasPrevious();
+    /**
+     * 最後のページであるかどうかを判定します。
+     *
+     * @return 最後のページである場合は {@code true}、そうではない場合は {@code false}
+     */
+    boolean isLast();
 
-	/**
-	 * 次のページが存在するかどうかを判定します。
-	 *
-	 * @return 次のページが存在する場合は {@code true}、そうではない場合は {@code false}
-	 */
-	boolean hasNext();
+    /**
+     * 前のページが存在するかどうかを判定します。
+     *
+     * @return 前のページが存在する場合は {@code true}、そうではない場合は {@code false}
+     */
+    boolean hasPrevious();
 
-	/**
-	 * ページ付けの情報を取得します。
-	 *
-	 * @return ページ付けの情報
-	 */
-	IPageRequest getPageRequest();
+    /**
+     * 次のページが存在するかどうかを判定します。
+     *
+     * @return 次のページが存在する場合は {@code true}、そうではない場合は {@code false}
+     */
+    boolean hasNext();
 
-	/**
-	 * 前のページのページ付けの情報を取得します。
-	 *
-	 * @return 前のページのページ付けの情報
-	 */
-	IPageRequest getPreviousPageRequest();
+    /**
+     * ページ付けの情報を取得します。
+     *
+     * @return ページ付けの情報
+     */
+    IPageRequest getPageRequest();
 
-	/**
-	 * 次のページのページ付けの情報を取得します。
-	 *
-	 * @return 次のページのページ付けの情報
-	 */
-	IPageRequest getNextPageRequest();
+    /**
+     * 前のページのページ付けの情報を取得します。
+     *
+     * @return 前のページのページ付けの情報
+     */
+    IPageRequest getPreviousPageRequest();
 
-	/**
-	 * ページに含まれる要素に指定された関数を適用した結果から構成されるページを取得します。
-	 *
-	 * @param <R>
-	 *         ページに含まれる要素に指定された関数を適用した結果の型
-	 * @param mapper
-	 *         ページに含まれる要素に適用する関数
-	 * @return ページに含まれる要素に指定された関数を適用した結果から構成されるページ
-	 */
-	<R> IPage<R> map( Function<? super T, ? extends R> mapper );
+    /**
+     * 次のページのページ付けの情報を取得します。
+     *
+     * @return 次のページのページ付けの情報
+     */
+    IPageRequest getNextPageRequest();
+
+    /**
+     * ページに含まれる要素に指定された関数を適用した結果から構成されるページを取得します。
+     *
+     * @param <R>    ページに含まれる要素に指定された関数を適用した結果の型
+     * @param mapper ページに含まれる要素に適用する関数
+     * @return ページに含まれる要素に指定された関数を適用した結果から構成されるページ
+     */
+    <R> IPage<R> map(Function<? super T, ? extends R> mapper);
 }
