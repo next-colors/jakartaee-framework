@@ -31,10 +31,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 public class Sha256Converter extends HashConverter {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

@@ -34,10 +34,6 @@ import jp.co.nextcolors.framework.data.pagination.IPageRequest;
  * @author hamana
  */
 public interface IPager<T> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * レコードをページング検索します。
      *

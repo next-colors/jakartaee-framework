@@ -28,9 +28,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class PageRequest implements IPageRequest {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * ページ番号です。
      */
@@ -40,10 +37,6 @@ public class PageRequest implements IPageRequest {
      * ページに含める要素の最大数です。
      */
     private final int pageSize;
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * @param pageNumber ページ番号

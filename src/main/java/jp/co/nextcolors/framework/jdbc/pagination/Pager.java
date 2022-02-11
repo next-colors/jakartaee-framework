@@ -53,9 +53,6 @@ import jp.co.nextcolors.framework.jdbc.record.mapper.BeanRecordMapper;
 @ToString
 @EqualsAndHashCode
 public class Pager<T> implements IPager<T> {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * DSL コンテキストです。
      */
@@ -67,10 +64,6 @@ public class Pager<T> implements IPager<T> {
      */
     @NonNull
     private final Class<T> resultClass;
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

@@ -21,10 +21,6 @@ package jp.co.nextcolors.framework.data.pagination;
  * @author hamana
  */
 public interface IPageRequest {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * ページ番号を取得します。
      *

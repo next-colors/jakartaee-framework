@@ -43,9 +43,6 @@ import jp.co.nextcolors.framework.filter.util.RequestDumpUtil;
 @ToString
 @EqualsAndHashCode
 public class RequestDumpFilter implements Filter {
-    //-------------------------------------------------------------------------
-    //    Private Constants
-    //-------------------------------------------------------------------------
     /**
      * リクエスト（{@link HttpServletRequest}）の内容をダンプする際のインデントです。
      */
@@ -55,10 +52,6 @@ public class RequestDumpFilter implements Filter {
      * リクエスト（{@link HttpServletRequest}）の内容をダンプする際の改行文字です。
      */
     private static final String LF = System.lineSeparator();
-
-    //-------------------------------------------------------------------------
-    //    Private Methods
-    //-------------------------------------------------------------------------
 
     /**
      * リクエスト（{@link HttpServletRequest}）の内容をダンプします。
@@ -88,10 +81,6 @@ public class RequestDumpFilter implements Filter {
 
         log.atDebug().log(buffer.toString());
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

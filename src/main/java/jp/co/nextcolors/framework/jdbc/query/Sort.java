@@ -43,19 +43,11 @@ import lombok.NonNull;
 @EqualsAndHashCode
 @SuppressWarnings("serial")
 public class Sort implements Serializable {
-    //-------------------------------------------------------------------------
-    //    Public Classes
-    //-------------------------------------------------------------------------
-
     /**
      * ソート順です。
      */
     @NonNull
     private final Collection<Order> orders;
-
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
 
     /**
      * ソートを生成します。
@@ -66,10 +58,6 @@ public class Sort implements Serializable {
     public static Sort by(@NonNull final Order... orders) {
         return by(List.of(orders));
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * ソートを結合します。
@@ -102,9 +90,6 @@ public class Sort implements Serializable {
     @Getter
     @EqualsAndHashCode
     public static class Order implements Serializable {
-        //---------------------------------------------------------------------
-        //    Private Properties
-        //---------------------------------------------------------------------
         /**
          * プロパティ名/カラム名です。
          */
@@ -116,10 +101,6 @@ public class Sort implements Serializable {
          */
         @NonNull
         private final SortOrder sortOrder;
-
-        //---------------------------------------------------------------------
-        //    Public Methods
-        //---------------------------------------------------------------------
 
         /**
          * ソート順を生成します。

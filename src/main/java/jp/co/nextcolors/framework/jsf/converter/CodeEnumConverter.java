@@ -49,9 +49,6 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 @ToString
 @EqualsAndHashCode
 public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> implements Converter<E> {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 列挙型の型を表すクラスです。
      */
@@ -62,13 +59,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
      */
     private final Class<C> enumCodeClass;
 
-    //-------------------------------------------------------------------------
-    //    Private Methods
-    //-------------------------------------------------------------------------
-
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected CodeEnumConverter() {
         Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
@@ -101,10 +91,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 
         return MessageFactory.getMessage(context, EnumConverter.ENUM_ID, value, null, label);
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

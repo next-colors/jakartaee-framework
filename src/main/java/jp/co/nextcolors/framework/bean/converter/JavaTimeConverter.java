@@ -43,26 +43,16 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractConverter {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 日付/時間の型を表すクラスです。
      */
     private final Class<JT> javaTimeClass;
 
-    //-------------------------------------------------------------------------
-    //    Protected Properties
-    //-------------------------------------------------------------------------
     /**
      * タイムゾーン ID です。
      */
     @NonNull
     protected ZoneId zone = ZoneId.systemDefault();
-
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
     protected JavaTimeConverter() {

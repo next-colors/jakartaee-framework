@@ -29,10 +29,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class PropertyResourceBundleControl extends ResourceBundleControl {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * @param timeToLive キャッシュ期間
      */

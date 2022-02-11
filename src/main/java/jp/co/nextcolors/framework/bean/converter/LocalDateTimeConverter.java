@@ -33,10 +33,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = LocalDateTime.class)
 public class LocalDateTimeConverter extends JavaTimeConverter<LocalDateTime> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

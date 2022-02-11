@@ -35,10 +35,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFileWrite {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * @param dslContext  DSL コンテキスト
      * @param sqlFilePath SQL ファイルのパス

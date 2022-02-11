@@ -34,20 +34,12 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = UInteger.class)
 public class UIntegerConverter extends UnsignedNumberConverter<UInteger, Integer> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * @param defaultValue デフォルト値
      */
     public UIntegerConverter(final UInteger defaultValue) {
         super(defaultValue);
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

@@ -33,10 +33,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Instant.class)
 public class InstantConverter extends JavaTimeConverter<Instant> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

@@ -26,10 +26,6 @@ import org.jooq.Query;
  * @author hamana
  */
 public interface ISqlFileQuery<S extends ISqlFileQuery<S>> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * パラメータを追加します。
      *

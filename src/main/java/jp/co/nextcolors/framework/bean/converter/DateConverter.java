@@ -57,9 +57,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Date.class)
 public class DateConverter extends DateTimeConverter {
-    //-------------------------------------------------------------------------
-    //    Private Constants
-    //-------------------------------------------------------------------------
     /**
      * 日付のコンポーネントです。
      */
@@ -92,13 +89,6 @@ public class DateConverter extends DateTimeConverter {
      */
     private static final String[] DATE_TIME_SEPARATORS = {StringUtils.EMPTY, StringUtils.SPACE, "'T'"};
 
-    //-------------------------------------------------------------------------
-    //    Private Methods
-    //-------------------------------------------------------------------------
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
     public DateConverter() {
         super(null);
         setPatterns(getDateTimeFormats());
@@ -182,10 +172,6 @@ public class DateConverter extends DateTimeConverter {
 
         return Set.copyOf(timeFormats);
     }
-
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
 
     /**
      * 日時のフォーマットを取得します。

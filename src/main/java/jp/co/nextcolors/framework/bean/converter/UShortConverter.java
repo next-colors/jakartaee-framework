@@ -34,20 +34,12 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = UShort.class)
 public class UShortConverter extends UnsignedNumberConverter<UShort, Short> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * @param defaultValue デフォルト値
      */
     public UShortConverter(final UShort defaultValue) {
         super(defaultValue);
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

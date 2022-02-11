@@ -46,9 +46,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B> {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 変換する Bean（JavaBeans）の型を表すクラスです。
      */
@@ -60,10 +57,6 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
      */
     @NonNull
     private final Configuration configuration;
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

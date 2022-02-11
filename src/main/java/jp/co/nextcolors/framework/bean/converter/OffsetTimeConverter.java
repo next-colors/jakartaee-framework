@@ -33,10 +33,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = OffsetTime.class)
 public class OffsetTimeConverter extends JavaTimeConverter<OffsetTime> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

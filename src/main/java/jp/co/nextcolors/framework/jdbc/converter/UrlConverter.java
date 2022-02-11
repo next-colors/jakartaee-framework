@@ -33,9 +33,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 public class UrlConverter extends AbstractConverter<String, URL> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
     public UrlConverter() {
         super(String.class, URL.class);
     }

@@ -42,21 +42,11 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 列挙型の型を表すクラスです。
      */
     private final Class<E> enumClass;
 
-    //-------------------------------------------------------------------------
-    //    Private Methods
-    //-------------------------------------------------------------------------
-
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected EnumConverter() {
         super(null);

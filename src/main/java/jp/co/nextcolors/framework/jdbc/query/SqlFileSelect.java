@@ -38,10 +38,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlFileSelect {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * @param dslContext  DSL コンテキスト
      * @param sqlFilePath SQL ファイルのパス

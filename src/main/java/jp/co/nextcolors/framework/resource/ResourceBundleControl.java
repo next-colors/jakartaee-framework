@@ -36,9 +36,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class ResourceBundleControl extends Control {
-    //-------------------------------------------------------------------------
-    //    Public Constants
-    //-------------------------------------------------------------------------
     /**
      * キャッシュ期間 1 分を表します。
      */
@@ -64,9 +61,6 @@ public class ResourceBundleControl extends Control {
      */
     public static final long TTL_1H = Duration.ofHours(1).toMillis();
 
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * リソースのキャッシュ期間です。
      */
@@ -78,9 +72,6 @@ public class ResourceBundleControl extends Control {
     @NonNull
     private final List<String> format;
 
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
     public ResourceBundleControl() {
         timeToLive = TTL_NO_EXPIRATION_CONTROL;
         format = FORMAT_DEFAULT;

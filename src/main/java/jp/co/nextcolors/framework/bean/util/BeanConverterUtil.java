@@ -35,16 +35,9 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  */
 @UtilityClass
 public class BeanConverterUtil {
-    //-------------------------------------------------------------------------
-    //    Static Initializer
-    //-------------------------------------------------------------------------
     static {
         ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.JVM_DRIVER;
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@link ConvertUtilsBean} にコンバータを登録します。

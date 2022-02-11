@@ -54,9 +54,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFileQuery<S> {
-    //-------------------------------------------------------------------------
-    //    Protected Properties
-    //-------------------------------------------------------------------------
     /**
      * DSL コンテキストです。
      */
@@ -73,10 +70,6 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
      * パラメータです。
      */
     protected final Map<String, Object> params = new HashMap<>();
-
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
 
     /**
      * @param dslContext  DSL コンテキスト
@@ -140,10 +133,6 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
             return sqlContext;
         }
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

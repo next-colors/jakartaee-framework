@@ -29,16 +29,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 public abstract class HashConverter extends AbstractConverter<String, String> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
     protected HashConverter() {
         super(String.class, String.class);
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

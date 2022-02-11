@@ -32,10 +32,6 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BeanConverter {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * 変換の対象となるクラスです。
      *

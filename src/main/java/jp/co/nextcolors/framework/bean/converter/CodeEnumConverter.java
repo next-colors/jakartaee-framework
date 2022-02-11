@@ -39,9 +39,6 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> extends AbstractConverter {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 列挙型の型を表すクラスです。
      */
@@ -52,9 +49,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
      */
     private final Class<C> enumCodeClass;
 
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected CodeEnumConverter() {
         super(null);

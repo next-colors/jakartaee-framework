@@ -35,10 +35,6 @@ import jp.co.nextcolors.framework.util.GenericUtil;
  * @author hamana
  */
 public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * 指定したコードを持つ指定した列挙型の列挙型定数を返します。<br />
      * 指定したコードが {@code null} の場合は、{@code null} を返します。

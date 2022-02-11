@@ -47,10 +47,6 @@ class ICodeEnumTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> ICodeEnum.codeOf(Foo.class, 2));
     }
 
-    //-------------------------------------------------------------------------
-    //    Test
-    //-------------------------------------------------------------------------
-
     /**
      * {@link ICodeEnum#isValidCode(Class, Object)} のテストです。
      */
@@ -79,9 +75,6 @@ class ICodeEnumTest {
         assertThat(ICodeEnum.getCodeClass(Foo.class)).isEqualTo(Integer.class);
     }
 
-    //-------------------------------------------------------------------------
-    //    Test Preparation
-    //-------------------------------------------------------------------------
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public enum Foo implements ICodeEnum<Foo, Integer> {
         BAR(0),

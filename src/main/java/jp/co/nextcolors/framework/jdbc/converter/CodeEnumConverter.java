@@ -41,9 +41,6 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 @EqualsAndHashCode
 @SuppressWarnings("serial")
 public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, D> implements Converter<D, E> {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 列挙型の型を表すクラスです。
      */
@@ -59,9 +56,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
      */
     private final Class<D> databaseObjectClass;
 
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     protected CodeEnumConverter() {
         Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
@@ -79,10 +73,6 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
 
         throw new RuntimeException("列挙型の型/列挙型のコードの型/DB のデータ型に準拠した型を表すクラスを設定できませんでした。");
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

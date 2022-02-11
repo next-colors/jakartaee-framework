@@ -126,10 +126,6 @@ class GenericUtilTest {
         assertThat(elementClass).isEqualTo(String.class);
     }
 
-    //-------------------------------------------------------------------------
-    //    Test
-    //-------------------------------------------------------------------------
-
     /**
      * {@link GenericUtil#getActualElementClassOfList(Type, Map)} のテストです。
      */
@@ -178,9 +174,6 @@ class GenericUtilTest {
         assertThat(valueClass).isEqualTo(Boolean.class);
     }
 
-    //-------------------------------------------------------------------------
-    //    Test Preparation
-    //-------------------------------------------------------------------------
     public interface ArrayType {
         Class<String>[] arrayOfStringClass();
     }

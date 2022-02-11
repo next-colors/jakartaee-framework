@@ -21,10 +21,6 @@ package jp.co.nextcolors.framework.jdbc.query;
  * @author hamana
  */
 public interface ISqlFileWrite extends ISqlFileQuery<ISqlFileWrite> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * レコードを書き込みます。
      *

@@ -39,9 +39,6 @@ import jp.co.nextcolors.framework.util.GenericUtil;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class UnsignedNumberConverter<U extends UNumber, S extends Number> extends NumberConverter {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * 符号なし整数の型を表すクラスです。
      */
@@ -51,10 +48,6 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
      * 符号あり整数の型を表すクラスです。
      */
     private final Class<S> signedNumberClass;
-
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
     protected UnsignedNumberConverter() {

@@ -33,10 +33,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = YearMonth.class)
 public class YearMonthConverter extends JavaTimeConverter<YearMonth> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

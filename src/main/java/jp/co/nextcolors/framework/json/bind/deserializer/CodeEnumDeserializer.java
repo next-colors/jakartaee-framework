@@ -46,10 +46,6 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 @EqualsAndHashCode
 @SuppressWarnings("serial")
 public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, C> implements JsonbDeserializer<T>, Serializable {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

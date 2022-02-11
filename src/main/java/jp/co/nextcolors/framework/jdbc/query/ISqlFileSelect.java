@@ -26,10 +26,6 @@ import org.jooq.Table;
  * @author hamana
  */
 public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */

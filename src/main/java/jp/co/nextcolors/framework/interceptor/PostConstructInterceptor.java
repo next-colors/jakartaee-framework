@@ -33,10 +33,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public abstract class PostConstructInterceptor implements IInterceptor {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * インターセプトした {@link PostConstruct} ライフサイクルイベントに対して割り込み処理を行います。
      *
@@ -45,10 +41,6 @@ public abstract class PostConstructInterceptor implements IInterceptor {
      * @throws Exception 割り込み処理の実行中にエラーが発生した場合
      */
     protected abstract Object invokeInternal(InvocationContext context) throws Exception;
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}

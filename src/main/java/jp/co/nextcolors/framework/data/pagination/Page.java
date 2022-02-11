@@ -39,9 +39,6 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class Page<T> implements IPage<T> {
-    //-------------------------------------------------------------------------
-    //    Private Properties
-    //-------------------------------------------------------------------------
     /**
      * ページ付けの情報です。
      */
@@ -56,10 +53,6 @@ public class Page<T> implements IPage<T> {
      * 要素の総数です。
      */
     private final int totalElements;
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * @param pageRequest   ページ付けの情報

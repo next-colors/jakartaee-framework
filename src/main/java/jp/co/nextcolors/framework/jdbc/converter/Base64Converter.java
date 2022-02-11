@@ -34,9 +34,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 public class Base64Converter extends AbstractConverter<String, String> {
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
     public Base64Converter() {
         super(String.class, String.class);
     }

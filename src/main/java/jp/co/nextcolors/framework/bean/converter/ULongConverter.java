@@ -36,20 +36,12 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = ULong.class)
 public class ULongConverter extends UnsignedNumberConverter<ULong, Long> {
-    //-------------------------------------------------------------------------
-    //    Protected Methods
-    //-------------------------------------------------------------------------
-
     /**
      * @param defaultValue デフォルト値
      */
     public ULongConverter(final ULong defaultValue) {
         super(defaultValue);
     }
-
-    //-------------------------------------------------------------------------
-    //    Public Methods
-    //-------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
