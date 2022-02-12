@@ -61,7 +61,6 @@ dependencies {
     annotationProcessor('org.projectlombok:lombok:latest.release')
 
     // パッケージに含めるライブラリ
-    api('com.google.guava:guava:latest.release')
     api('commons-beanutils:commons-beanutils:latest.release')
     api('commons-codec:commons-codec:latest.release')
     api('commons-io:commons-io:latest.release')
@@ -232,7 +231,6 @@ tasks.javadoc {
             'https://commons.apache.org/proper/commons-io/javadocs/api-release/',
             'https://commons.apache.org/proper/commons-lang/apidocs/',
             'https://docs.oracle.com/javase/jp/17/docs/api/',
-            'https://google.github.io/guava/releases/31.0.1-jre/api/docs/',
             'https://jakarta.ee/specifications/platform/8/apidocs/',
             'https://javadoc.io/doc/io.github.classgraph/classgraph/',
             'https://javadoc.io/doc/jp.co.future/uroborosql/',

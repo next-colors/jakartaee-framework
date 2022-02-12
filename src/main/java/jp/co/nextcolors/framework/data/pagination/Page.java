@@ -15,14 +15,9 @@
  */
 package jp.co.nextcolors.framework.data.pagination;
 
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.apache.commons.collections4.CollectionUtils;
-
-import com.google.common.math.DoubleMath;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -86,7 +81,7 @@ public class Page<T> implements IPage<T> {
      */
     @Override
     public int getNumberOfElements() {
-        return CollectionUtils.size(elements);
+        return elements.size();
     }
 
     /**
@@ -94,7 +89,7 @@ public class Page<T> implements IPage<T> {
      */
     @Override
     public int getTotalPages() {
-        return DoubleMath.roundToInt((double) totalElements / getSize(), RoundingMode.CEILING);
+        return (int) Math.ceil((double) totalElements / getSize());
     }
 
     /**
@@ -102,7 +97,7 @@ public class Page<T> implements IPage<T> {
      */
     @Override
     public boolean hasElements() {
-        return CollectionUtils.isNotEmpty(elements);
+        return !elements.isEmpty();
     }
 
     /**
@@ -166,7 +161,7 @@ public class Page<T> implements IPage<T> {
      */
     @Override
     public <R> IPage<R> map(@NonNull final Function<? super T, ? extends R> mapper) {
-        List<R> elements = this.elements.stream().map(mapper::apply).collect(Collectors.toList());
+        List<R> elements = this.elements.stream().map(mapper::apply).collect(Collectors.toUnmodifiableList());
 
         return new Page<>(pageRequest, elements, totalElements);
     }
