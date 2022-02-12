@@ -19,12 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jooq.SortOrder;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
 
 import jp.co.future.uroborosql.utils.CaseFormat;
 
@@ -118,10 +118,11 @@ public class Sort implements Serializable {
         @Override
         public String toString() {
             String columnName = CaseFormat.LOWER_SNAKE_CASE.convert(name);
+            String direction = sortOrder.toSQL().toUpperCase();
 
-            String direction = Strings.emptyToNull(sortOrder.toSQL().toUpperCase());
-
-            return Joiner.on(StringUtils.SPACE).skipNulls().join(columnName, direction);
+            return Stream.of(columnName, direction)
+                    .filter(Predicate.not(String::isEmpty))
+                    .collect(Collectors.joining(StringUtils.SPACE));
         }
     }
 }
