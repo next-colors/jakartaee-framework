@@ -53,8 +53,10 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 class CodeEnumConverterTest {
     @Tested
     private FooConverter converter;
+
     @Mocked
     private FacesContext context;
+
     @Mocked
     private UIComponent component;
 
