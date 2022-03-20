@@ -17,6 +17,10 @@ package jp.co.nextcolors.framework.jsf.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.mockStatic;
 
 import java.util.stream.Stream;
 
@@ -28,6 +32,9 @@ import javax.faces.convert.ConverterException;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.sun.faces.util.MessageFactory;
 
@@ -36,12 +43,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-import mockit.Mock;
-import mockit.MockUp;
-import mockit.Mocked;
-import mockit.Tested;
-import mockit.integration.junit5.JMockitExtension;
-
 import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 
 /**
@@ -49,15 +50,14 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  *
  * @author hamana
  */
-@ExtendWith(JMockitExtension.class)
+@ExtendWith(MockitoExtension.class)
 class CodeEnumConverterTest {
-    @Tested
-    private FooConverter converter;
+    private FooConverter converter = new FooConverter();
 
-    @Mocked
+    @Mock
     private FacesContext context;
 
-    @Mocked
+    @Mock
     private UIComponent component;
 
     /**
@@ -65,22 +65,19 @@ class CodeEnumConverterTest {
      */
     @Test
     void testGetAsObject() {
-        new MockUp<MessageFactory>() {
-            @Mock
-            FacesMessage getMessage(FacesContext context, String messageId, Object... params) {
-                return new FacesMessage();
-            }
-        };
+        try (MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
+            messageFactory.when(() -> MessageFactory.getMessage(isA(FacesContext.class), anyString(), any())).thenReturn(new FacesMessage());
 
-        Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->
-                assertThat(converter.getAsObject(context, component, value)).isNull()
-        );
+            Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->
+                    assertThat(converter.getAsObject(context, component, value)).isNull()
+            );
 
-        Stream.of(Foo.values()).forEach(value ->
-                assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)
-        );
+            Stream.of(Foo.values()).forEach(value ->
+                    assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)
+            );
 
-        assertThatExceptionOfType(ConverterException.class).isThrownBy(() -> converter.getAsObject(context, component, String.valueOf(2)));
+            assertThatExceptionOfType(ConverterException.class).isThrownBy(() -> converter.getAsObject(context, component, String.valueOf(2)));
+        }
     }
 
     /**
