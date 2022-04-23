@@ -225,6 +225,9 @@ tasks.javadoc {
     options {
         encoding = StandardCharsets.UTF_8
         author = true
+        use = true
+        version = true
+        bottom = "&#169; 2017-${Calendar.instance[Calendar.YEAR]} NEXT COLORS Co., Ltd."
         links(
             'https://commons.apache.org/proper/commons-beanutils/apidocs/',
             'https://commons.apache.org/proper/commons-codec/apidocs/',
