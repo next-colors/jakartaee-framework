@@ -29,6 +29,7 @@ plugins {
 //    Import Classes
 //-----------------------------------------------------------------------------
 import java.nio.charset.StandardCharsets
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import io.franzbecker.gradle.lombok.task.DelombokTask
 
 //-----------------------------------------------------------------------------
@@ -155,7 +156,14 @@ tasks.jar {
 tasks.test {
     useJUnitPlatform()
 
+    systemProperties['junit.jupiter.execution.parallel.enabled'] = true
+    systemProperties['junit.jupiter.execution.parallel.mode.default'] = 'concurrent'
+
     ignoreFailures = true
+
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+    }
 
     jacoco {
         destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
