@@ -160,6 +160,7 @@ tasks.test {
     systemProperties['junit.jupiter.execution.parallel.mode.default'] = 'concurrent'
 
     ignoreFailures = true
+    maxParallelForks = Math.max(Runtime.runtime.availableProcessors().intdiv(2), 1)
 
     testLogging {
         exceptionFormat = TestExceptionFormat.FULL
