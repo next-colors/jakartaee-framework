@@ -152,6 +152,10 @@ tasks.withType(DokkaTask).configureEach {
             it.sourceRoots.from(sourceSet.java.srcDirs)
         }
     }
+
+    dokkaSourceSets.configureEach {
+        jdkVersion.set(java.targetCompatibility.majorVersion as int)
+    }
 }
 
 // JAR ファイルを構築するタスク
