@@ -23,6 +23,7 @@ plugins {
     id('com.github.ben-manes.versions') version 'latest.release'
     id('com.vanniktech.dependency.graph.generator') version 'latest.release'
     id('io.franzbecker.gradle-lombok') version 'latest.release'
+    id('org.jetbrains.dokka') version 'latest.release'
 }
 
 //-----------------------------------------------------------------------------
@@ -30,6 +31,7 @@ plugins {
 //-----------------------------------------------------------------------------
 import java.nio.charset.StandardCharsets
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.dokka.gradle.DokkaTask
 import io.franzbecker.gradle.lombok.task.DelombokTask
 
 //-----------------------------------------------------------------------------
@@ -141,6 +143,15 @@ eclipse {
 // JVM 言語でコンパイルするタスク
 tasks.withType(AbstractCompile).configureEach {
     options.encoding = StandardCharsets.UTF_8
+}
+
+// Dokka のタスク
+tasks.withType(DokkaTask).configureEach {
+    sourceSets.each { sourceSet ->
+        dokkaSourceSets.register(sourceSet.name) {
+            it.sourceRoots.from(sourceSet.java.srcDirs)
+        }
+    }
 }
 
 // JAR ファイルを構築するタスク
