@@ -33,6 +33,7 @@ import java.nio.charset.StandardCharsets
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.DokkaConfiguration
 
 //-----------------------------------------------------------------------------
 //    Constant Properties
@@ -147,14 +148,19 @@ tasks.withType(AbstractCompile).configureEach {
 
 // Dokka のタスク
 tasks.withType(DokkaTask).configureEach {
-    sourceSets.each { sourceSet ->
-        dokkaSourceSets.register(sourceSet.name) {
-            it.sourceRoots.from(sourceSet.java.srcDirs)
-        }
-    }
+    dependsOn(tasks.delombok)
 
-    dokkaSourceSets.configureEach {
-        jdkVersion.set(java.targetCompatibility.majorVersion as int)
+    dokkaSourceSets {
+        main {
+            sourceRoots.from(tasks.delombok.outputDir)
+
+            documentedVisibilities.set([
+                DokkaConfiguration.Visibility.PUBLIC,
+                DokkaConfiguration.Visibility.PROTECTED
+            ])
+
+            jdkVersion.set(java.targetCompatibility.majorVersion.toInteger())
+        }
     }
 }
 
