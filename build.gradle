@@ -62,30 +62,30 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     // パッケージに含めるライブラリ
+    api(libs.classgraph)
     api(libs.commons.beanutils)
     api(libs.commons.codec)
-    api(libs.commons.io)
-    api(libs.classgraph)
-    api(libs.toolfactory.jvm.driver)
-    api(libs.uroborosql)
-    api(libs.ognl)
     api(libs.commons.collections4)
+    api(libs.commons.io)
     api(libs.commons.lang3)
     api(libs.jool)
     api(libs.jooq)
+    api(libs.ognl)
     api(libs.slf4j.api)
+    api(libs.toolfactory.jvm.driver)
+    api(libs.uroborosql)
 
     // コンパイル時にのみ必要なライブラリ
     compileOnly(libs.jakartaee.api)
     compileOnly(libs.javax.faces)
 
     // テスト時にのみ必要なライブラリ
-    testImplementation(libs.ninja.squad.DbSetup)
     testImplementation(libs.assertj.core)
     testImplementation(libs.assertj.db)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.ninja.squad.DbSetup)
 
     // テスト実行時にのみ必要なライブラリ
     testRuntimeOnly(libs.junit.jupiter.engine)
