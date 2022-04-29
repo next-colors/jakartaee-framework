@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
 import java.util.stream.Stream;
@@ -65,7 +66,7 @@ class CodeEnumConverterTest {
     @Test
     void testGetAsObject() {
         try (MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
-            messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(new FacesMessage());
+            messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(mock(FacesMessage.class));
 
             Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->
                     assertThat(converter.getAsObject(context, component, value)).isNull()
