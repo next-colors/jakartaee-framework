@@ -20,10 +20,10 @@ plugins {
     id('java-library')
     id('jacoco')
     id('eclipse-wtp')
-    id('com.github.ben-manes.versions') version 'latest.release'
-    id('com.vanniktech.dependency.graph.generator') version 'latest.release'
-    id('io.franzbecker.gradle-lombok') version 'latest.release'
-    id('org.jetbrains.dokka') version 'latest.release'
+    alias(libs.plugins.gradle.dependency.graph.generator)
+    alias(libs.plugins.gradle.dokka)
+    alias(libs.plugins.gradle.lombok)
+    alias(libs.plugins.gradle.versions)
 }
 
 //-----------------------------------------------------------------------------
@@ -59,36 +59,36 @@ repositories {
 // 依存関係の設定
 dependencies {
     // アノテーションプロセッサ
-    annotationProcessor('org.projectlombok:lombok:latest.release')
+    annotationProcessor(libs.lombok)
 
     // パッケージに含めるライブラリ
-    api('commons-beanutils:commons-beanutils:latest.release')
-    api('commons-codec:commons-codec:latest.release')
-    api('commons-io:commons-io:latest.release')
-    api('io.github.classgraph:classgraph:latest.release')
-    api('io.github.toolfactory:jvm-driver:latest.release')
-    api('jp.co.future:uroborosql:latest.release')
-    api('ognl:ognl:latest.release')
-    api('org.apache.commons:commons-collections4:latest.release')
-    api('org.apache.commons:commons-lang3:latest.release')
-    api('org.jooq:jool:latest.release')
-    api('org.jooq:jooq:latest.release')
-    api('org.slf4j:slf4j-api:latest.release')
+    api(libs.commons.beanutils)
+    api(libs.commons.codec)
+    api(libs.commons.io)
+    api(libs.classgraph)
+    api(libs.toolfactory.jvm.driver)
+    api(libs.uroborosql)
+    api(libs.ognl)
+    api(libs.commons.collections4)
+    api(libs.commons.lang3)
+    api(libs.jool)
+    api(libs.jooq)
+    api(libs.slf4j.api)
 
     // コンパイル時にのみ必要なライブラリ
-    compileOnly('jakarta.platform:jakarta.jakartaee-api:8.+')
-    compileOnly('org.glassfish:javax.faces:latest.release')
+    compileOnly(libs.jakartaee.api)
+    compileOnly(libs.javax.faces)
 
     // テスト時にのみ必要なライブラリ
-    testImplementation('com.ninja-squad:DbSetup:latest.release')
-    testImplementation('org.assertj:assertj-core:latest.release')
-    testImplementation('org.assertj:assertj-db:latest.release')
-    testImplementation('org.junit.jupiter:junit-jupiter-api:latest.release')
-    testImplementation('org.mockito:mockito-inline:latest.release')
-    testImplementation('org.mockito:mockito-junit-jupiter:latest.release')
+    testImplementation(libs.ninja.squad.DbSetup)
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.assertj.db)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito.junit.jupiter)
 
     // テスト実行時にのみ必要なライブラリ
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:latest.release')
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 //-----------------------------------------------------------------------------
