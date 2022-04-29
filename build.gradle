@@ -162,6 +162,12 @@ tasks.withType(DokkaTask).configureEach {
             jdkVersion.set(java.targetCompatibility.majorVersion.toInteger())
         }
     }
+
+    pluginsMapConfiguration.set([
+        'org.jetbrains.dokka.base.DokkaBase': """{
+            "footerMessage": "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
+        }"""
+    ])
 }
 
 // JAR ファイルを構築するタスク
