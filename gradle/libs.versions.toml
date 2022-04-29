@@ -22,7 +22,7 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 lombok = { module = "org.projectlombok:lombok", version = "latest.release" }
 mockito-inline = { module = "org.mockito:mockito-inline", version = "latest.release" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version = "latest.release" }
-ninja-squad-DbSetup = { module = "com.ninja-squad:DbSetup", version = "latest.release" }
+ninja-squad-dbsetup = { module = "com.ninja-squad:DbSetup", version = "latest.release" }
 ognl = { module = "ognl:ognl", version = "latest.release" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version = "latest.release" }
 toolfactory-jvm-driver = { module = "io.github.toolfactory:jvm-driver", version = "latest.release" }

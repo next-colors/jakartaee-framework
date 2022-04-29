@@ -85,7 +85,7 @@ dependencies {
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.ninja.squad.DbSetup)
+    testImplementation(libs.ninja.squad.dbsetup)
 
     // テスト実行時にのみ必要なライブラリ
     testRuntimeOnly(libs.junit.jupiter.engine)
