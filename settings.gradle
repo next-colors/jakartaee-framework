@@ -1,0 +1,8 @@
+
+dependencyResolutionManagement {
+    // ライブラリ取得先リポジトリ
+    repositories {
+        // Maven セントラルリポジトリ
+        mavenCentral()
+    }
+}

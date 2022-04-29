@@ -50,12 +50,6 @@ configurations {
     testImplementation.extendsFrom(compileOnly)
 }
 
-// ライブラリ取得先リポジトリ
-repositories {
-    // Maven セントラルリポジトリ
-    mavenCentral()
-}
-
 // 依存関係の設定
 dependencies {
     // アノテーションプロセッサ
