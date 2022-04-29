@@ -163,11 +163,10 @@ tasks.withType(DokkaTask).configureEach {
         }
     }
 
-    pluginsMapConfiguration.set([
-        'org.jetbrains.dokka.base.DokkaBase': """{
-            "footerMessage": "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
-        }"""
-    ])
+    pluginsMapConfiguration['org.jetbrains.dokka.base.DokkaBase'] = """\
+    {
+        "footerMessage": "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
+    }"""
 }
 
 // JAR ファイルを構築するタスク
