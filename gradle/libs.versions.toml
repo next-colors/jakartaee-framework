@@ -5,25 +5,25 @@ gradle-lombok = { id = 'io.franzbecker.gradle-lombok', version = 'latest.release
 gradle-versions = { id = 'com.github.ben-manes.versions', version = 'latest.release' }
 
 [libraries]
-assertj-core = { module = 'org.assertj:assertj-core', version = 'latest.release' }
-assertj-db = { module = 'org.assertj:assertj-db', version = 'latest.release' }
-classgraph = { module = 'io.github.classgraph:classgraph', version = 'latest.release' }
-commons-beanutils = { module = 'commons-beanutils:commons-beanutils', version = 'latest.release' }
-commons-codec = { module = 'commons-codec:commons-codec', version = 'latest.release' }
-commons-collections4 = { module = 'org.apache.commons:commons-collections4', version = 'latest.release' }
-commons-io = { module = 'commons-io:commons-io', version = 'latest.release' }
-commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = 'latest.release' }
-jakartaee-api = { module = 'jakarta.platform:jakarta.jakartaee-api', version = '8.+' }
-javax-faces = { module = 'org.glassfish:javax.faces', version = 'latest.release' }
-jool = { module = 'org.jooq:jool', version = 'latest.release' }
-jooq = { module = 'org.jooq:jooq', version = 'latest.release' }
-junit-jupiter-api = { module = 'org.junit.jupiter:junit-jupiter-api', version = 'latest.release' }
-junit-jupiter-engine = { module = 'org.junit.jupiter:junit-jupiter-engine', version = 'latest.release' }
-lombok = { module = 'org.projectlombok:lombok', version = 'latest.release' }
-mockito-inline = { module = 'org.mockito:mockito-inline', version = 'latest.release' }
-mockito-junit-jupiter = { module = 'org.mockito:mockito-junit-jupiter', version = 'latest.release' }
-ninja-squad-dbsetup = { module = 'com.ninja-squad:DbSetup', version = 'latest.release' }
-ognl = { module = 'ognl:ognl', version = 'latest.release' }
-slf4j-api = { module = 'org.slf4j:slf4j-api', version = 'latest.release' }
-toolfactory-jvm-driver = { module = 'io.github.toolfactory:jvm-driver', version = 'latest.release' }
-uroborosql = { module = 'jp.co.future:uroborosql', version = 'latest.release' }
+assertj-core = { group = 'org.assertj', name = 'assertj-core', version = 'latest.release' }
+assertj-db = { group = 'org.assertj', name = 'assertj-db', version = 'latest.release' }
+classgraph = { group = 'io.github.classgraph', name = 'classgraph', version = 'latest.release' }
+commons-beanutils = { group = 'commons-beanutils', name = 'commons-beanutils', version = 'latest.release' }
+commons-codec = { group = 'commons-codec', name = 'commons-codec', version = 'latest.release' }
+commons-collections4 = { group = 'org.apache.commons', name = 'commons-collections4', version = 'latest.release' }
+commons-io = { group = 'commons-io', name = 'commons-io', version = 'latest.release' }
+commons-lang3 = { group = 'org.apache.commons', name = 'commons-lang3', version = 'latest.release' }
+jakartaee-api = { group = 'jakarta.platform', name = 'jakarta.jakartaee-api', version = '8.+' }
+javax-faces = { group = 'org.glassfish', name = 'javax.faces', version = 'latest.release' }
+jool = { group = 'org.jooq', name = 'jool', version = 'latest.release' }
+jooq = { group = 'org.jooq', name = 'jooq', version = 'latest.release' }
+junit-jupiter-api = { group = 'org.junit.jupiter', name = 'junit-jupiter-api', version = 'latest.release' }
+junit-jupiter-engine = { group = 'org.junit.jupiter', name = 'junit-jupiter-engine', version = 'latest.release' }
+lombok = { group = 'org.projectlombok', name = 'lombok', version = 'latest.release' }
+mockito-inline = { group = 'org.mockito', name = 'mockito-inline', version = 'latest.release' }
+mockito-junit-jupiter = { group = 'org.mockito', name = 'mockito-junit-jupiter', version = 'latest.release' }
+ninja-squad-dbsetup = { group = 'com.ninja-squad', name = 'DbSetup', version = 'latest.release' }
+ognl = { group = 'ognl', name = 'ognl', version = 'latest.release' }
+slf4j-api = { group = 'org.slf4j', name = 'slf4j-api', version = 'latest.release' }
+toolfactory-jvm-driver = { group = 'io.github.toolfactory', name = 'jvm-driver', version = 'latest.release' }
+uroborosql = { group = 'jp.co.future', name = 'uroborosql', version = 'latest.release' }
