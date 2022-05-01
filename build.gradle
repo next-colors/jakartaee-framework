@@ -67,6 +67,7 @@ dependencies {
     api(libs.commons.collections4)
     api(libs.commons.io)
     api(libs.commons.lang3)
+    api(libs.generics.resolver)
     api(libs.jool)
     api(libs.jooq)
     api(libs.ognl)
@@ -262,6 +263,7 @@ tasks.javadoc {
             'https://docs.oracle.com/javase/jp/17/docs/api/',
             'https://jakarta.ee/specifications/platform/8/apidocs/',
             'https://javadoc.io/doc/io.github.classgraph/classgraph/',
+            'https://javadoc.io/doc/ru.vyarus/generics-resolver/',
             'https://javadoc.io/doc/jp.co.future/uroborosql/',
             'https://projectlombok.org/api/',
             'https://www.jooq.org/javadoc/latest/',

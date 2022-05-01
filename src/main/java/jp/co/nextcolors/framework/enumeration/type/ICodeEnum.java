@@ -15,17 +15,15 @@
  */
 package jp.co.nextcolors.framework.enumeration.type;
 
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.EnumSet;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import lombok.NonNull;
+import ru.vyarus.java.generics.resolver.GenericsResolver;
+import ru.vyarus.java.generics.resolver.context.GenericsContext;
 
-import jp.co.nextcolors.framework.util.GenericUtil;
+import lombok.NonNull;
 
 /**
  * プロパティにコードを持つ列挙型を扱うためのインターフェースです。
@@ -98,17 +96,9 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V> {
      */
     @SuppressWarnings("unchecked")
     static <T extends Enum<T> & ICodeEnum<T, V>, V> Class<V> getCodeClass(@NonNull final Class<T> enumClass) {
-        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(enumClass);
+        GenericsContext context = GenericsResolver.resolve(enumClass).type(ICodeEnum.class);
 
-        for (Type interfaceType : enumClass.getGenericInterfaces()) {
-            if (GenericUtil.getRawClass(interfaceType) == ICodeEnum.class) {
-                Type[] paramTypes = GenericUtil.getGenericParameters(interfaceType);
-
-                return (Class<V>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
-            }
-        }
-
-        throw new RuntimeException("列挙型のコードの型を表すクラスを取得できませんでした。");
+        return (Class<V>) context.generic(1);
     }
 
     /**

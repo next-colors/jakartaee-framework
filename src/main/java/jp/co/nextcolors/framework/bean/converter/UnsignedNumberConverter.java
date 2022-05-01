@@ -15,19 +15,17 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.beanutils.converters.NumberConverter;
 import org.jooq.types.UNumber;
 
+import ru.vyarus.java.generics.resolver.GenericsResolver;
+import ru.vyarus.java.generics.resolver.context.GenericsContext;
+
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
-
-import jp.co.nextcolors.framework.util.GenericUtil;
 
 /**
  * 符号なし整数に変換するための抽象クラスです。
@@ -53,19 +51,10 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
     protected UnsignedNumberConverter() {
         super(false);
 
-        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
+        GenericsContext context = GenericsResolver.resolve(getClass()).type(UnsignedNumberConverter.class);
 
-        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-            if (clazz.getSuperclass() == UnsignedNumberConverter.class) {
-                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
-                unsignedNumberClass = (Class<U>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
-                signedNumberClass = (Class<S>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
-
-                return;
-            }
-        }
-
-        throw new RuntimeException("符号なし整数の型/符号あり整数の型を表すクラスを設定できませんでした。");
+        unsignedNumberClass = (Class<U>) context.generic(0);
+        signedNumberClass = (Class<S>) context.generic(1);
     }
 
     /**

@@ -15,8 +15,6 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -27,11 +25,12 @@ import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.beanutils.converters.AbstractConverter;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import ru.vyarus.java.generics.resolver.GenericsResolver;
+import ru.vyarus.java.generics.resolver.context.GenericsContext;
+
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
-
-import jp.co.nextcolors.framework.util.GenericUtil;
 
 /**
  * 列挙型の列挙型定数に変換するための抽象クラスです。
@@ -51,18 +50,9 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
     protected EnumConverter() {
         super(null);
 
-        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
+        GenericsContext context = GenericsResolver.resolve(getClass()).type(EnumConverter.class);
 
-        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-            if (clazz.getSuperclass() == EnumConverter.class) {
-                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
-                enumClass = (Class<E>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
-
-                return;
-            }
-        }
-
-        throw new RuntimeException("列挙型の型を表すクラスを設定できませんでした。");
+        enumClass = (Class<E>) context.generic(0);
     }
 
     /**

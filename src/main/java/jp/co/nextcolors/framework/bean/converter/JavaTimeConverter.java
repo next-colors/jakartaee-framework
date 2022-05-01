@@ -15,23 +15,21 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.temporal.Temporal;
 import java.util.Date;
-import java.util.Map;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.AbstractConverter;
+
+import ru.vyarus.java.generics.resolver.GenericsResolver;
+import ru.vyarus.java.generics.resolver.context.GenericsContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
-
-import jp.co.nextcolors.framework.util.GenericUtil;
 
 /**
  * {@code java.time} の日付/時間に変換するための抽象クラスです。
@@ -58,18 +56,9 @@ public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractCon
     protected JavaTimeConverter() {
         super(null);
 
-        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
+        GenericsContext context = GenericsResolver.resolve(getClass()).type(JavaTimeConverter.class);
 
-        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-            if (clazz.getSuperclass() == JavaTimeConverter.class) {
-                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
-                javaTimeClass = (Class<JT>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
-
-                return;
-            }
-        }
-
-        throw new RuntimeException("日付/時間の型を表すクラスを設定できませんでした。");
+        javaTimeClass = (Class<JT>) context.generic(0);
     }
 
     /**

@@ -15,9 +15,6 @@
  */
 package jp.co.nextcolors.framework.jsf.converter;
 
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.faces.application.FacesMessage;
@@ -32,12 +29,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.sun.faces.util.MessageFactory;
 
+import ru.vyarus.java.generics.resolver.GenericsResolver;
+import ru.vyarus.java.generics.resolver.context.GenericsContext;
+
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
 
 import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
-import jp.co.nextcolors.framework.util.GenericUtil;
 
 /**
  * JSF でプロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
@@ -61,19 +60,10 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 
     @SuppressWarnings("unchecked")
     protected CodeEnumConverter() {
-        Map<TypeVariable<?>, Type> typeVariableMap = GenericUtil.getTypeVariableMap(getClass());
+        GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
 
-        for (Class<?> clazz = getClass(); clazz != Object.class; clazz = clazz.getSuperclass()) {
-            if (clazz.getSuperclass() == CodeEnumConverter.class) {
-                Type[] paramTypes = GenericUtil.getGenericParameters(clazz.getGenericSuperclass());
-                enumClass = (Class<E>) GenericUtil.getActualClass(paramTypes[0], typeVariableMap);
-                enumCodeClass = (Class<C>) GenericUtil.getActualClass(paramTypes[1], typeVariableMap);
-
-                return;
-            }
-        }
-
-        throw new RuntimeException("列挙型の型/列挙型のコードの型を表すクラスを設定できませんでした。");
+        enumClass = (Class<E>) context.generic(0);
+        enumCodeClass = (Class<C>) context.generic(1);
     }
 
     /**
