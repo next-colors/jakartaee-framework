@@ -217,11 +217,11 @@ val delombok by tasks.registering(DelombokTask::class) {
 
     outputs.dir(outputDir)
 
-    sourceSets["main"].java.srcDirs.forEach { srcDir ->
-        if (srcDir.exists()) {
-            inputs.dir(srcDir)
+    sourceSets["main"].java.srcDirs.forEach {
+        if (it.exists()) {
+            inputs.dir(it)
 
-            args(srcDir, "-d", outputDir)
+            args(it, "-d", outputDir)
         }
     }
 
@@ -288,8 +288,8 @@ tasks.javadoc {
 tasks.eclipse {
     doFirst {
         // Buildship の設定
-        layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.printWriter().use { writer ->
-            writer.println(
+        layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.printWriter().use {
+            it.println(
                 """
                 connection.project.dir=${relativePath(rootDir)}
                 eclipse.preferences.version=1
