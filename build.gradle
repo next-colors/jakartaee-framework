@@ -199,11 +199,11 @@ tasks.test {
         events(TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         exceptionFormat = TestExceptionFormat.FULL
     }
+}
 
-    jacoco {
-        destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
-        classDumpDir = layout.buildDirectory.dir('jacoco/classpathdumps').get().asFile
-    }
+// Jacoco でテストのレポートを生成するためのタスク
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
 }
 
 // Lombok による変換後のソースコードを生成するタスク
