@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-rootProject.name = 'jakartaee-framework'
+rootProject.name = "jakartaee-framework"
 
 dependencyResolutionManagement {
     // ライブラリ取得先リポジトリ

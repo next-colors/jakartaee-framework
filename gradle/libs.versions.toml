@@ -13,7 +13,8 @@ commons-codec = { group = 'commons-codec', name = 'commons-codec', version = 'la
 commons-collections4 = { group = 'org.apache.commons', name = 'commons-collections4', version = 'latest.release' }
 commons-io = { group = 'commons-io', name = 'commons-io', version = 'latest.release' }
 commons-lang3 = { group = 'org.apache.commons', name = 'commons-lang3', version = 'latest.release' }
-dokka-kotlin-as-java-plugin = { group = 'org.jetbrains.dokka', name = 'kotlin-as-java-plugin', version = 'latest.release' }
+dokka-base = { group = 'org.jetbrains.dokka', name = 'dokka-base', version = 'latest.release' }
+dokka-kotlin-java-plugin = { group = 'org.jetbrains.dokka', name = 'kotlin-as-java-plugin', version = 'latest.release' }
 generics-resolver = { group = 'ru.vyarus', name = 'generics-resolver', version = 'latest.release' }
 jakartaee-api = { group = 'jakarta.platform', name = 'jakarta.jakartaee-api', version = '8.+' }
 javax-faces = { group = 'org.glassfish', name = 'javax.faces', version = 'latest.release' }
