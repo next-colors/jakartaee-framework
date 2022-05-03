@@ -31,6 +31,7 @@ plugins {
 //-----------------------------------------------------------------------------
 import java.nio.charset.StandardCharsets
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.DokkaConfiguration
@@ -190,6 +191,7 @@ tasks.test {
     maxParallelForks = Math.max(Runtime.runtime.availableProcessors().intdiv(2), 1)
 
     testLogging {
+        events(TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         exceptionFormat = TestExceptionFormat.FULL
     }
 
