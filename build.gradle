@@ -166,7 +166,8 @@ tasks.withType(DokkaTask).configureEach {
     pluginsMapConfiguration['org.jetbrains.dokka.base.DokkaBase'] = """\
     {
         "footerMessage": "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
-    }"""
+    }
+    """.stripIndent()
 }
 
 // JAR ファイルを構築するタスク
