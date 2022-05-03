@@ -90,6 +90,10 @@ dependencies {
 
     // テスト実行時にのみ必要なライブラリ
     testRuntimeOnly(libs.junit.jupiter.engine)
+
+    // Dokka のタスク実行時に必要なライブラリ
+    // ※ Dokka で Java の書式でドキュメントを生成するためのライブラリ
+    dokkaPlugin(libs.dokka.kotlin.as.java.plugin)
 }
 
 //-----------------------------------------------------------------------------
@@ -166,6 +170,7 @@ tasks.withType(DokkaTask).configureEach {
 
     pluginsMapConfiguration['org.jetbrains.dokka.base.DokkaBase'] = """\
     {
+        "separateInheritedMembers": true,
         "footerMessage": "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
     }
     """.stripIndent()
