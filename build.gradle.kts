@@ -57,7 +57,7 @@ group = "jp.co.next-colors"
 //    Constant Properties
 //-----------------------------------------------------------------------------
 // ビルド出力ディレクトリ
-layout.buildDirectory.set(layout.projectDirectory.dir(properties["build.dir.output"] as String))
+layout.buildDirectory.set(layout.projectDirectory.dir(project.property("build.dir.output") as String))
 
 //-----------------------------------------------------------------------------
 //    Dependency Management
@@ -121,8 +121,8 @@ java {
 
 // Gradle Lombok Plugin の設定
 lombok {
-    version = properties["lombok.version"] as String
-    sha256 = properties["lombok.checksum.sha256"] as String
+    version = project.property("lombok.version") as String
+    sha256 = project.property("lombok.checksum.sha256") as String
 }
 
 // Eclipse Plugin の設定
@@ -301,6 +301,6 @@ tasks.eclipse {
 
 // Gradle ラッパーのタスク
 tasks.wrapper {
-    gradleVersion = properties["gradle.version"] as String
+    gradleVersion = project.property("gradle.version") as String
     distributionType = Wrapper.DistributionType.ALL
 }
