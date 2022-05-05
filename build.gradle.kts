@@ -145,7 +145,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 // Delombok のタスク
 tasks.withType<DelombokTask>().configureEach {
-    main = "lombok.launch.Main"
+    mainClass.set("lombok.launch.Main")
 }
 
 // Dokka のタスク
