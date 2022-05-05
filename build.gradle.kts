@@ -188,9 +188,6 @@ tasks.jar {
 tasks.test {
     useJUnitPlatform()
 
-    systemProperties["junit.jupiter.execution.parallel.enabled"] = true
-    systemProperties["junit.jupiter.execution.parallel.mode.default"] = "concurrent"
-
     ignoreFailures = true
     maxParallelForks = Math.max(Runtime.getRuntime().availableProcessors().div(2), 1)
 
