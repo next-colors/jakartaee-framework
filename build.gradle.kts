@@ -189,7 +189,7 @@ tasks.test {
     useJUnitPlatform()
 
     ignoreFailures = true
-    maxParallelForks = Math.max(Runtime.getRuntime().availableProcessors().div(2), 1)
+    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2).coerceAtLeast(1)
 
     testLogging {
         events(TestLogEvent.STARTED, TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
