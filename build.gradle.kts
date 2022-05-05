@@ -261,8 +261,8 @@ tasks.javadoc {
         this as StandardJavadocDocletOptions
 
         encoding = Charsets.UTF_8.name()
-        author(true)
-        use(true)
+        isAuthor = true
+        isUse = true
         version = true
         bottom = "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
         links(
