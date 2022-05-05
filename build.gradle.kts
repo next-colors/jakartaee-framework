@@ -17,13 +17,13 @@
 //    Import Classes
 //-----------------------------------------------------------------------------
 import io.franzbecker.gradle.lombok.task.DelombokTask
-import java.time.Year
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.DokkaTask
+import java.time.Year
 
 //-----------------------------------------------------------------------------
 //    Plugins
