@@ -153,7 +153,7 @@ tasks.withType<DokkaTask>().configureEach {
     dependsOn(delombok)
 
     dokkaSourceSets {
-        register("main") {
+        register(sourceSets.main.name) {
             val outputDir: Directory by delombok.get().extra
 
             sourceRoots.from(outputDir)
@@ -213,11 +213,13 @@ val delombok by tasks.registering(DelombokTask::class) {
 
     outputs.dir(outputDir)
 
-    sourceSets["main"].java.srcDirs.forEach {
-        if (it.exists()) {
-            inputs.dir(it)
+    sourceSets.main {
+        java.srcDirs.forEach {
+            if (it.exists()) {
+                inputs.dir(it)
 
-            args(it, "-d", outputDir)
+                args(it, "-d", outputDir)
+            }
         }
     }
 
