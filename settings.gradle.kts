@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//-----------------------------------------------------------------------------
+//    Project Settings
+//-----------------------------------------------------------------------------
 rootProject.name = "jakartaee-framework"
 
+//-----------------------------------------------------------------------------
+//    Dependency Management
+//-----------------------------------------------------------------------------
 dependencyResolutionManagement {
     // ライブラリ取得先リポジトリ
     repositories {
