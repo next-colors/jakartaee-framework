@@ -54,7 +54,7 @@ buildscript {
 group = "jp.co.next-colors"
 
 //-----------------------------------------------------------------------------
-//    Constant Properties
+//    Project Layout Settings
 //-----------------------------------------------------------------------------
 // ビルド出力ディレクトリ
 layout.buildDirectory.set(layout.projectDirectory.dir(findProperty("build.dir.output") as String))
