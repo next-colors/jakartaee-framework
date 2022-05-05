@@ -16,14 +16,14 @@
 //-----------------------------------------------------------------------------
 //    Import Classes
 //-----------------------------------------------------------------------------
+import io.franzbecker.gradle.lombok.task.DelombokTask
 import java.time.Year
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import io.franzbecker.gradle.lombok.task.DelombokTask
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.DokkaConfiguration
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
+import org.jetbrains.dokka.gradle.DokkaTask
 
 //-----------------------------------------------------------------------------
 //    Plugins
@@ -57,7 +57,7 @@ group = "jp.co.next-colors"
 //    Constant Properties
 //-----------------------------------------------------------------------------
 // ビルド出力ディレクトリ
-layout.buildDirectory.set(layout.projectDirectory.dir(project.property("build.dir.output") as String))
+layout.buildDirectory.set(layout.projectDirectory.dir(findProperty("build.dir.output") as String))
 
 //-----------------------------------------------------------------------------
 //    Dependency Management
@@ -121,8 +121,8 @@ java {
 
 // Gradle Lombok Plugin の設定
 lombok {
-    version = project.property("lombok.version") as String
-    sha256 = project.property("lombok.checksum.sha256") as String
+    version = findProperty("lombok.version") as String
+    sha256 = findProperty("lombok.checksum.sha256") as String
 }
 
 // Eclipse Plugin の設定
@@ -301,6 +301,6 @@ tasks.eclipse {
 
 // Gradle ラッパーのタスク
 tasks.wrapper {
-    gradleVersion = project.property("gradle.version") as String
+    gradleVersion = findProperty("gradle.version") as String
     distributionType = Wrapper.DistributionType.ALL
 }
