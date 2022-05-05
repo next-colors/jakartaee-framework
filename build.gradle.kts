@@ -204,11 +204,10 @@ tasks.jacocoTestReport {
 
 // Lombok による変換後のソースコードを生成するタスク
 val delombok by tasks.registering(DelombokTask::class) {
-    description = "Generates delomboked sources."
-
-    group = name
-
     dependsOn(tasks.compileJava)
+
+    description = "Generates delomboked sources."
+    group = name
 
     val outputDir by extra(layout.buildDirectory.dir(name).get())
 
@@ -230,7 +229,6 @@ val delombok by tasks.registering(DelombokTask::class) {
 // Lombok による変換後のソースコードを生成する際のヘルプを表示するタスク
 val delombokHelp by tasks.registering(DelombokTask::class) {
     description = "Displays the help about delomboking."
-
     group = delombok.get().group
 
     args("--help")
@@ -239,7 +237,6 @@ val delombokHelp by tasks.registering(DelombokTask::class) {
 // Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するタスク
 val delombokFormatHelp by tasks.registering(DelombokTask::class) {
     description = "Displays the help about the format of delomboking."
-
     group = delombok.get().group
 
     args("--format-help")
