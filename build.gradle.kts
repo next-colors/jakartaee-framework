@@ -133,6 +133,20 @@ eclipse {
         natures("org.eclipse.buildship.core.gradleprojectnature")
         buildCommand("org.eclipse.buildship.core.gradleprojectbuilder")
     }
+
+    // JDT（Java Development Tools）の設定
+    jdt {
+        file {
+            layout.projectDirectory.file(".settings/org.eclipse.core.resources.prefs").asFile.printWriter().use {
+                it.println(
+                    """
+                    eclipse.preferences.version=1
+                    encoding/<project>=${Charsets.UTF_8}
+                    """.trimIndent()
+                )
+            }
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -287,8 +301,8 @@ tasks.eclipse {
         layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.printWriter().use {
             it.println(
                 """
-                connection.project.dir=${relativePath(rootDir)}
                 eclipse.preferences.version=1
+                connection.project.dir=${relativePath(rootDir)}
                 """.trimIndent()
             )
         }
