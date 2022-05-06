@@ -64,8 +64,10 @@ layout.buildDirectory.set(layout.projectDirectory.dir(findProperty("build.dir.ou
 //-----------------------------------------------------------------------------
 // コンフィギュレーションの設定
 configurations {
-    // テスト時にのみ必要なライブラリに、コンパイル時にのみ必要なライブラリを追加
-    testImplementation.extendsFrom(compileOnly.get())
+    testImplementation {
+        // テスト時にのみ必要なライブラリに、コンパイル時にのみ必要なライブラリを追加
+        extendsFrom(compileOnly.get())
+    }
 }
 
 // 依存関係の設定
