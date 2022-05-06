@@ -31,7 +31,7 @@ import java.time.Year
 plugins {
     `java-library`
     jacoco
-    `eclipse-wtp`
+    eclipse
     alias(libs.plugins.gradle.dependency.graph.generator)
     alias(libs.plugins.gradle.dokka)
     alias(libs.plugins.gradle.lombok)
