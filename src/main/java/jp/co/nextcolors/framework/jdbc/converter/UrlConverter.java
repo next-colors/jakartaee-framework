@@ -46,7 +46,7 @@ public class UrlConverter extends AbstractConverter<String, URL> {
             return null;
         }
 
-        return (URL) ConvertUtils.convert(databaseObject, URL.class);
+        return toType().cast(ConvertUtils.convert(databaseObject, toType()));
     }
 
     /**
