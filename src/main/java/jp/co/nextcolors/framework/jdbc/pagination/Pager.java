@@ -117,7 +117,7 @@ public class Pager<T> implements IPager<T> {
 
         Table<Record> table = DSL.table('(' + query.getSQL() + ')', query.getBindValues().toArray());
 
-        int totalElements = dslContext.fetchCount(table.as("q"));
+        int totalElements = dslContext.fetchCount(table.as("t"));
 
         select.addParameter("offset", pageRequest.getOffset());
         select.addParameter("limit", pageRequest.getPageSize());
