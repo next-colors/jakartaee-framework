@@ -280,8 +280,10 @@ tasks.javadoc {
     }
 }
 
-// Eclipse プロジェクトのタスク
+// Eclipse の設定ファイルを生成するタスク
 tasks.eclipse {
+    dependsOn(tasks.cleanEclipse)
+
     doFirst {
         // Buildship の設定
         layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.printWriter().use {
