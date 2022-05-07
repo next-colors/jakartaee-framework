@@ -216,12 +216,10 @@ val delombok by tasks.registering(DelombokTask::class) {
     outputs.dir(outputDir)
 
     sourceSets.main {
-        java.srcDirs.forEach {
-            if (it.exists()) {
-                inputs.dir(it)
+        java.srcDirs.filter(File::exists).forEach {
+            inputs.dir(it)
 
-                args(it, "-d", outputDir)
-            }
+            args(it, "-d", outputDir)
         }
     }
 
