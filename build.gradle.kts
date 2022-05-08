@@ -16,6 +16,7 @@
 //-----------------------------------------------------------------------------
 //    Import Classes
 //-----------------------------------------------------------------------------
+import io.franzbecker.gradle.lombok.LombokPluginExtension
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
@@ -148,7 +149,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 // Delombok のタスク
 tasks.withType<DelombokTask>().configureEach {
-    mainClass.set("lombok.launch.Main")
+    mainClass.set(LombokPluginExtension().main)
 }
 
 // Dokka のタスク
@@ -210,7 +211,7 @@ val delombok by tasks.registering(DelombokTask::class) {
     dependsOn(tasks.compileJava)
 
     description = "Generates delomboked sources."
-    group = name
+    group = LombokPluginExtension.getNAME()
 
     val outputDir by extra(layout.buildDirectory.dir(name).get())
 
