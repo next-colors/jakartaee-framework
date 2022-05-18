@@ -76,6 +76,7 @@ class CodeEnumConverterTest {
                     assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)
             );
 
+            // 含まれていないコード
             assertThatExceptionOfType(ConverterException.class).isThrownBy(() -> converter.getAsObject(context, component, String.valueOf(2)));
         }
     }
