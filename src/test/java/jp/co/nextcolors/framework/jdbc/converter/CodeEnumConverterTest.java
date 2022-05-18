@@ -95,6 +95,7 @@ class CodeEnumConverterTest {
         private final Integer code;
     }
 
+    @SuppressWarnings("serial")
     public static class FooConverter extends CodeEnumConverter<Foo, Integer, Long> {
     }
 }
