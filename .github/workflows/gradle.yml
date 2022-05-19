@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: temurin
+          distribution: corretto
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2.1.6
