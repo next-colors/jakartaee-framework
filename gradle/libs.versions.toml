@@ -25,6 +25,7 @@ junit-jupiter-engine = { group = 'org.junit.jupiter', name = 'junit-jupiter-engi
 lombok = { group = 'org.projectlombok', name = 'lombok', version = 'latest.release' }
 mockito-inline = { group = 'org.mockito', name = 'mockito-inline', version = 'latest.release' }
 mockito-junit-jupiter = { group = 'org.mockito', name = 'mockito-junit-jupiter', version = 'latest.release' }
+mockneat = { group = 'net.andreinc', name = 'mockneat', version = 'latest.release' }
 ninja-squad-dbsetup = { group = 'com.ninja-squad', name = 'DbSetup', version = 'latest.release' }
 ognl = { group = 'ognl', name = 'ognl', version = 'latest.release' }
 slf4j-api = { group = 'org.slf4j', name = 'slf4j-api', version = 'latest.release' }

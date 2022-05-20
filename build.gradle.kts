@@ -102,6 +102,7 @@ dependencies {
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockneat)
     testImplementation(libs.ninja.squad.dbsetup)
 
     // テスト実行時にのみ必要なライブラリ
