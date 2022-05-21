@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
  * @author hamana
  */
 class Base64ConverterTest {
-    private Base64Converter converter = new Base64Converter();
+    private final Base64Converter converter = new Base64Converter();
 
     /**
      * {@link Base64Converter#from(String)} のテストです。

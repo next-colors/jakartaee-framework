@@ -28,7 +28,7 @@ import org.mockito.Mockito;
  * @author hamana
  */
 class HashConverterTest {
-    HashConverter converter = mock(HashConverter.class, Mockito.CALLS_REAL_METHODS);
+    private final HashConverter converter = mock(HashConverter.class, Mockito.CALLS_REAL_METHODS);
 
     /**
      * {@link HashConverter#from(String)} のテストです。

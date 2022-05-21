@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * @author hamana
  */
 class Sha256ConverterTest {
-    private Sha256Converter converter = new Sha256Converter();
+    private final Sha256Converter converter = new Sha256Converter();
 
     /**
      * {@link Sha256Converter#to(String)} のテストです。

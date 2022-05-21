@@ -29,7 +29,7 @@ import org.junit.jupiter.api.Test;
  * @author hamana
  */
 class UrlConverterTest {
-    private UrlConverter converter = new UrlConverter();
+    private final UrlConverter converter = new UrlConverter();
 
     /**
      * {@link UrlConverter#from(String)} のテストです。

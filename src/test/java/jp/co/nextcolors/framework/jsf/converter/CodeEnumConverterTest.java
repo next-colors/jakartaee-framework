@@ -52,7 +52,7 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  */
 @ExtendWith(MockitoExtension.class)
 class CodeEnumConverterTest {
-    private FooConverter converter = new FooConverter();
+    private final FooConverter converter = new FooConverter();
 
     @Mock
     private FacesContext context;

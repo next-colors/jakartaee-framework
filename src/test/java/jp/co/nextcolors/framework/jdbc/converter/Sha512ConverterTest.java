@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  * @author hamana
  */
 class Sha512ConverterTest {
-    private Sha512Converter converter = new Sha512Converter();
+    private final Sha512Converter converter = new Sha512Converter();
 
     /**
      * {@link Sha256Converter#to(String)} のテストです。
