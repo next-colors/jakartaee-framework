@@ -74,9 +74,9 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
      * @param value     変換対象の値
      * @return 変換に失敗した場合のメッセージ
      */
-    private FacesMessage getConversionErrorMessage(@NonNull final FacesContext context,
-                                                   @NonNull final UIComponent component,
-                                                   @NonNull final Object value) {
+    private FacesMessage getConversionErrorMessage(final FacesContext context,
+                                                   final UIComponent component,
+                                                   final Object value) {
         Object label = MessageFactory.getLabel(context, component);
 
         return MessageFactory.getMessage(context, EnumConverter.ENUM_ID, value, null, label);

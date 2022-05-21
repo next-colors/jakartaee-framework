@@ -15,6 +15,7 @@
  */
 package jp.co.nextcolors.framework.jsf.converter;
 
+import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
@@ -78,6 +79,9 @@ class CodeEnumConverterTest {
 
             // 含まれていないコード
             assertThatExceptionOfType(ConverterException.class).isThrownBy(() -> converter.getAsObject(context, component, String.valueOf(2)));
+
+            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsObject(null, component, from(Foo.class).get().toString()));
+            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsObject(context, null, from(Foo.class).get().toString()));
         }
     }
 
@@ -91,6 +95,9 @@ class CodeEnumConverterTest {
         Stream.of(Foo.values()).forEach(value ->
                 assertThat(converter.getAsString(context, component, value)).isEqualTo(value.getCode().toString())
         );
+
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsString(null, component, from(Foo.class).get()));
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsString(context, null, from(Foo.class).get()));
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)

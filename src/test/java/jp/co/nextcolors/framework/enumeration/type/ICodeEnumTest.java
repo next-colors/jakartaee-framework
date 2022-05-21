@@ -15,6 +15,7 @@
  */
 package jp.co.nextcolors.framework.enumeration.type;
 
+import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
@@ -44,7 +45,10 @@ class ICodeEnumTest {
                 assertThat(ICodeEnum.codeOf(Foo.class, value.getCode())).isEqualTo(value)
         );
 
+        // 含まれていないコード
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> ICodeEnum.codeOf(Foo.class, 2));
+
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.codeOf(null, from(Foo.class).get().getCode()));
     }
 
     /**
@@ -57,6 +61,8 @@ class ICodeEnumTest {
         );
 
         assertThat(ICodeEnum.isValidCode(Foo.class, 2)).isFalse();
+
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.isValidCode(null, from(Foo.class).get().getCode()));
     }
 
     /**
@@ -65,6 +71,8 @@ class ICodeEnumTest {
     @Test
     void testCodes() {
         assertThat(ICodeEnum.codes(Foo.class)).containsExactlyInAnyOrder(Stream.of(Foo.values()).map(Foo::getCode).toArray(Integer[]::new));
+
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.codes(null));
     }
 
     /**
@@ -73,6 +81,8 @@ class ICodeEnumTest {
     @Test
     void testGetCodeClass() {
         assertThat(ICodeEnum.getCodeClass(Foo.class)).isEqualTo(Integer.class);
+
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.getCodeClass(null));
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
