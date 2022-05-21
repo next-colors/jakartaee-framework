@@ -34,8 +34,8 @@ class Sha256ConverterTest {
      */
     @Test
     void testTo() {
-        String text = strings().get();
-        String expected = DigestUtils.sha256Hex(text);
+        final String text = strings().get();
+        final String expected = DigestUtils.sha256Hex(text);
 
         assertThat(converter.to(text)).isEqualTo(expected);
 

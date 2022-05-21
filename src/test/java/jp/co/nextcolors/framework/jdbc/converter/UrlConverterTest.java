@@ -36,7 +36,7 @@ class UrlConverterTest {
      */
     @Test
     void testFrom() {
-        URL url = urls().get(Unchecked.function(URL::new));
+        final URL url = urls().get(Unchecked.function(URL::new));
 
         assertThat(converter.from(url.toString())).isEqualTo(url);
 
@@ -49,7 +49,7 @@ class UrlConverterTest {
      */
     @Test
     void testTo() {
-        URL url = urls().get(Unchecked.function(URL::new));
+        final URL url = urls().get(Unchecked.function(URL::new));
 
         assertThat(converter.to(url)).isEqualTo(url.toString());
 

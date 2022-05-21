@@ -37,8 +37,8 @@ class Base64ConverterTest {
      */
     @Test
     void testFrom() {
-        String text = strings().get();
-        String expected = StringUtils.toEncodedString(Base64.decodeBase64(text), StandardCharsets.UTF_8);
+        final String text = strings().get();
+        final String expected = StringUtils.toEncodedString(Base64.decodeBase64(text), StandardCharsets.UTF_8);
 
         assertThat(converter.from(text)).isEqualTo(expected);
 
@@ -51,8 +51,8 @@ class Base64ConverterTest {
      */
     @Test
     void testTo() {
-        String text = strings().get();
-        String expected = Base64.encodeBase64String(text.getBytes(StandardCharsets.UTF_8));
+        final String text = strings().get();
+        final String expected = Base64.encodeBase64String(text.getBytes(StandardCharsets.UTF_8));
 
         assertThat(converter.to(text)).isEqualTo(expected);
 

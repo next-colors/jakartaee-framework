@@ -34,8 +34,8 @@ class Sha512ConverterTest {
      */
     @Test
     void testTo() {
-        String text = strings().get();
-        String expected = DigestUtils.sha512Hex(text);
+        final String text = strings().get();
+        final String expected = DigestUtils.sha512Hex(text);
 
         assertThat(converter.to(text)).isEqualTo(expected);
 

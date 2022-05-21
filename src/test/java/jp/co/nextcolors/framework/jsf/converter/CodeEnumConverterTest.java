@@ -66,7 +66,7 @@ class CodeEnumConverterTest {
      */
     @Test
     void testGetAsObject() {
-        try (MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
+        try (final MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
             messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(mock(FacesMessage.class));
 
             Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->

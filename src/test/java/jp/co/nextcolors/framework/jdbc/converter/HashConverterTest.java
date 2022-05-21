@@ -35,7 +35,7 @@ class HashConverterTest {
      */
     @Test
     void testFrom() {
-        String text = strings().get();
+        final String text = strings().get();
 
         assertThat(converter.from(text)).isEqualTo(text);
 

@@ -15,10 +15,13 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
+import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.stream.Stream;
 
+import org.jooq.lambda.Unchecked;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -27,6 +30,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 
 import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 
@@ -40,19 +44,28 @@ class CodeEnumConverterTest {
     private final FooConverter converter = new FooConverter();
 
     /**
-     * {@link CodeEnumConverter#convert(Class, Object)} のテストです。
+     * {@link CodeEnumConverter#convertToType(Class, Object)} のテストです。
      */
+    @SneakyThrows(Throwable.class)
     @Test
-    void testConvert() {
-        Stream.of(Foo.values()).forEach(value ->
-                assertThat(converter.convert(Foo.class, value.getCode())).isEqualTo(value)
-        );
+    void testConvertToType() {
+        Stream.of(Foo.values()).forEach(Unchecked.consumer(value ->
+                assertThat(converter.convertToType(Foo.class, value.getCode())).isEqualTo(value)
+        ));
 
         // 含まれていないコード
-        assertThat(converter.convert(Foo.class, 2)).isNull();
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> converter.convertToType(Foo.class, 2));
 
-        // null
-        assertThat(converter.convert(Foo.class, null)).isNull();
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, from(Foo.class).get().getCode()));
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(Foo.class, null));
+    }
+
+    /**
+     * {@link CodeEnumConverter#getDefaultType()} のテストです。
+     */
+    @Test
+    void testGetDefaultType() {
+        assertThat(converter.getDefaultType()).isEqualTo(Foo.class);
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
