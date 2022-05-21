@@ -283,8 +283,8 @@ tasks.eclipse {
 
     doFirst {
         // Buildship の設定
-        layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.printWriter().use {
-            it.println(
+        layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.writer().use {
+            it.appendLine(
                 """
                 eclipse.preferences.version=1
                 connection.project.dir=${relativePath(rootDir)}
@@ -293,8 +293,8 @@ tasks.eclipse {
         }
 
         // テキストファイルのエンコードの設定
-        layout.projectDirectory.file(".settings/org.eclipse.core.resources.prefs").asFile.printWriter().use {
-            it.println(
+        layout.projectDirectory.file(".settings/org.eclipse.core.resources.prefs").asFile.writer().use {
+            it.appendLine(
                 """
                 eclipse.preferences.version=1
                 encoding/<project>=${Charsets.UTF_8}
