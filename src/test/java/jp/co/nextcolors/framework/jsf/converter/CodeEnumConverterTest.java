@@ -101,7 +101,7 @@ class CodeEnumConverterTest {
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public enum Foo implements ICodeEnum<Foo, Integer> {
+    private enum Foo implements ICodeEnum<Foo, Integer> {
         BAR(0),
         BAZ(1);
 
@@ -110,6 +110,6 @@ class CodeEnumConverterTest {
         private final Integer code;
     }
 
-    public static class FooConverter extends CodeEnumConverter<Foo, Integer> {
+    private static class FooConverter extends CodeEnumConverter<Foo, Integer> {
     }
 }

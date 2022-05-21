@@ -86,7 +86,7 @@ class ICodeEnumTest {
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public enum Foo implements ICodeEnum<Foo, Integer> {
+    private enum Foo implements ICodeEnum<Foo, Integer> {
         BAR(0),
         BAZ(1);
 
