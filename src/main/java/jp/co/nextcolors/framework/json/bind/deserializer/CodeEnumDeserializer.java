@@ -24,6 +24,7 @@ import javax.json.bind.serializer.JsonbDeserializer;
 import javax.json.stream.JsonParser;
 
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import lombok.AccessLevel;
@@ -55,8 +56,14 @@ public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, 
         Class<T> enumClass = (Class<T>) rtType;
         Class<C> enumCodeClass = ICodeEnum.getCodeClass(enumClass);
 
+        String value = parser.getString();
+
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
+
         try {
-            C code = enumCodeClass.cast(ConvertUtils.convert(parser.getString(), enumCodeClass));
+            C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
             return ICodeEnum.codeOf(enumClass, code);
         } catch (Exception e) {

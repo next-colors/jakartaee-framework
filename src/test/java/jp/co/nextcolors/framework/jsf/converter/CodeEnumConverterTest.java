@@ -69,12 +69,12 @@ class CodeEnumConverterTest {
         try (final MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
             messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(mock(FacesMessage.class));
 
-            Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->
-                    assertThat(converter.getAsObject(context, component, value)).isNull()
-            );
-
             Stream.of(Foo.values()).forEach(value ->
                     assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)
+            );
+
+            Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value ->
+                    assertThat(converter.getAsObject(context, component, value)).isNull()
             );
 
             // 含まれていないコード

@@ -21,8 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -36,7 +34,6 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  *
  * @author hamana
  */
-@ExtendWith(MockitoExtension.class)
 class CodeEnumConverterTest {
     private final FooConverter converter = new FooConverter();
 
