@@ -16,13 +16,11 @@
 package jp.co.nextcolors.framework.json.bind.serializer;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.Optional;
 
 import javax.json.bind.serializer.JsonbSerializer;
 import javax.json.bind.serializer.SerializationContext;
 import javax.json.stream.JsonGenerator;
-
-import org.apache.commons.beanutils.ConvertUtils;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -47,19 +45,9 @@ public abstract class CodeEnumSerializer<T extends Enum<T> & ICodeEnum<T, C>, C>
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void serialize(final T obj, @NonNull final JsonGenerator generator, @NonNull final SerializationContext ctx) {
-        if (Objects.isNull(obj)) {
-            ctx.serialize(obj, generator);
-
-            return;
-        }
-
-        Class<T> enumClass = (Class<T>) obj.getClass();
-        Class<C> enumCodeClass = ICodeEnum.getCodeClass(enumClass);
-
-        C code = enumCodeClass.cast(ConvertUtils.convert(obj, enumCodeClass));
+        C code = Optional.ofNullable(obj).map(value -> value.getCode()).orElse(null);
 
         ctx.serialize(code, generator);
     }
