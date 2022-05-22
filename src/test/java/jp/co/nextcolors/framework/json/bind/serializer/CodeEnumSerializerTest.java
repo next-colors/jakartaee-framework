@@ -17,8 +17,6 @@ package jp.co.nextcolors.framework.json.bind.serializer;
 
 import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -62,7 +60,7 @@ class CodeEnumSerializerTest {
     void testSerialize() {
         Stream.of(Foo.values()).forEach(value -> {
             serializer.serialize(value, generator, ctx);
-            verify(ctx, times(1)).serialize(anyInt(), same(generator));
+            verify(ctx, times(1)).serialize(value.getCode(), generator);
             clearInvocations(ctx);
         });
 
