@@ -21,7 +21,7 @@ class UShortConverterTest {
      * {@link UShortConverter#getUnsignedValue(Short)} のテストです。
      */
     @Test
-    void testGetDateTime() {
+    void testGetUnsignedValue() {
         final short unsignedNumber = ints().bound(Short.valueOf(Short.MAX_VALUE).intValue()).get().shortValue();
 
         assertThat(converter.getUnsignedValue(unsignedNumber)).isEqualTo(UShort.valueOf(unsignedNumber));

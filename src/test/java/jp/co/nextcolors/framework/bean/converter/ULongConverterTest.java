@@ -21,7 +21,7 @@ class ULongConverterTest {
      * {@link ULongConverter#getUnsignedValue(Long)} のテストです。
      */
     @Test
-    void testGetDateTime() {
+    void testGetUnsignedValue() {
         final long unsignedNumber = longs().bound(Long.MAX_VALUE).get();
 
         assertThat(converter.getUnsignedValue(unsignedNumber)).isEqualTo(ULong.valueOf(unsignedNumber));

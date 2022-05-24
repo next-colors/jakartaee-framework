@@ -21,7 +21,7 @@ class UIntegerConverterTest {
      * {@link UIntegerConverter#getUnsignedValue(Integer)} のテストです。
      */
     @Test
-    void testGetDateTime() {
+    void testGetUnsignedValue() {
         final int unsignedNumber = ints().bound(Integer.MAX_VALUE).get();
 
         assertThat(converter.getUnsignedValue(unsignedNumber)).isEqualTo(UInteger.valueOf(unsignedNumber));

@@ -21,7 +21,7 @@ class UByteConverterTest {
      * {@link UByteConverter#getUnsignedValue(Byte)} のテストです。
      */
     @Test
-    void testGetDateTime() {
+    void testGetUnsignedValue() {
         final byte unsignedNumber = ints().bound(Byte.valueOf(Byte.MAX_VALUE).intValue()).get().byteValue();
 
         assertThat(converter.getUnsignedValue(unsignedNumber)).isEqualTo(UByte.valueOf(unsignedNumber));
