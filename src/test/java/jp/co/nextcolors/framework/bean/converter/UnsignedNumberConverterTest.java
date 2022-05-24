@@ -2,6 +2,7 @@ package jp.co.nextcolors.framework.bean.converter;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -35,6 +36,8 @@ class UnsignedNumberConverterTest {
         converter.convertToType(Number.class, number.toString());
         verify(converter, times(1)).getUnsignedValue(number);
         clearInvocations(converter);
+
+        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, number));
     }
 
     /**

@@ -35,13 +35,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @BeanConverter(forClass = UByte.class)
 public class UByteConverter extends UnsignedNumberConverter<UByte, Byte> {
     /**
-     * @param defaultValue デフォルト値
-     */
-    public UByteConverter(final UByte defaultValue) {
-        super(defaultValue);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

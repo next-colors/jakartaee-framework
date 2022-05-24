@@ -15,8 +15,6 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
-import java.util.Objects;
-
 import org.apache.commons.beanutils.converters.NumberConverter;
 import org.jooq.types.UNumber;
 
@@ -58,14 +56,6 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
     }
 
     /**
-     * @param defaultValue デフォルト値
-     */
-    protected UnsignedNumberConverter(final U defaultValue) {
-        this();
-        setDefaultValue(defaultValue);
-    }
-
-    /**
      * 符号なし整数を取得します。
      *
      * @param signedValue 符号あり整数
@@ -80,10 +70,6 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
     @Override
     protected <T> T convertToType(@NonNull final Class<T> type, final Object value) throws Throwable {
         S signedValue = super.convertToType(signedNumberClass, value);
-
-        if (Objects.isNull(signedValue)) {
-            return null;
-        }
 
         return type.cast(getUnsignedValue(signedValue));
     }

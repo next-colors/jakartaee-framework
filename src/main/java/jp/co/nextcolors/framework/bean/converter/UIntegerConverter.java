@@ -35,13 +35,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @BeanConverter(forClass = UInteger.class)
 public class UIntegerConverter extends UnsignedNumberConverter<UInteger, Integer> {
     /**
-     * @param defaultValue デフォルト値
-     */
-    public UIntegerConverter(final UInteger defaultValue) {
-        super(defaultValue);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
