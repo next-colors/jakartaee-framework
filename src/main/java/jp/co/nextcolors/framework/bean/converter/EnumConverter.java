@@ -79,7 +79,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
      * @return 列挙型定数
      * @throws ConversionException 指定した名前の列挙型定数がない場合
      */
-    private E convert(@NonNull final String name) {
+    private E convert(final String name) {
         Map<String, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::name, Function.identity()));
 
         if (!constants.containsKey(name)) {
