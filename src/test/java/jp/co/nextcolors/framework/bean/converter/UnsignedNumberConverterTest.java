@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.jooq.types.UNumber;
@@ -45,11 +44,11 @@ class UnsignedNumberConverterTest {
         final Integer number = ints().get();
 
         converter.convertToType(Number.class, number);
-        verify(converter, times(1)).getUnsignedValue(number);
+        verify(converter).getUnsignedValue(number);
         clearInvocations(converter);
 
         converter.convertToType(Number.class, number.toString());
-        verify(converter, times(1)).getUnsignedValue(number);
+        verify(converter).getUnsignedValue(number);
         clearInvocations(converter);
 
         assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, number));

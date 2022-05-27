@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.time.OffsetDateTime;
@@ -49,7 +48,7 @@ class JavaTimeConverterTest {
         final Date date = Date.from(localDates().get().atStartOfDay(converter.zone).toInstant());
 
         converter.convertToType(Temporal.class, date);
-        verify(converter, times(1)).getDateTime(any(OffsetDateTime.class));
+        verify(converter).getDateTime(any(OffsetDateTime.class));
         clearInvocations(converter);
 
         assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, date));

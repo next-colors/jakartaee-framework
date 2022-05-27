@@ -18,7 +18,6 @@ package jp.co.nextcolors.framework.interceptor;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import javax.interceptor.InvocationContext;
@@ -50,7 +49,7 @@ class PostConstructInterceptorTest {
     @Test
     void testInvoke() {
         interceptor.invoke(context);
-        verify(interceptor, times(1)).invokeInternal(context);
+        verify(interceptor).invokeInternal(context);
         clearInvocations(interceptor);
 
         assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> interceptor.invoke(null));
