@@ -16,6 +16,7 @@
 package jp.co.nextcolors.framework.resource;
 
 import static net.andreinc.mockneat.unit.text.Strings.strings;
+import static net.andreinc.mockneat.unit.types.Longs.longs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -24,7 +25,6 @@ import java.util.ResourceBundle.Control;
 
 import org.junit.jupiter.api.Test;
 
-import net.andreinc.mockneat.unit.types.Longs;
 
 /**
  * {@link PropertyResourceBundleControl} のテストです。
@@ -37,7 +37,7 @@ class PropertyResourceBundleControlTest {
      */
     @Test
     void testConstructor() {
-        final long timeToLive = Longs.longs().get();
+        final long timeToLive = longs().get();
 
         final PropertyResourceBundleControl control = new PropertyResourceBundleControl(timeToLive);
 
