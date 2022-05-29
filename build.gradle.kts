@@ -99,6 +99,7 @@ dependencies {
     testImplementation(libs.ninja.squad.dbsetup)
 
     // テスト実行時にのみ必要なライブラリ
+    testRuntimeOnly(libs.jakarta.servlet.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
     // Dokka のタスク実行時に必要なライブラリ
