@@ -125,7 +125,7 @@ class RequestDumpUtilTest {
         reset(request);
 
         when(request.getParameterNames()).thenReturn(Collections.enumeration(strings().collection(2).get()));
-        when(request.getParameterValues(anyString())).thenReturn(Collections.emptyList().toArray(String[]::new));
+        when(request.getParameterValues(anyString())).thenReturn(Arrays.array());
         RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
