@@ -95,26 +95,26 @@ class RequestDumpFilterTest {
             final FilterChain chain = mock(FilterChain.class);
 
             filter.doFilter(request, response, chain);
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), any(), any(), any()), never());
 
             when(LOGGER.isDebugEnabled()).thenReturn(true);
             filter.doFilter(mock(ServletRequest.class), response, chain);
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(StringBuffer.class), any(HttpServletRequest.class), anyString(), anyString()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), any(), any(), any()), never());
             reset(LOGGER);
 
             when(LOGGER.isDebugEnabled()).thenReturn(true);
             when(LOGGER.atDebug()).thenReturn(mock(LoggingEventBuilder.class));
             filter.doFilter(request, response, chain);
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(StringBuffer.class), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(StringBuffer.class), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(StringBuffer.class), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(StringBuffer.class), same(request), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), same(request), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), same(request), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), same(request), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), same(request), anyString(), anyString()));
             reset(LOGGER);
 
             assertThatNullPointerException().isThrownBy(() -> filter.doFilter(null, response, chain));
