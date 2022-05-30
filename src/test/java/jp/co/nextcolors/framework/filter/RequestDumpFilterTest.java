@@ -84,7 +84,7 @@ class RequestDumpFilterTest {
     }
 
     /**
-     * {@link RequestDumpFilter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)} のテストです。
+     * {@link RequestDumpFilter#doFilter(ServletRequest, ServletResponse, FilterChain)} のテストです。
      */
     @SneakyThrows({IOException.class, ServletException.class})
     @Test
