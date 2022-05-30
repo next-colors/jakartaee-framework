@@ -15,8 +15,8 @@
  */
 package jp.co.nextcolors.framework.filter;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.same;
@@ -39,6 +39,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
@@ -54,6 +56,7 @@ import jp.co.nextcolors.framework.filter.util.RequestDumpUtil;
  *
  * @author hamana
  */
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(MockitoExtension.class)
 class RequestDumpFilterTest {
     private static final MockedStatic<LoggerFactory> LOGGER_FACTORY = mockStatic(LoggerFactory.class);
@@ -114,9 +117,9 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(StringBuffer.class), same(request), anyString(), anyString()));
             reset(LOGGER);
 
-            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> filter.doFilter(null, response, chain));
-            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> filter.doFilter(request, null, chain));
-            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> filter.doFilter(request, response, null));
+            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(null, response, chain));
+            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(request, null, chain));
+            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(request, response, null));
         }
     }
 

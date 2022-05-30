@@ -17,7 +17,8 @@ package jp.co.nextcolors.framework.enumeration.type;
 
 import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import java.util.stream.Stream;
 
@@ -46,9 +47,9 @@ class ICodeEnumTest {
         );
 
         // 含まれていないコード
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> ICodeEnum.codeOf(Foo.class, 2));
+        assertThatIllegalArgumentException().isThrownBy(() -> ICodeEnum.codeOf(Foo.class, 2));
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.codeOf(null, from(Foo.class).get().getCode()));
+        assertThatNullPointerException().isThrownBy(() -> ICodeEnum.codeOf(null, from(Foo.class).get().getCode()));
     }
 
     /**
@@ -62,7 +63,7 @@ class ICodeEnumTest {
 
         assertThat(ICodeEnum.isValidCode(Foo.class, 2)).isFalse();
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.isValidCode(null, from(Foo.class).get().getCode()));
+        assertThatNullPointerException().isThrownBy(() -> ICodeEnum.isValidCode(null, from(Foo.class).get().getCode()));
     }
 
     /**
@@ -72,7 +73,7 @@ class ICodeEnumTest {
     void testCodes() {
         assertThat(ICodeEnum.codes(Foo.class)).containsExactlyInAnyOrder(Stream.of(Foo.values()).map(Foo::getCode).toArray(Integer[]::new));
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.codes(null));
+        assertThatNullPointerException().isThrownBy(() -> ICodeEnum.codes(null));
     }
 
     /**
@@ -82,7 +83,7 @@ class ICodeEnumTest {
     void testGetCodeClass() {
         assertThat(ICodeEnum.getCodeClass(Foo.class)).isEqualTo(Integer.class);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> ICodeEnum.getCodeClass(null));
+        assertThatNullPointerException().isThrownBy(() -> ICodeEnum.getCodeClass(null));
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)

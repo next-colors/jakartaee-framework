@@ -17,7 +17,7 @@ package jp.co.nextcolors.framework.resource;
 
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import java.util.Locale;
 import java.util.ResourceBundle.Control;
@@ -46,8 +46,8 @@ class ResourceBundleControlTest {
     void testGetTimeToLive() {
         assertThat(control.getTimeToLive(strings().get(), locale)).isEqualTo(Control.TTL_NO_EXPIRATION_CONTROL);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> control.getTimeToLive(null, locale));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> control.getTimeToLive(strings().get(), null));
+        assertThatNullPointerException().isThrownBy(() -> control.getTimeToLive(null, locale));
+        assertThatNullPointerException().isThrownBy(() -> control.getTimeToLive(strings().get(), null));
     }
 
     /**
@@ -57,6 +57,6 @@ class ResourceBundleControlTest {
     void testGetFormats() {
         assertThat(control.getFormats(strings().get())).isEqualTo(Control.FORMAT_DEFAULT);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> control.getFormats(null));
+        assertThatNullPointerException().isThrownBy(() -> control.getFormats(null));
     }
 }

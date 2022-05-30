@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.jsf.converter;
 import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -80,8 +81,8 @@ class CodeEnumConverterTest {
             // 含まれていないコード
             assertThatExceptionOfType(ConverterException.class).isThrownBy(() -> converter.getAsObject(context, component, String.valueOf(2)));
 
-            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsObject(null, component, from(Foo.class).get().toString()));
-            assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsObject(context, null, from(Foo.class).get().toString()));
+            assertThatNullPointerException().isThrownBy(() -> converter.getAsObject(null, component, from(Foo.class).get().toString()));
+            assertThatNullPointerException().isThrownBy(() -> converter.getAsObject(context, null, from(Foo.class).get().toString()));
         }
     }
 
@@ -96,8 +97,8 @@ class CodeEnumConverterTest {
                 assertThat(converter.getAsString(context, component, value)).isEqualTo(value.getCode().toString())
         );
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsString(null, component, from(Foo.class).get()));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getAsString(context, null, from(Foo.class).get()));
+        assertThatNullPointerException().isThrownBy(() -> converter.getAsString(null, component, from(Foo.class).get()));
+        assertThatNullPointerException().isThrownBy(() -> converter.getAsString(context, null, from(Foo.class).get()));
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)

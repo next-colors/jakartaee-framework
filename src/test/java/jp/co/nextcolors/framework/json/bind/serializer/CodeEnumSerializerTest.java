@@ -16,7 +16,7 @@
 package jp.co.nextcolors.framework.json.bind.serializer;
 
 import static net.andreinc.mockneat.unit.objects.From.from;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.verify;
 
@@ -68,8 +68,8 @@ class CodeEnumSerializerTest {
         verify(ctx).serialize(null, generator);
         clearInvocations(ctx);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> serializer.serialize(from(Foo.class).get(), null, ctx));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> serializer.serialize(from(Foo.class).get(), generator, null));
+        assertThatNullPointerException().isThrownBy(() -> serializer.serialize(from(Foo.class).get(), null, ctx));
+        assertThatNullPointerException().isThrownBy(() -> serializer.serialize(from(Foo.class).get(), generator, null));
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)

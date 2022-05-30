@@ -17,7 +17,7 @@ package jp.co.nextcolors.framework.filter.util;
 
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -62,10 +62,10 @@ class RequestDumpUtilTest {
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(null, request, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, null, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, request, null, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(null, request, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, request, LF, null));
     }
 
     /**
@@ -83,10 +83,10 @@ class RequestDumpUtilTest {
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(null, request, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, null, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, request, null, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(null, request, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, request, LF, null));
     }
 
     /**
@@ -106,10 +106,10 @@ class RequestDumpUtilTest {
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(null, request, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, null, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, request, null, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(null, request, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, null));
     }
 
     /**
@@ -130,10 +130,10 @@ class RequestDumpUtilTest {
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(null, request, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, null, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, request, null, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(null, request, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, request, LF, null));
     }
 
     /**
@@ -151,9 +151,9 @@ class RequestDumpUtilTest {
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpCookies(null, request, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, null, LF, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, request, null, INDENT));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(null, request, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, request, LF, null));
     }
 }

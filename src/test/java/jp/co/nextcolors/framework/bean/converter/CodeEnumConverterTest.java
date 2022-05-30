@@ -17,7 +17,8 @@ package jp.co.nextcolors.framework.bean.converter;
 
 import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import java.util.stream.Stream;
 
@@ -51,10 +52,10 @@ class CodeEnumConverterTest {
         ));
 
         // 含まれていないコード
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> converter.convertToType(Foo.class, 2));
+        assertThatIllegalArgumentException().isThrownBy(() -> converter.convertToType(Foo.class, 2));
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, from(Foo.class).get().getCode()));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(Foo.class, null));
+        assertThatNullPointerException().isThrownBy(() -> converter.convertToType(null, from(Foo.class).get().getCode()));
+        assertThatNullPointerException().isThrownBy(() -> converter.convertToType(Foo.class, null));
     }
 
     /**

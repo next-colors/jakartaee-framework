@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.bean.converter;
 import static net.andreinc.mockneat.unit.types.Longs.longs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import java.util.stream.Stream;
 
@@ -45,6 +46,6 @@ class ULongConverterTest {
                 assertThatExceptionOfType(NumberFormatException.class).isThrownBy(() -> converter.getUnsignedValue(number))
         );
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getUnsignedValue(null));
+        assertThatNullPointerException().isThrownBy(() -> converter.getUnsignedValue(null));
     }
 }

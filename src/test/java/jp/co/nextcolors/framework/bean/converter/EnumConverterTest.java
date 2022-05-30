@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.bean.converter;
 import static net.andreinc.mockneat.unit.objects.From.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import java.util.stream.Stream;
 
@@ -54,8 +55,8 @@ class EnumConverterTest {
                 assertThatExceptionOfType(ConversionException.class).isThrownBy(() -> converter.convertToType(Foo.class, value.name().toLowerCase()))
         );
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, from(Foo.class).get().name()));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(Foo.class, null));
+        assertThatNullPointerException().isThrownBy(() -> converter.convertToType(null, from(Foo.class).get().name()));
+        assertThatNullPointerException().isThrownBy(() -> converter.convertToType(Foo.class, null));
     }
 
     /**

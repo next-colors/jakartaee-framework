@@ -17,6 +17,7 @@ package jp.co.nextcolors.framework.json.bind.deserializer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
@@ -80,9 +81,9 @@ class CodeEnumDeserializerTest {
         assertThatExceptionOfType(JsonbException.class).isThrownBy(() -> assertThat(deserializer.deserialize(parser, ctx, Foo.class)));
         reset(parser);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> deserializer.deserialize(null, ctx, Foo.class));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> deserializer.deserialize(parser, null, Foo.class));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> deserializer.deserialize(parser, ctx, null));
+        assertThatNullPointerException().isThrownBy(() -> deserializer.deserialize(null, ctx, Foo.class));
+        assertThatNullPointerException().isThrownBy(() -> deserializer.deserialize(parser, null, Foo.class));
+        assertThatNullPointerException().isThrownBy(() -> deserializer.deserialize(parser, ctx, null));
     }
 
     @AllArgsConstructor(access = AccessLevel.PRIVATE)

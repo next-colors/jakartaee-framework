@@ -17,7 +17,7 @@ package jp.co.nextcolors.framework.data.pagination;
 
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.stream.Stream;
 
@@ -37,13 +37,13 @@ class PageRequestTest {
         Stream.of(0, Integer.MIN_VALUE).forEach(pageNumber -> {
             final int pageSize = ints().lowerBound(1).get();
 
-            assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new PageRequest(pageNumber, pageSize));
+            assertThatIllegalArgumentException().isThrownBy(() -> new PageRequest(pageNumber, pageSize));
         });
 
         Stream.of(0, Integer.MIN_VALUE).forEach(pageSize -> {
             final int pageNumber = ints().lowerBound(1).get();
 
-            assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new PageRequest(pageNumber, pageSize));
+            assertThatIllegalArgumentException().isThrownBy(() -> new PageRequest(pageNumber, pageSize));
         });
     }
 

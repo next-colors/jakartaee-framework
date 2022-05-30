@@ -17,7 +17,7 @@ package jp.co.nextcolors.framework.bean.converter;
 
 import static net.andreinc.mockneat.unit.time.LocalDates.localDates;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 
 import java.time.OffsetDateTime;
 
@@ -40,6 +40,6 @@ class ZonedDateTimeConverterTest {
 
         assertThat(converter.getDateTime(offsetDateTime)).isEqualTo(offsetDateTime.toZonedDateTime());
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.getDateTime(null));
+        assertThatNullPointerException().isThrownBy(() -> converter.getDateTime(null));
     }
 }

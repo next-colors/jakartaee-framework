@@ -17,7 +17,7 @@ package jp.co.nextcolors.framework.bean.converter;
 
 import static net.andreinc.mockneat.unit.time.LocalDates.localDates;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.spy;
@@ -51,8 +51,8 @@ class JavaTimeConverterTest {
         verify(converter).getDateTime(any(OffsetDateTime.class));
         clearInvocations(converter);
 
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(null, date));
-        assertThatExceptionOfType(NullPointerException.class).isThrownBy(() -> converter.convertToType(Temporal.class, null));
+        assertThatNullPointerException().isThrownBy(() -> converter.convertToType(null, date));
+        assertThatNullPointerException().isThrownBy(() -> converter.convertToType(Temporal.class, null));
     }
 
     /**

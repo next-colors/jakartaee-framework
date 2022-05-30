@@ -16,7 +16,7 @@
 package jp.co.nextcolors.framework.jdbc.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import java.util.stream.Stream;
 
@@ -50,7 +50,7 @@ class CodeEnumConverterTest {
         assertThat(converter.from(null)).isNull();
 
         // 含まれていないコード
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> converter.from(2L));
+        assertThatIllegalArgumentException().isThrownBy(() -> converter.from(2L));
     }
 
     /**
