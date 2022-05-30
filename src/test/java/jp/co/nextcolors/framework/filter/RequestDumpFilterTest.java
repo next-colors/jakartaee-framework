@@ -99,6 +99,7 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), any(), any(), any()), never());
 
             when(LOGGER.isDebugEnabled()).thenReturn(true);
             filter.doFilter(mock(ServletRequest.class), response, chain);
@@ -106,6 +107,7 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), any(), any(), any()), never());
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), any(), any(), any()), never());
             reset(LOGGER);
 
             when(LOGGER.isDebugEnabled()).thenReturn(true);
@@ -115,6 +117,7 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), same(request), anyString(), anyString()));
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), same(request), anyString(), anyString()));
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), same(request), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), same(request), anyString(), anyString()));
             reset(LOGGER);
 
             assertThatNullPointerException().isThrownBy(() -> filter.doFilter(null, response, chain));
