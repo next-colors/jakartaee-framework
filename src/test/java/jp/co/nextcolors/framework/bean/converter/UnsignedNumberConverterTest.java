@@ -19,11 +19,13 @@ import static net.andreinc.mockneat.unit.types.Ints.ints;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.clearInvocations;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import org.jooq.types.UNumber;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import lombok.SneakyThrows;
 
@@ -32,8 +34,10 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
+@ExtendWith(MockitoExtension.class)
 class UnsignedNumberConverterTest {
-    private final UNumberConverter converter = spy(new UNumberConverter());
+    @Spy
+    private final UNumberConverter converter = new UNumberConverter();
 
     /**
      * {@link UnsignedNumberConverter#convertToType(Class, Object)} のテストです。

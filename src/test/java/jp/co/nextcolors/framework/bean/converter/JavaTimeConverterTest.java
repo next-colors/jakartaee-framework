@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.clearInvocations;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.time.OffsetDateTime;
@@ -28,6 +27,9 @@ import java.time.temporal.Temporal;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import lombok.SneakyThrows;
 
@@ -36,8 +38,10 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
+@ExtendWith(MockitoExtension.class)
 class JavaTimeConverterTest {
-    private final TemporalConverter converter = spy(new TemporalConverter());
+    @Spy
+    private final TemporalConverter converter = new TemporalConverter();
 
     /**
      * {@link JavaTimeConverter#convertToType(Class, Object)} のテストです。
