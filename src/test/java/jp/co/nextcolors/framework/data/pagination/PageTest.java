@@ -53,7 +53,7 @@ class PageTest {
         final int totalElements = ints().lowerBound(elements.size()).get();
 
         assertThatNullPointerException().isThrownBy(() -> new Page<Foo>(null, elements, totalElements));
-        assertThatNullPointerException().isThrownBy(() -> new Page<Foo>(pageRequest, null, ints().get()));
+        assertThatNullPointerException().isThrownBy(() -> new Page<Foo>(pageRequest, null, totalElements));
     }
 
     /**

@@ -20,11 +20,11 @@ import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
@@ -101,7 +101,7 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), any(), any(), any()), never());
 
-            when(LOGGER.isDebugEnabled()).thenReturn(true);
+            doReturn(true).when(LOGGER).isDebugEnabled();
             filter.doFilter(mock(ServletRequest.class), response, chain);
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
@@ -110,8 +110,8 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), any(), any(), any()), never());
             reset(LOGGER);
 
-            when(LOGGER.isDebugEnabled()).thenReturn(true);
-            when(LOGGER.atDebug()).thenReturn(mock(LoggingEventBuilder.class));
+            doReturn(true).when(LOGGER).isDebugEnabled();
+            doReturn(mock(LoggingEventBuilder.class)).when(LOGGER).atDebug();
             filter.doFilter(request, response, chain);
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), same(request), anyString(), anyString()));
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), same(request), anyString(), anyString()));

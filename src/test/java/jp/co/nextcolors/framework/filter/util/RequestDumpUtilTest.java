@@ -19,9 +19,9 @@ import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 
@@ -57,7 +57,7 @@ class RequestDumpUtilTest {
     void testDumpRequestProperties() {
         final StringBuffer buffer = new StringBuffer();
 
-        when(request.getLocales()).thenReturn(Collections.emptyEnumeration());
+        doReturn(Collections.emptyEnumeration()).when(request).getLocales();
         RequestDumpUtil.dumpRequestProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
@@ -78,7 +78,7 @@ class RequestDumpUtilTest {
         RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
 
-        when(request.getSession(false)).thenReturn(mock(HttpSession.class));
+        doReturn(mock(HttpSession.class)).when(request).getSession(false);
         RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
@@ -96,12 +96,12 @@ class RequestDumpUtilTest {
     void testDumpRequestHeaders() {
         final StringBuffer buffer = new StringBuffer();
 
-        when(request.getHeaderNames()).thenReturn(Collections.emptyEnumeration());
+        doReturn(Collections.emptyEnumeration()).when(request).getHeaderNames();
         RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
         reset(request);
 
-        when(request.getHeaderNames()).thenReturn(Collections.enumeration(strings().collection(2).get()));
+        doReturn(Collections.enumeration(strings().collection(2).get())).when(request).getHeaderNames();
         RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
@@ -119,13 +119,13 @@ class RequestDumpUtilTest {
     void testDumpRequestParameters() {
         final StringBuffer buffer = new StringBuffer();
 
-        when(request.getParameterNames()).thenReturn(Collections.emptyEnumeration());
+        doReturn(Collections.emptyEnumeration()).when(request).getParameterNames();
         RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
         reset(request);
 
-        when(request.getParameterNames()).thenReturn(Collections.enumeration(strings().collection(2).get()));
-        when(request.getParameterValues(anyString())).thenReturn(Arrays.array());
+        doReturn(Collections.enumeration(strings().collection(2).get())).when(request).getParameterNames();
+        doReturn(Arrays.<String>array()).when(request).getParameterValues(anyString());
         RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
@@ -146,7 +146,7 @@ class RequestDumpUtilTest {
         RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
 
-        when(request.getCookies()).thenReturn(Arrays.array(mock(Cookie.class)));
+        doReturn(Arrays.array(mock(Cookie.class))).when(request).getCookies();
         RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
