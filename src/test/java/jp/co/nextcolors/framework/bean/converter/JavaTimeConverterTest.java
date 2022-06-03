@@ -52,7 +52,7 @@ class JavaTimeConverterTest {
         final Date date = Date.from(localDates().get().atStartOfDay(converter.zone).toInstant());
 
         converter.convertToType(Temporal.class, date);
-        verify(converter).getDateTime(any(OffsetDateTime.class));
+        verify(converter).getDateTime(any());
         clearInvocations(converter);
 
         assertThatNullPointerException().isThrownBy(() -> converter.convertToType(null, date));
