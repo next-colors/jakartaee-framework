@@ -18,8 +18,8 @@ package jp.co.nextcolors.framework.json.bind.deserializer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -65,19 +65,19 @@ class CodeEnumDeserializerTest {
     @Test
     void testDeserialize() {
         Stream.of(Foo.values()).forEach(value -> {
-            when(parser.getString()).thenReturn(value.getCode().toString());
+            doReturn(value.getCode().toString()).when(parser).getString();
             assertThat(deserializer.deserialize(parser, ctx, value.getClass())).isEqualTo(value);
             reset(parser);
         });
 
         Stream.of(null, StringUtils.EMPTY, StringUtils.SPACE).forEach(value -> {
-            when(parser.getString()).thenReturn(value);
+            doReturn(value).when(parser).getString();
             assertThat(deserializer.deserialize(parser, ctx, Foo.class)).isNull();
             reset(parser);
         });
 
         // 含まれていないコード
-        when(parser.getString()).thenReturn(Objects.toString(2));
+        doReturn(Objects.toString(2)).when(parser).getString();
         assertThatExceptionOfType(JsonbException.class).isThrownBy(() -> assertThat(deserializer.deserialize(parser, ctx, Foo.class)));
         reset(parser);
 
