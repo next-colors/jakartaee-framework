@@ -18,20 +18,25 @@ package jp.co.nextcolors.framework.resource;
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static net.andreinc.mockneat.unit.types.Longs.longs;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 import java.util.Locale;
 import java.util.ResourceBundle.Control;
 
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * {@link PropertyResourceBundleControl} のテストです。
  *
  * @author hamana
  */
+@ExtendWith(MockitoExtension.class)
 class PropertyResourceBundleControlTest {
+    @Mock
+    private Locale locale;
+
     /**
      * {@link PropertyResourceBundleControl#PropertyResourceBundleControl(long)} のテストです。
      */
@@ -41,7 +46,7 @@ class PropertyResourceBundleControlTest {
 
         final PropertyResourceBundleControl control = new PropertyResourceBundleControl(timeToLive);
 
-        assertThat(control.getTimeToLive(strings().get(), mock(Locale.class))).isEqualTo(timeToLive);
+        assertThat(control.getTimeToLive(strings().get(), locale)).isEqualTo(timeToLive);
         assertThat(control.getFormats(strings().get())).isEqualTo(Control.FORMAT_PROPERTIES);
     }
 }

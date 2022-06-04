@@ -17,15 +17,14 @@ package jp.co.nextcolors.framework.interceptor;
 
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.clearInvocations;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import javax.interceptor.InvocationContext;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import lombok.SneakyThrows;
@@ -37,7 +36,8 @@ import lombok.SneakyThrows;
  */
 @ExtendWith(MockitoExtension.class)
 class MethodInterceptorTest {
-    private final MethodInterceptor interceptor = mock(MethodInterceptor.class, Mockito.CALLS_REAL_METHODS);
+    @Mock(answer = Answers.CALLS_REAL_METHODS)
+    private MethodInterceptor interceptor;
 
     @Mock
     private InvocationContext context;

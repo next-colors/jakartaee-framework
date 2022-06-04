@@ -20,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 
 import java.util.Collections;
@@ -50,6 +49,12 @@ class RequestDumpUtilTest {
     @Mock
     private HttpServletRequest request;
 
+    @Mock
+    private HttpSession session;
+
+    @Mock
+    private Cookie cookie;
+
     /**
      * {@link RequestDumpUtil#dumpRequestProperties(StringBuffer, HttpServletRequest, String, String)} のテストです。
      */
@@ -78,7 +83,7 @@ class RequestDumpUtilTest {
         RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
 
-        doReturn(mock(HttpSession.class)).when(request).getSession(false);
+        doReturn(session).when(request).getSession(false);
         RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
@@ -146,7 +151,7 @@ class RequestDumpUtilTest {
         RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
 
-        doReturn(Arrays.array(mock(Cookie.class))).when(request).getCookies();
+        doReturn(Arrays.array(cookie)).when(request).getCookies();
         RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);

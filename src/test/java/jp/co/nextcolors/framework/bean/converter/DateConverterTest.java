@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
-import static org.mockito.Mockito.mock;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -38,6 +37,9 @@ import java.util.Date;
 import org.apache.commons.beanutils.ConversionException;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import lombok.SneakyThrows;
 
@@ -46,8 +48,12 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
+@ExtendWith(MockitoExtension.class)
 class DateConverterTest {
     private final DateConverter converter = new DateConverter();
+
+    @Mock
+    private Temporal temporal;
 
     /**
      * {@link DateConverter#convertToType(Class, Object)} のテストです。
@@ -74,7 +80,7 @@ class DateConverterTest {
         assertThat(converter.convertToType(Date.class, offsetDateTime)).isEqualTo(Date.from(offsetDateTime.toInstant()));
         assertThat(converter.convertToType(Date.class, offsetTime)).isEqualTo(Date.from(epochDate.atTime(offsetTime).toInstant()));
         assertThat(converter.convertToType(Date.class, zonedDateTime)).isEqualTo(Date.from(zonedDateTime.toInstant()));
-        assertThatIllegalArgumentException().isThrownBy(() -> converter.convertToType(Date.class, mock(Temporal.class)));
+        assertThatIllegalArgumentException().isThrownBy(() -> converter.convertToType(Date.class, temporal));
 
         assertThatNoException().isThrownBy(() -> converter.convertToType(Date.class, date.getTime()));
 

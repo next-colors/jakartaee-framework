@@ -17,18 +17,22 @@ package jp.co.nextcolors.framework.jdbc.converter;
 
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * {@link HashConverter} のテストです。
  *
  * @author hamana
  */
+@ExtendWith(MockitoExtension.class)
 class HashConverterTest {
-    private final HashConverter converter = mock(HashConverter.class, Mockito.CALLS_REAL_METHODS);
+    @Mock(answer = Answers.CALLS_REAL_METHODS)
+    private HashConverter converter;
 
     /**
      * {@link HashConverter#from(String)} のテストです。

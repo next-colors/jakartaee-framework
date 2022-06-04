@@ -21,7 +21,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockStatic;
 
 import java.util.stream.Stream;
@@ -62,13 +61,16 @@ class CodeEnumConverterTest {
     @Mock
     private UIComponent component;
 
+    @Mock
+    private FacesMessage message;
+
     /**
      * {@link CodeEnumConverter#getAsObject(FacesContext, UIComponent, String)} のテストです。
      */
     @Test
     void testGetAsObject() {
         try (final MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
-            messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(mock(FacesMessage.class));
+            messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(message);
 
             Stream.of(Foo.values()).forEach(value ->
                     assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)

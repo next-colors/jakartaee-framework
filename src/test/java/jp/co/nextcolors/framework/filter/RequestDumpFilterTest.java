@@ -41,11 +41,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.spi.LoggingEventBuilder;
 
 import lombok.SneakyThrows;
 
@@ -61,9 +62,24 @@ import jp.co.nextcolors.framework.filter.util.RequestDumpUtil;
 class RequestDumpFilterTest {
     private static final MockedStatic<LoggerFactory> LOGGER_FACTORY = mockStatic(LoggerFactory.class);
 
-    private static final Logger LOGGER = mock(Logger.class);
+    private static final Logger LOGGER = mock(Logger.class, Mockito.CALLS_REAL_METHODS);
 
     private final RequestDumpFilter filter = new RequestDumpFilter();
+
+    @Mock
+    private FilterConfig filterConfig;
+
+    @Mock
+    private FilterChain filterChain;
+
+    @Mock
+    private HttpServletRequest httpServletRequest;
+
+    @Mock
+    private ServletRequest servletRequest;
+
+    @Mock
+    private ServletResponse response;
 
     @BeforeAll
     static void setup() {
@@ -80,7 +96,7 @@ class RequestDumpFilterTest {
      */
     @Test
     void testInit() {
-        assertThatNoException().isThrownBy(() -> filter.init(mock(FilterConfig.class)));
+        assertThatNoException().isThrownBy(() -> filter.init(filterConfig));
     }
 
     /**
@@ -90,11 +106,7 @@ class RequestDumpFilterTest {
     @Test
     void testDoFilter() {
         try (final MockedStatic<RequestDumpUtil> requestDumpUtil = mockStatic(RequestDumpUtil.class)) {
-            final HttpServletRequest request = mock(HttpServletRequest.class);
-            final ServletResponse response = mock(ServletResponse.class);
-            final FilterChain chain = mock(FilterChain.class);
-
-            filter.doFilter(request, response, chain);
+            filter.doFilter(httpServletRequest, response, filterChain);
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), any(), any(), any()), never());
@@ -102,7 +114,7 @@ class RequestDumpFilterTest {
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), any(), any(), any()), never());
 
             doReturn(true).when(LOGGER).isDebugEnabled();
-            filter.doFilter(mock(ServletRequest.class), response, chain);
+            filter.doFilter(servletRequest, response, filterChain);
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), any(), any(), any()), never());
             requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), any(), any(), any()), never());
@@ -111,18 +123,17 @@ class RequestDumpFilterTest {
             reset(LOGGER);
 
             doReturn(true).when(LOGGER).isDebugEnabled();
-            doReturn(mock(LoggingEventBuilder.class)).when(LOGGER).atDebug();
-            filter.doFilter(request, response, chain);
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), same(request), anyString(), anyString()));
-            requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), same(request), anyString(), anyString()));
+            filter.doFilter(httpServletRequest, response, filterChain);
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestProperties(any(), same(httpServletRequest), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpSessionProperties(any(), same(httpServletRequest), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestHeaders(any(), same(httpServletRequest), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpRequestParameters(any(), same(httpServletRequest), anyString(), anyString()));
+            requestDumpUtil.verify(() -> RequestDumpUtil.dumpCookies(any(), same(httpServletRequest), anyString(), anyString()));
             reset(LOGGER);
 
-            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(null, response, chain));
-            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(request, null, chain));
-            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(request, response, null));
+            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(null, response, filterChain));
+            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(httpServletRequest, null, filterChain));
+            assertThatNullPointerException().isThrownBy(() -> filter.doFilter(httpServletRequest, response, null));
         }
     }
 
