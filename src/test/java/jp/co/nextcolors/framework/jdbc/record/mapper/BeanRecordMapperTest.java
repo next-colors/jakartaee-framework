@@ -23,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.jooq.Configuration;
 import org.jooq.Record;
-import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
@@ -37,7 +36,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -55,7 +53,7 @@ class BeanRecordMapperTest {
      */
     @Test
     void testMap() {
-        final FooRecord record = new FooRecord(new FooTable());
+        final FooRecord record = new FooRecord();
         record.setBaz(strings().get());
         record.setQux(ints().get());
         record.setQuux(longs().get());
@@ -77,8 +75,8 @@ class BeanRecordMapperTest {
 
     @SuppressWarnings("serial")
     private static class FooRecord extends TableRecordImpl<FooRecord> {
-        private FooRecord(@NonNull Table<FooRecord> table) {
-            super(table);
+        private FooRecord() {
+            super(new FooTable());
         }
 
         public String getBaz() {
