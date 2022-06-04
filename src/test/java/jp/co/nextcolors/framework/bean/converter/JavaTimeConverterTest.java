@@ -49,7 +49,7 @@ class JavaTimeConverterTest {
     @SneakyThrows(Throwable.class)
     @Test
     void testConvertToType() {
-        final Date date = Date.from(localDates().get().atStartOfDay(converter.zone).toInstant());
+        final Date date = localDates().mapToDate().get();
 
         converter.convertToType(Temporal.class, date);
         verify(converter).getDateTime(any());

@@ -100,7 +100,7 @@ public class DateConverter extends DateTimeConverter {
      * @param value {@code java.time} の日付/時間
      * @return {@link Date} 型の日付
      */
-    private Date toDate(@NonNull final Temporal value) {
+    private Date toDate(final Temporal value) {
         ZoneId zone = Optional.ofNullable(getTimeZone()).map(TimeZone::toZoneId).orElseGet(ZoneId::systemDefault);
 
         if (value instanceof Instant instant) {
@@ -116,9 +116,9 @@ public class DateConverter extends DateTimeConverter {
         }
 
         if (value instanceof LocalTime localTime) {
-            LocalDate localDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
+            LocalDate epochDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
 
-            return Date.from(localDate.atTime(localTime).atZone(zone).toInstant());
+            return Date.from(epochDate.atTime(localTime).atZone(zone).toInstant());
         }
 
         if (value instanceof OffsetDateTime offsetDateTime) {
@@ -126,9 +126,9 @@ public class DateConverter extends DateTimeConverter {
         }
 
         if (value instanceof OffsetTime offsetTime) {
-            LocalDate localDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
+            LocalDate epochDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
 
-            return Date.from(localDate.atTime(offsetTime).toInstant());
+            return Date.from(epochDate.atTime(offsetTime).toInstant());
         }
 
         if (value instanceof ZonedDateTime zonedDateTime) {
