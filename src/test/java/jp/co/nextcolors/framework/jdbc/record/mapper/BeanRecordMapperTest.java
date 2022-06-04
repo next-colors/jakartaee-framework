@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.DSL;
@@ -39,8 +40,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-import jp.co.nextcolors.framework.jdbc.converter.HashConverter;
-
 /**
  * {@link BeanRecordMapper} のテストです。
  *
@@ -52,7 +51,7 @@ class BeanRecordMapperTest {
     private Configuration configuration;
 
     /**
-     * {@link HashConverter#from(String)} のテストです。
+     * {@link BeanRecordMapper#map(Record)} のテストです。
      */
     @Test
     void testMap() {

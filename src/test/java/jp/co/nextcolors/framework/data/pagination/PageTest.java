@@ -257,15 +257,15 @@ class PageTest {
         final List<Foo> elements = filler(Foo::new).list(ints().range(1, 10)).get();
         final int totalElements = ints().lowerBound(elements.size()).get();
 
-        final Page<Foo> pageFoo = new Page<>(pageRequest, elements, totalElements);
+        final Page<Foo> fooPage = new Page<>(pageRequest, elements, totalElements);
 
-        final IPage<Bar> pageBar = pageFoo.map(new FooBarMapper());
+        final IPage<Bar> barPage = fooPage.map(new FooBarMapper());
 
-        assertThat(pageFoo.getPageRequest()).isSameAs(pageBar.getPageRequest());
-        assertThat(pageFoo.getNumberOfElements()).isEqualTo(pageFoo.getNumberOfElements());
-        assertThat(pageFoo.getTotalPages()).isEqualTo(pageFoo.getTotalPages());
+        assertThat(fooPage.getPageRequest()).isSameAs(barPage.getPageRequest());
+        assertThat(fooPage.getNumberOfElements()).isEqualTo(fooPage.getNumberOfElements());
+        assertThat(fooPage.getTotalPages()).isEqualTo(fooPage.getTotalPages());
 
-        assertThatNullPointerException().isThrownBy(() -> pageFoo.map(null));
+        assertThatNullPointerException().isThrownBy(() -> fooPage.map(null));
     }
 
     private static class Foo {
