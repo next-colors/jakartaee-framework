@@ -19,7 +19,7 @@ import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 import static net.andreinc.mockneat.unit.types.Longs.longs;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatReflectiveOperationException;
 
 import org.jooq.Configuration;
 import org.jooq.Record;
@@ -70,7 +70,7 @@ class BeanRecordMapperTest {
 
         final BeanRecordMapper<FooRecord, Bar> barMapper = new BeanRecordMapper<>(Bar.class, configuration);
 
-        assertThatExceptionOfType(ReflectiveOperationException.class).isThrownBy(() -> barMapper.map(record));
+        assertThatReflectiveOperationException().isThrownBy(() -> barMapper.map(record));
     }
 
     @SuppressWarnings("serial")
