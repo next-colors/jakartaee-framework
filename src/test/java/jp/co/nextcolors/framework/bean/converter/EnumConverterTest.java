@@ -69,7 +69,7 @@ class EnumConverterTest {
 
     private enum Foo {
         BAR,
-        BAZ;
+        BAZ
     }
 
     private static class FooConverter extends EnumConverter<Foo> {

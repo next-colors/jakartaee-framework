@@ -67,7 +67,6 @@ class UnsignedNumberConverterTest {
     }
 
     private static class UNumberConverter extends UnsignedNumberConverter<UNumber, Integer> {
-
         @Override
         protected UNumber getUnsignedValue(Integer signedValue) throws NumberFormatException {
             return null;

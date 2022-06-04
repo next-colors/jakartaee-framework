@@ -275,7 +275,6 @@ class PageTest {
     }
 
     private static class FooBarMapper implements Function<Foo, Bar> {
-
         @Override
         public Bar apply(@NonNull final Foo t) {
             return new Bar();

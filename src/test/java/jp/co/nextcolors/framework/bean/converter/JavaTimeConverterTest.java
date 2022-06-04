@@ -68,7 +68,6 @@ class JavaTimeConverterTest {
     }
 
     private static class TemporalConverter extends JavaTimeConverter<Temporal> {
-
         @Override
         protected Temporal getDateTime(OffsetDateTime offsetDateTime) {
             return null;
