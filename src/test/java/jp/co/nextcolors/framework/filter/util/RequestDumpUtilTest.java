@@ -18,7 +18,6 @@ package jp.co.nextcolors.framework.filter.util;
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
 
@@ -26,12 +25,12 @@ import java.util.Collections;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -46,11 +45,8 @@ class RequestDumpUtilTest {
 
     private static final String LF = System.lineSeparator();
 
-    @Mock
+    @Mock(answer = Answers.RETURNS_MOCKS)
     private HttpServletRequest request;
-
-    @Mock
-    private HttpSession session;
 
     @Mock
     private Cookie cookie;
@@ -62,10 +58,8 @@ class RequestDumpUtilTest {
     void testDumpRequestProperties() {
         final StringBuffer buffer = new StringBuffer();
 
-        doReturn(Collections.emptyEnumeration()).when(request).getLocales();
         RequestDumpUtil.dumpRequestProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
-        reset(request);
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(null, request, LF, INDENT));
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, null, LF, INDENT));
@@ -80,13 +74,13 @@ class RequestDumpUtilTest {
     void testDumpSessionProperties() {
         final StringBuffer buffer = new StringBuffer();
 
+        doReturn(null).when(request).getSession(false);
         RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
+        reset(request);
 
-        doReturn(session).when(request).getSession(false);
         RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
-        reset(request);
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(null, request, LF, INDENT));
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, null, LF, INDENT));
@@ -101,10 +95,8 @@ class RequestDumpUtilTest {
     void testDumpRequestHeaders() {
         final StringBuffer buffer = new StringBuffer();
 
-        doReturn(Collections.emptyEnumeration()).when(request).getHeaderNames();
         RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
-        reset(request);
 
         doReturn(Collections.enumeration(strings().collection(2).get())).when(request).getHeaderNames();
         RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
@@ -124,13 +116,10 @@ class RequestDumpUtilTest {
     void testDumpRequestParameters() {
         final StringBuffer buffer = new StringBuffer();
 
-        doReturn(Collections.emptyEnumeration()).when(request).getParameterNames();
         RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isEmpty();
-        reset(request);
 
         doReturn(Collections.enumeration(strings().collection(2).get())).when(request).getParameterNames();
-        doReturn(Arrays.<String>array()).when(request).getParameterValues(anyString());
         RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
         assertThat(buffer.toString()).isNotEmpty();
         reset(request);
