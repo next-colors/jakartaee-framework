@@ -51,7 +51,7 @@ class SqlFileSelectTest {
     @InjectMocks
     private SqlFileSelect sqlFileSelect;
 
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    @Mock
     private DSLContext dslContext;
 
     @Mock

@@ -48,7 +48,7 @@ class SqlFileWriteTest {
     @InjectMocks
     private SqlFileWrite sqlFileWrite;
 
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    @Mock
     private DSLContext dslContext;
 
     @Mock
