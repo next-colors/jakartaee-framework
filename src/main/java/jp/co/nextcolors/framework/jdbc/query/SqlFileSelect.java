@@ -42,7 +42,7 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
      * @param dslContext  DSL コンテキスト
      * @param sqlFilePath SQL ファイルのパス
      */
-    public SqlFileSelect(@NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath) {
+    public SqlFileSelect(final DSLContext dslContext, final Path sqlFilePath) {
         super(dslContext, sqlFilePath);
     }
 
@@ -51,9 +51,9 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
      * @param sqlFilePath SQL ファイルのパス
      * @param params      パラメータ
      */
-    public SqlFileSelect(@NonNull final DSLContext dslContext,
-                         @NonNull final Path sqlFilePath,
-                         @NonNull final Map<String, Object> params) {
+    public SqlFileSelect(final DSLContext dslContext,
+                         final Path sqlFilePath,
+                         final Map<String, Object> params) {
         super(dslContext, sqlFilePath, params);
     }
 

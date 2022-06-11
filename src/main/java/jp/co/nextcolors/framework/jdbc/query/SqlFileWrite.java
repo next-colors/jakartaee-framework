@@ -24,7 +24,6 @@ import org.jooq.Query;
 import jp.co.future.uroborosql.context.SqlContext;
 
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -39,7 +38,7 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
      * @param dslContext  DSL コンテキスト
      * @param sqlFilePath SQL ファイルのパス
      */
-    public SqlFileWrite(@NonNull final DSLContext dslContext, @NonNull final Path sqlFilePath) {
+    public SqlFileWrite(final DSLContext dslContext, final Path sqlFilePath) {
         super(dslContext, sqlFilePath);
     }
 
@@ -48,9 +47,9 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
      * @param sqlFilePath SQL ファイルのパス
      * @param params      パラメータ
      */
-    public SqlFileWrite(@NonNull final DSLContext dslContext,
-                        @NonNull final Path sqlFilePath,
-                        @NonNull final Map<String, Object> params) {
+    public SqlFileWrite(final DSLContext dslContext,
+                        final Path sqlFilePath,
+                        final Map<String, Object> params) {
         super(dslContext, sqlFilePath, params);
     }
 
