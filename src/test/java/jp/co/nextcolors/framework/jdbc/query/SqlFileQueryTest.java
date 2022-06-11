@@ -45,6 +45,8 @@ import org.jooq.Query;
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -64,6 +66,7 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(MockitoExtension.class)
 class SqlFileQueryTest {
     @InjectMocks
