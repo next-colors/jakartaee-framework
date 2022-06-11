@@ -66,8 +66,7 @@ public class Sort implements Serializable {
      * @return 結合したソート
      */
     public Sort and(@NonNull final Sort sort) {
-        List<Order> orders = new ArrayList<>();
-        orders.addAll(this.orders);
+        List<Order> orders = new ArrayList<>(this.orders);
         orders.addAll(sort.getOrders());
 
         return by(List.copyOf(orders));
