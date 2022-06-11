@@ -20,8 +20,6 @@ import static net.andreinc.mockneat.unit.text.SQLInserts.sqlInserts;
 import static net.andreinc.mockneat.unit.text.Strings.strings;
 import static net.andreinc.mockneat.unit.types.Ints.ints;
 import static net.andreinc.mockneat.unit.types.Longs.longs;
-import static net.andreinc.mockneat.unit.user.Emails.emails;
-import static net.andreinc.mockneat.unit.user.Names.names;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatIOException;
@@ -45,8 +43,6 @@ import org.jooq.Query;
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -66,7 +62,6 @@ import lombok.SneakyThrows;
  *
  * @author hamana
  */
-@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(MockitoExtension.class)
 class SqlFileQueryTest {
     @InjectMocks
@@ -132,15 +127,15 @@ class SqlFileQueryTest {
             final String sql = sqlInserts()
                     .tableName("foo")
                     .column("id", intSeq())
-                    .column("first_name", "/*firstName*/")
-                    .column("last_name", "/*lastName*/")
-                    .column("email", "/*email*/")
+                    .column("bar", "/*bar*/")
+                    .column("baz", "/*baz*/")
+                    .column("qux", "/*qux*/")
                     .get().toString();
 
             final Map<String, Object> params = Map.of(
-                    "firstName", names().first().get(),
-                    "lastName", names().last().get(),
-                    "email", emails().get()
+                    "bar", strings().get(),
+                    "baz", ints().get(),
+                    "qux", longs().get()
             );
 
             final UroboroSQLBuilder builder = UroboroSQL.builder(connection)
