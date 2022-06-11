@@ -76,8 +76,8 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
      * @param sqlFilePath SQL ファイルのパス
      * @param params      パラメータ
      */
-    protected SqlFileQuery(@NonNull final DSLContext dslContext,
-                           @NonNull final Path sqlFilePath,
+    protected SqlFileQuery(final DSLContext dslContext,
+                           final Path sqlFilePath,
                            @NonNull final Map<String, Object> params) {
         this(dslContext, sqlFilePath);
         this.params.putAll(params);
