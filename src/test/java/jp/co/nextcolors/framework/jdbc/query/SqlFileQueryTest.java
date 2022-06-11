@@ -81,6 +81,12 @@ class SqlFileQueryTest {
     @Mock
     private Connection connection;
 
+    @Mock(answer = Answers.CALLS_REAL_METHODS)
+    private DefaultDialect dialect;
+
+    @Mock(answer = Answers.CALLS_REAL_METHODS)
+    private OgnlExpressionParser expressionParser;
+
     /**
      * {@link SqlFileQuery#SqlFileQuery(DSLContext, Path, Map)} のテストです。
      */
@@ -135,8 +141,8 @@ class SqlFileQueryTest {
             );
 
             final UroboroSQLBuilder builder = UroboroSQL.builder(connection)
-                    .setDialect(new DefaultDialect())
-                    .setExpressionParser(new OgnlExpressionParser());
+                    .setDialect(dialect)
+                    .setExpressionParser(expressionParser);
 
             files.when(() -> Files.readString(sqlFilePath)).thenReturn(sql);
             uroboroSQL.when(() -> UroboroSQL.builder(any(Connection.class))).thenReturn(builder);
