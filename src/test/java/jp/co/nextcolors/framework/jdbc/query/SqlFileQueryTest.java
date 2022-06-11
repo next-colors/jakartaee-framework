@@ -108,6 +108,7 @@ class SqlFileQueryTest {
             sqlFileQuery.setParameters(params);
             assertThat(sqlFileQuery.createBindParameters()).hasSameSizeAs(params);
             dsl.verify(() -> DSL.list(anyCollection()));
+            dsl.clearInvocations();
         }
     }
 
@@ -128,9 +129,9 @@ class SqlFileQueryTest {
                     .get().toString();
 
             final Map<String, Object> params = Map.of(
-                    "firstName", names().first(),
-                    "lastName", names().last(),
-                    "email", emails()
+                    "firstName", names().first().get(),
+                    "lastName", names().last().get(),
+                    "email", emails().get()
             );
 
             final UroboroSQLBuilder builder = UroboroSQL.builder(connection)
