@@ -107,7 +107,7 @@ public class Sort implements Serializable {
          * @param name プロパティ名/カラム名
          * @return ソート順
          */
-        public static Order by(@NonNull final String name) {
+        public static Order by(final String name) {
             return by(name, SortOrder.DEFAULT);
         }
 
