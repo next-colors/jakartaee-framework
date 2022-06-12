@@ -77,7 +77,7 @@ public class Sort implements Serializable {
      */
     @Override
     public String toString() {
-        return StringUtils.join(orders, ", ");
+        return orders.stream().map(Order::toString).collect(Collectors.joining(", "));
     }
 
     /**
