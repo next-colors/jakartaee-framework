@@ -116,7 +116,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
         final String sql = Files.readString(sqlFilePath);
         final Map<String, Object> params = createBindParameters();
 
-        try (Connection connection = dslContext.configuration().connectionProvider().acquire()) {
+        try (final Connection connection = dslContext.configuration().connectionProvider().acquire()) {
             final SqlConfig sqlConfig = UroboroSQL.builder(connection).build();
 
             final Dialect dialect = sqlConfig.getDialect();
