@@ -45,12 +45,12 @@ public class BeanConverterUtil {
      * @see ConvertUtils#register(Converter, Class)
      */
     public static void registerConverters() {
-        try (ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
+        try (final ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
             scanResult.getClassesImplementing(Converter.class)
                     .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class))
                     .loadClasses(Converter.class).forEach(Unchecked.consumer(converterClass -> {
-                        Converter converter = converterClass.getConstructor().newInstance();
-                        Class<?> targetClass = converterClass.getAnnotation(BeanConverter.class).forClass();
+                        final Converter converter = converterClass.getConstructor().newInstance();
+                        final Class<?> targetClass = converterClass.getAnnotation(BeanConverter.class).forClass();
 
                         ConvertUtils.register(converter, targetClass);
                     }));

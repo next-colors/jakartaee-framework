@@ -62,7 +62,7 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
      */
     @Override
     public ResultQuery<Record> getQuery() {
-        SqlContext sqlContext = createSqlContext();
+        final SqlContext sqlContext = createSqlContext();
 
         return dslContext.resultQuery(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
     }

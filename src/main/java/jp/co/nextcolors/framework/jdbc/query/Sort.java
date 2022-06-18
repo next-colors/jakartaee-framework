@@ -66,7 +66,7 @@ public class Sort implements Serializable {
      * @return 結合したソート
      */
     public Sort and(@NonNull final Sort sort) {
-        List<Order> orders = new ArrayList<>(this.orders);
+        final List<Order> orders = new ArrayList<>(this.orders);
         orders.addAll(sort.getOrders());
 
         return by(List.copyOf(orders));
@@ -116,8 +116,8 @@ public class Sort implements Serializable {
          */
         @Override
         public String toString() {
-            String columnName = CaseFormat.LOWER_SNAKE_CASE.convert(name);
-            String direction = sortOrder.toSQL().toUpperCase();
+            final String columnName = CaseFormat.LOWER_SNAKE_CASE.convert(name);
+            final String direction = sortOrder.toSQL().toUpperCase();
 
             return Stream.of(columnName, direction)
                     .filter(Predicate.not(String::isEmpty))

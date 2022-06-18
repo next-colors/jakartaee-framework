@@ -60,7 +60,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 
     @SuppressWarnings("unchecked")
     protected CodeEnumConverter() {
-        GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
+        final GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
 
         enumClass = (Class<E>) context.generic(0);
         enumCodeClass = (Class<C>) context.generic(1);
@@ -77,7 +77,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
     private FacesMessage getConversionErrorMessage(final FacesContext context,
                                                    final UIComponent component,
                                                    final Object value) {
-        Object label = MessageFactory.getLabel(context, component);
+        final Object label = MessageFactory.getLabel(context, component);
 
         return MessageFactory.getMessage(context, EnumConverter.ENUM_ID, value, null, label);
     }
@@ -91,7 +91,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
             return null;
         }
 
-        C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
+        final C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
         try {
             return ICodeEnum.codeOf(enumClass, code);

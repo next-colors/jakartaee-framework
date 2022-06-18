@@ -101,7 +101,7 @@ public class RequestDumpUtil {
      */
     public static void dumpSessionProperties(@NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
                                              @NonNull final String lf, @NonNull final String indent) {
-        HttpSession session = request.getSession(false);
+        final HttpSession session = request.getSession(false);
 
         if (Objects.isNull(session)) {
             return;

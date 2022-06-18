@@ -47,7 +47,7 @@ public abstract class CodeEnumSerializer<T extends Enum<T> & ICodeEnum<T, C>, C>
      */
     @Override
     public void serialize(final T obj, @NonNull final JsonGenerator generator, @NonNull final SerializationContext ctx) {
-        C code = Optional.ofNullable(obj).map(value -> value.getCode()).orElse(null);
+        final C code = Optional.ofNullable(obj).map(value -> value.getCode()).orElse(null);
 
         ctx.serialize(code, generator);
     }

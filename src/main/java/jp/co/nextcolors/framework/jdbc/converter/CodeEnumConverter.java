@@ -57,7 +57,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
 
     @SuppressWarnings("unchecked")
     protected CodeEnumConverter() {
-        GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
+        final GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
 
         enumClass = (Class<E>) context.generic(0);
         enumCodeClass = (Class<C>) context.generic(1);
@@ -73,7 +73,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
             return null;
         }
 
-        C code = enumCodeClass.cast(ConvertUtils.convert(databaseObject, enumCodeClass));
+        final C code = enumCodeClass.cast(ConvertUtils.convert(databaseObject, enumCodeClass));
 
         return ICodeEnum.codeOf(enumClass, code);
     }
@@ -87,7 +87,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C, 
             return null;
         }
 
-        C code = userObject.getCode();
+        final C code = userObject.getCode();
 
         return databaseObjectClass.cast(ConvertUtils.convert(code, databaseObjectClass));
     }

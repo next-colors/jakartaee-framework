@@ -67,20 +67,20 @@ public class BeanRecordMapper<R extends Record, B> implements RecordMapper<R, B>
             return null;
         }
 
-        B bean = beanClass.getConstructor().newInstance();
+        final B bean = beanClass.getConstructor().newInstance();
 
         record.fieldStream().forEach(Unchecked.consumer(field -> {
-            String propertyName = CaseFormat.CAMEL_CASE.convert(field.getName());
+            final String propertyName = CaseFormat.CAMEL_CASE.convert(field.getName());
 
             if (!PropertyUtils.isWriteable(bean, propertyName)) {
                 return;
             }
 
-            Class<?> propertyType = PropertyUtils.getPropertyType(bean, propertyName);
+            final Class<?> propertyType = PropertyUtils.getPropertyType(bean, propertyName);
 
-            DataType<?> dataType = DefaultDataType.getDataType(configuration.dialect(), propertyType);
+            final DataType<?> dataType = DefaultDataType.getDataType(configuration.dialect(), propertyType);
 
-            Object value = record.get(field.getQualifiedName(), dataType.getConverter());
+            final Object value = record.get(field.getQualifiedName(), dataType.getConverter());
 
             BeanUtils.setProperty(bean, propertyName, value);
         }));

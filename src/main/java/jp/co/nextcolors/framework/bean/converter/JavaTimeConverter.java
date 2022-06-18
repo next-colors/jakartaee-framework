@@ -56,7 +56,7 @@ public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractCon
     protected JavaTimeConverter() {
         super(null);
 
-        GenericsContext context = GenericsResolver.resolve(getClass()).type(JavaTimeConverter.class);
+        final GenericsContext context = GenericsResolver.resolve(getClass()).type(JavaTimeConverter.class);
 
         javaTimeClass = (Class<JT>) context.generic(0);
     }
@@ -74,9 +74,9 @@ public abstract class JavaTimeConverter<JT extends Temporal> extends AbstractCon
      */
     @Override
     protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
-        Date date = (Date) ConvertUtils.convert(value, Date.class);
+        final Date date = (Date) ConvertUtils.convert(value, Date.class);
 
-        OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(date.toInstant(), zone);
+        final OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(date.toInstant(), zone);
 
         return type.cast(getDateTime(offsetDateTime));
     }

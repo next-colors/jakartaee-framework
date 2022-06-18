@@ -58,7 +58,7 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
      */
     @Override
     public Query getQuery() {
-        SqlContext sqlContext = createSqlContext();
+        final SqlContext sqlContext = createSqlContext();
 
         return dslContext.query(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
     }

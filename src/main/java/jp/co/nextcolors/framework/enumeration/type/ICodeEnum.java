@@ -69,7 +69,7 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V> {
      * @return 指定したコードを持つ指定した列挙型の列挙型定数が存在する場合は {@code true}、そうではない場合は {@code false}
      */
     static <T extends Enum<T> & ICodeEnum<T, V>, V> boolean isValidCode(@NonNull final Class<T> enumClass, final V code) {
-        Set<V> codes = codes(enumClass);
+        final Set<V> codes = codes(enumClass);
 
         return codes.contains(code);
     }
@@ -96,7 +96,7 @@ public interface ICodeEnum<T extends Enum<T> & ICodeEnum<T, V>, V> {
      */
     @SuppressWarnings("unchecked")
     static <T extends Enum<T> & ICodeEnum<T, V>, V> Class<V> getCodeClass(@NonNull final Class<T> enumClass) {
-        GenericsContext context = GenericsResolver.resolve(enumClass).type(ICodeEnum.class);
+        final GenericsContext context = GenericsResolver.resolve(enumClass).type(ICodeEnum.class);
 
         return (Class<V>) context.generic(1);
     }

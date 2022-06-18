@@ -50,7 +50,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
     protected EnumConverter() {
         super(null);
 
-        GenericsContext context = GenericsResolver.resolve(getClass()).type(EnumConverter.class);
+        final GenericsContext context = GenericsResolver.resolve(getClass()).type(EnumConverter.class);
 
         enumClass = (Class<E>) context.generic(0);
     }
@@ -63,7 +63,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
      * @throws ConversionException 指定した序数の列挙型定数がない場合
      */
     private E convert(final int ordinal) {
-        Map<Integer, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
+        final Map<Integer, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
 
         if (!constants.containsKey(ordinal)) {
             throw new ConversionException("序数 %s に %s は含まれていません。".formatted(constants.keySet(), ordinal));
@@ -80,7 +80,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
      * @throws ConversionException 指定した名前の列挙型定数がない場合
      */
     private E convert(final String name) {
-        Map<String, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::name, Function.identity()));
+        final Map<String, E> constants = Stream.of(enumClass.getEnumConstants()).collect(Collectors.toMap(Enum::name, Function.identity()));
 
         if (!constants.containsKey(name)) {
             throw new ConversionException("名前 %s に %s は含まれていません。".formatted(constants.keySet(), name));
@@ -94,7 +94,7 @@ public abstract class EnumConverter<E extends Enum<E>> extends AbstractConverter
      */
     @Override
     protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
-        String key = Objects.toString(value);
+        final String key = Objects.toString(value);
 
         if (NumberUtils.isDigits(key)) {
             return type.cast(convert(NumberUtils.toInt(key)));

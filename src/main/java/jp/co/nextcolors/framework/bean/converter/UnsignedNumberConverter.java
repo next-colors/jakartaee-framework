@@ -49,7 +49,7 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
     protected UnsignedNumberConverter() {
         super(false);
 
-        GenericsContext context = GenericsResolver.resolve(getClass()).type(UnsignedNumberConverter.class);
+        final GenericsContext context = GenericsResolver.resolve(getClass()).type(UnsignedNumberConverter.class);
 
         unsignedNumberClass = (Class<U>) context.generic(0);
         signedNumberClass = (Class<S>) context.generic(1);
@@ -69,7 +69,7 @@ public abstract class UnsignedNumberConverter<U extends UNumber, S extends Numbe
      */
     @Override
     protected <T> T convertToType(@NonNull final Class<T> type, final Object value) throws Throwable {
-        S signedValue = super.convertToType(signedNumberClass, value);
+        final S signedValue = super.convertToType(signedNumberClass, value);
 
         return type.cast(getUnsignedValue(signedValue));
     }

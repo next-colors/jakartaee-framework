@@ -53,17 +53,17 @@ public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, 
     @SuppressWarnings("unchecked")
     @Override
     public T deserialize(@NonNull final JsonParser parser, @NonNull final DeserializationContext ctx, @NonNull final Type rtType) {
-        Class<T> enumClass = (Class<T>) rtType;
-        Class<C> enumCodeClass = ICodeEnum.getCodeClass(enumClass);
+        final Class<T> enumClass = (Class<T>) rtType;
+        final Class<C> enumCodeClass = ICodeEnum.getCodeClass(enumClass);
 
-        String value = parser.getString();
+        final String value = parser.getString();
 
         if (StringUtils.isBlank(value)) {
             return null;
         }
 
         try {
-            C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
+            final C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
             return ICodeEnum.codeOf(enumClass, code);
         } catch (Exception e) {

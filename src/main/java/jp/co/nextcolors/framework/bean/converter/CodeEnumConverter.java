@@ -51,7 +51,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
     protected CodeEnumConverter() {
         super(null);
 
-        GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
+        final GenericsContext context = GenericsResolver.resolve(getClass()).type(CodeEnumConverter.class);
 
         enumClass = (Class<E>) context.generic(0);
         enumCodeClass = (Class<C>) context.generic(1);
@@ -62,7 +62,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
      */
     @Override
     protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
-        C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
+        final C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
         return type.cast(ICodeEnum.codeOf(enumClass, code));
     }

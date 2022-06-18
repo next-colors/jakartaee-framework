@@ -89,7 +89,7 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
      * @return SQL にバインドするパラメータ
      */
     protected Map<String, Object> createBindParameters() {
-        Map<String, Object> params = new HashMap<>();
+        final Map<String, Object> params = new HashMap<>();
 
         this.params.forEach((key, value) -> {
             if (value instanceof Collection<?> collection) {
@@ -113,21 +113,21 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
      */
     @SneakyThrows({IOException.class, SQLException.class})
     protected SqlContext createSqlContext() {
-        String sql = Files.readString(sqlFilePath);
-        Map<String, Object> params = createBindParameters();
+        final String sql = Files.readString(sqlFilePath);
+        final Map<String, Object> params = createBindParameters();
 
         try (Connection connection = dslContext.configuration().connectionProvider().acquire()) {
-            SqlConfig sqlConfig = UroboroSQL.builder(connection).build();
+            final SqlConfig sqlConfig = UroboroSQL.builder(connection).build();
 
-            Dialect dialect = sqlConfig.getDialect();
+            final Dialect dialect = sqlConfig.getDialect();
 
-            SqlParser sqlParser = new SqlParserImpl(sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false);
+            final SqlParser sqlParser = new SqlParserImpl(sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false);
 
-            SqlContext sqlContext = sqlConfig.context();
+            final SqlContext sqlContext = sqlConfig.context();
             sqlContext.paramMap(params);
             sqlContext.param(Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar());
 
-            ContextTransformer contextTransformer = sqlParser.parse();
+            final ContextTransformer contextTransformer = sqlParser.parse();
             contextTransformer.transform(sqlContext);
 
             return sqlContext;

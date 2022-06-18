@@ -84,11 +84,11 @@ public class Pager<T> implements IPager<T> {
                                                          @NonNull final Table<R> table,
                                                          final Condition condition,
                                                          @NonNull final Collection<? extends OrderField<?>> order) {
-        SelectSeekStepN<R> query = dslContext.selectFrom(table).where(condition).orderBy(order);
+        final SelectSeekStepN<R> query = dslContext.selectFrom(table).where(condition).orderBy(order);
 
-        int totalElements = dslContext.fetchCount(query);
+        final int totalElements = dslContext.fetchCount(query);
 
-        List<T> elements = query.offset(pageRequest.getOffset())
+        final List<T> elements = query.offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
                 .fetchInto(resultClass);
 
@@ -111,18 +111,18 @@ public class Pager<T> implements IPager<T> {
     public IPage<T> fetchPageBySqlFile(@NonNull final IPageRequest pageRequest,
                                        @NonNull final Path sqlFilePath,
                                        @NonNull final Map<String, Object> params) {
-        ISqlFileSelect select = new SqlFileSelect(dslContext, sqlFilePath, params);
+        final ISqlFileSelect select = new SqlFileSelect(dslContext, sqlFilePath, params);
 
-        Query query = select.getQuery();
+        final Query query = select.getQuery();
 
-        Table<Record> table = DSL.table('(' + query.getSQL() + ')', query.getBindValues().toArray());
+        final Table<Record> table = DSL.table('(' + query.getSQL() + ')', query.getBindValues().toArray());
 
-        int totalElements = dslContext.fetchCount(table.as("t"));
+        final int totalElements = dslContext.fetchCount(table.as("t"));
 
         select.addParameter("offset", pageRequest.getOffset());
         select.addParameter("limit", pageRequest.getPageSize());
 
-        List<T> elements = select.fetch().map(new BeanRecordMapper<>(resultClass, dslContext.configuration()));
+        final List<T> elements = select.fetch().map(new BeanRecordMapper<>(resultClass, dslContext.configuration()));
 
         return new Page<>(pageRequest, elements, totalElements);
     }
