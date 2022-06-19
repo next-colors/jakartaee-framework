@@ -20,14 +20,11 @@ import java.util.Map;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.Table;
 
 import jp.co.future.uroborosql.context.SqlContext;
 
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -65,37 +62,5 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
         final SqlContext sqlContext = createSqlContext();
 
         return dslContext.resultQuery(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Record fetchOne() {
-        return getQuery().fetchOne();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <R extends Record> R fetchOneInto(@NonNull final Table<R> table) {
-        return getQuery().fetchOneInto(table);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Result<Record> fetch() {
-        return getQuery().fetch();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <R extends Record> Result<R> fetchInto(@NonNull final Table<R> table) {
-        return getQuery().fetchInto(table);
     }
 }

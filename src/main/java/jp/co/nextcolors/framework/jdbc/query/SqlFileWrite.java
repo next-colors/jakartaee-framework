@@ -62,12 +62,4 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
 
         return dslContext.query(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int execute() {
-        return getQuery().execute();
-    }
 }

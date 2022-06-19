@@ -16,7 +16,6 @@
 package jp.co.nextcolors.framework.jdbc.query;
 
 import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
@@ -27,9 +26,6 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.ResultQuery;
-import org.jooq.Table;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
@@ -63,12 +59,6 @@ class SqlFileSelectTest {
     @Mock(answer = Answers.RETURNS_MOCKS)
     private SqlContext sqlContext;
 
-    @Mock
-    private ResultQuery<Record> query;
-
-    @Mock
-    private Table<? extends Record> table;
-
     /**
      * {@link SqlFileSelect#SqlFileSelect(DSLContext, Path)} のテストです。
      */
@@ -86,53 +76,5 @@ class SqlFileSelectTest {
         sqlFileSelect.getQuery();
         verify(dslContext).resultQuery(anyString(), any(Object[].class));
         reset(sqlFileSelect);
-    }
-
-    /**
-     * {@link SqlFileSelect#fetchOne()} のテストです。
-     */
-    @Test
-    void testFetchOne() {
-        doReturn(query).when(sqlFileSelect).getQuery();
-        sqlFileSelect.fetchOne();
-        verify(query).fetchOne();
-        reset(sqlFileSelect);
-    }
-
-    /**
-     * {@link SqlFileSelect#fetchOneInto(Table)} のテストです。
-     */
-    @Test
-    void testFetchOneInto() {
-        doReturn(query).when(sqlFileSelect).getQuery();
-        sqlFileSelect.fetchOneInto(table);
-        verify(query).fetchOneInto(table);
-        reset(sqlFileSelect);
-
-        assertThatNullPointerException().isThrownBy(() -> sqlFileSelect.fetchOneInto(null));
-    }
-
-    /**
-     * {@link SqlFileSelect#fetch()} のテストです。
-     */
-    @Test
-    void testFetch() {
-        doReturn(query).when(sqlFileSelect).getQuery();
-        sqlFileSelect.fetch();
-        verify(query).fetch();
-        reset(sqlFileSelect);
-    }
-
-    /**
-     * {@link SqlFileSelect#fetchInto(Table)} のテストです。
-     */
-    @Test
-    void testFetchInto() {
-        doReturn(query).when(sqlFileSelect).getQuery();
-        sqlFileSelect.fetchInto(table);
-        verify(query).fetchInto(table);
-        reset(sqlFileSelect);
-
-        assertThatNullPointerException().isThrownBy(() -> sqlFileSelect.fetchInto(null));
     }
 }

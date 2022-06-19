@@ -20,6 +20,8 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Table;
 
+import lombok.NonNull;
+
 /**
  * SQL ファイルを使用した検索です。
  *
@@ -37,7 +39,9 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
      *
      * @return 検索結果
      */
-    Record fetchOne();
+    default Record fetchOne() {
+        return getQuery().fetchOne();
+    }
 
     /**
      * レコードを検索します。<br />
@@ -47,14 +51,18 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
      * @param table テーブル
      * @return 検索結果
      */
-    <R extends Record> R fetchOneInto(Table<R> table);
+    default <R extends Record> R fetchOneInto(@NonNull Table<R> table) {
+        return getQuery().fetchOneInto(table);
+    }
 
     /**
      * レコードを検索します。
      *
      * @return 検索結果
      */
-    Result<Record> fetch();
+    default Result<Record> fetch() {
+        return getQuery().fetch();
+    }
 
     /**
      * レコードを検索します。<br />
@@ -64,5 +72,7 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
      * @param table テーブル
      * @return 検索結果
      */
-    <R extends Record> Result<R> fetchInto(Table<R> table);
+    default <R extends Record> Result<R> fetchInto(@NonNull Table<R> table) {
+        return getQuery().fetchInto(table);
+    }
 }

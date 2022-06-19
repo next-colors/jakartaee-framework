@@ -26,5 +26,7 @@ public interface ISqlFileWrite extends ISqlFileQuery<ISqlFileWrite> {
      *
      * @return レコードの書き込み件数
      */
-    int execute();
+    default int execute() {
+        return getQuery().execute();
+    }
 }

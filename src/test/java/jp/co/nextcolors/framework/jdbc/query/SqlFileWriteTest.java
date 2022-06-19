@@ -26,7 +26,6 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.jooq.DSLContext;
-import org.jooq.Query;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
@@ -60,9 +59,6 @@ class SqlFileWriteTest {
     @Mock(answer = Answers.RETURNS_MOCKS)
     private SqlContext sqlContext;
 
-    @Mock
-    private Query query;
-
     /**
      * {@link SqlFileWrite#SqlFileWrite(DSLContext, Path)} のテストです。
      */
@@ -79,17 +75,6 @@ class SqlFileWriteTest {
         doReturn(sqlContext).when(sqlFileWrite).createSqlContext();
         sqlFileWrite.getQuery();
         verify(dslContext).query(anyString(), any(Object[].class));
-        reset(sqlFileWrite);
-    }
-
-    /**
-     * {@link SqlFileWrite#execute()} のテストです。
-     */
-    @Test
-    void testExecute() {
-        doReturn(query).when(sqlFileWrite).getQuery();
-        sqlFileWrite.execute();
-        verify(query).execute();
         reset(sqlFileWrite);
     }
 }
