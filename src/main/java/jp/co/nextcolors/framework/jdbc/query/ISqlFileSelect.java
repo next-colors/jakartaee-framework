@@ -51,7 +51,7 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
      * @param table テーブル
      * @return 検索結果
      */
-    default <R extends Record> R fetchOneInto(@NonNull Table<R> table) {
+    default <R extends Record> R fetchOneInto(@NonNull final Table<R> table) {
         return getQuery().fetchOneInto(table);
     }
 
@@ -72,7 +72,7 @@ public interface ISqlFileSelect extends ISqlFileQuery<ISqlFileSelect> {
      * @param table テーブル
      * @return 検索結果
      */
-    default <R extends Record> Result<R> fetchInto(@NonNull Table<R> table) {
+    default <R extends Record> Result<R> fetchInto(@NonNull final Table<R> table) {
         return getQuery().fetchInto(table);
     }
 }
