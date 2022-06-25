@@ -123,9 +123,9 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 
             final SqlParser sqlParser = new SqlParserImpl(sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false);
 
-            final SqlContext sqlContext = sqlConfig.context();
-            sqlContext.paramMap(params);
-            sqlContext.param(Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar());
+            final SqlContext sqlContext = sqlConfig.context()
+                    .paramMap(params)
+                    .param(Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar());
 
             final ContextTransformer contextTransformer = sqlParser.parse();
             contextTransformer.transform(sqlContext);
