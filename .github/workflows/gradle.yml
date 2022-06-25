@@ -26,6 +26,6 @@ jobs:
           distribution: corretto
 
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2.2.0
+        uses: gradle/gradle-build-action@v2.2.1
         with:
           arguments: build
