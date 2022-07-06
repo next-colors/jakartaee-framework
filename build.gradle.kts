@@ -183,7 +183,7 @@ tasks.jar {
     }
 }
 
-// JUnit でテストするタスク
+// テストするタスク
 tasks.test {
     useJUnitPlatform()
 
