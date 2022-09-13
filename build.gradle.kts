@@ -252,7 +252,7 @@ tasks.javadoc {
     options {
         this as StandardJavadocDocletOptions
 
-        encoding = Charsets.UTF_8.name()
+        encoding = tasks.compileJava.get().options.encoding
         isAuthor = true
         isUse = true
         version = true
