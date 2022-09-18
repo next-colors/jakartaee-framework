@@ -59,27 +59,27 @@ public class RequestDumpFilter implements Filter {
      * @param request リクエスト
      */
     private void dump(final HttpServletRequest request) {
-        final StringBuffer buffer = new StringBuffer();
-        buffer.append(LF);
-        buffer.append(LF);
-        buffer.append("** Request Dump ***************************************************************");
-        buffer.append(LF);
+        final StringBuilder builder = new StringBuilder();
+        builder.append(LF);
+        builder.append(LF);
+        builder.append("** Request Dump ***************************************************************");
+        builder.append(LF);
 
         // リクエストのプロパティを文字列バッファにダンプ
-        RequestDumpUtil.dumpRequestProperties(buffer, request, LF, INDENT);
+        RequestDumpUtil.dumpRequestProperties(builder, request, LF, INDENT);
         // セッションのプロパティを文字列バッファにダンプ
-        RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
+        RequestDumpUtil.dumpSessionProperties(builder, request, LF, INDENT);
         // リクエストヘッダの内容を文字列バッファにダンプ
-        RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
+        RequestDumpUtil.dumpRequestHeaders(builder, request, LF, INDENT);
         // リクエストパラメータの内容を文字列バッファにダンプ
-        RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
+        RequestDumpUtil.dumpRequestParameters(builder, request, LF, INDENT);
         // クッキーの内容を文字列バッファにダンプ
-        RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
+        RequestDumpUtil.dumpCookies(builder, request, LF, INDENT);
 
-        buffer.append("*******************************************************************************");
-        buffer.append(LF);
+        builder.append("*******************************************************************************");
+        builder.append(LF);
 
-        log.atDebug().log(buffer.toString());
+        log.atDebug().log(builder.toString());
     }
 
     /**
