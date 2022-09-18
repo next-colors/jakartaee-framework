@@ -15,8 +15,8 @@
  */
 package jp.co.nextcolors.framework.interceptor;
 
-import javax.annotation.PreDestroy;
-import javax.interceptor.InvocationContext;
+import jakarta.annotation.PreDestroy;
+import jakarta.interceptor.InvocationContext;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

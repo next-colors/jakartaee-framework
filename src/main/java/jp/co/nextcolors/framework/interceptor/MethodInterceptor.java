@@ -15,8 +15,8 @@
  */
 package jp.co.nextcolors.framework.interceptor;
 
-import javax.interceptor.AroundInvoke;
-import javax.interceptor.InvocationContext;
+import jakarta.interceptor.AroundInvoke;
+import jakarta.interceptor.InvocationContext;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

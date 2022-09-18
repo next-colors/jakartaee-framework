@@ -25,10 +25,10 @@ import static org.mockito.Mockito.mockStatic;
 
 import java.util.stream.Stream;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.ConverterException;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.ConverterException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;

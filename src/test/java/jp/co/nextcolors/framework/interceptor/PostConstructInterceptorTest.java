@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.verify;
 
-import javax.interceptor.InvocationContext;
+import jakarta.interceptor.InvocationContext;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

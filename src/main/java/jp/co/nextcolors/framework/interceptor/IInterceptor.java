@@ -15,7 +15,7 @@
  */
 package jp.co.nextcolors.framework.interceptor;
 
-import javax.interceptor.InvocationContext;
+import jakarta.interceptor.InvocationContext;
 
 /**
  * インターセプタです。

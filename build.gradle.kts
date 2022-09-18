@@ -86,8 +86,8 @@ dependencies {
     api(libs.uroborosql)
 
     // コンパイル時にのみ必要なライブラリ
+    compileOnly(libs.jakarta.faces)
     compileOnly(libs.jakartaee.api)
-    compileOnly(libs.javax.faces)
 
     // テスト時にのみ必要なライブラリ
     testImplementation(libs.assertj.core)

@@ -22,8 +22,8 @@ import static org.mockito.Mockito.verify;
 
 import java.util.stream.Stream;
 
-import javax.json.bind.serializer.SerializationContext;
-import javax.json.stream.JsonGenerator;
+import jakarta.json.bind.serializer.SerializationContext;
+import jakarta.json.stream.JsonGenerator;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

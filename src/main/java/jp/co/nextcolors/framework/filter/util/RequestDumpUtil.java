@@ -24,9 +24,9 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -23,8 +23,8 @@ import static org.mockito.Mockito.reset;
 
 import java.util.Collections;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Arrays;

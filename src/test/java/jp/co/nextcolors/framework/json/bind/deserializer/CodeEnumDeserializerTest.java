@@ -24,11 +24,11 @@ import static org.mockito.Mockito.reset;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import javax.json.bind.JsonbException;
-import javax.json.bind.serializer.DeserializationContext;
-import javax.json.bind.serializer.SerializationContext;
-import javax.json.stream.JsonGenerator;
-import javax.json.stream.JsonParser;
+import jakarta.json.bind.JsonbException;
+import jakarta.json.bind.serializer.DeserializationContext;
+import jakarta.json.bind.serializer.SerializationContext;
+import jakarta.json.stream.JsonGenerator;
+import jakarta.json.stream.JsonParser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
