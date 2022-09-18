@@ -41,65 +41,65 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class RequestDumpUtil {
     /**
-     * リクエストのプロパティを文字列バッファにダンプします。
+     * リクエストのプロパティを文字列ビルダーにダンプします。
      *
-     * @param buffer  文字列バッファ
+     * @param builder 文字列ビルダー
      * @param request リクエスト
      * @param lf      改行文字
      * @param indent  インデント
      */
-    public static void dumpRequestProperties(@NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
+    public static void dumpRequestProperties(@NonNull final StringBuilder builder, @NonNull final HttpServletRequest request,
                                              @NonNull final String lf, @NonNull final String indent) {
-        buffer.append(indent);
-        buffer.append("Request Class = ").append(request.getClass().getName());
-        buffer.append(", Instance = ").append(request);
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("Request Class = ").append(request.getClass().getName());
+        builder.append(", Instance = ").append(request);
+        builder.append(lf);
 
-        buffer.append(indent);
-        buffer.append("RequestedSessionId = ").append(request.getRequestedSessionId());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("RequestedSessionId = ").append(request.getRequestedSessionId());
+        builder.append(lf);
 
-        buffer.append(indent);
-        buffer.append("REQUEST_URI = ").append(request.getRequestURI());
-        buffer.append(", SERVLET_PATH = ").append(request.getServletPath());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("REQUEST_URI = ").append(request.getRequestURI());
+        builder.append(", SERVLET_PATH = ").append(request.getServletPath());
+        builder.append(lf);
 
-        buffer.append(indent);
-        buffer.append("CharacterEncoding = ").append(request.getCharacterEncoding());
-        buffer.append(", ContentLength = ").append(request.getContentLength());
-        buffer.append(", ContentType = ").append(request.getContentType());
-        buffer.append(", Locale = ").append(request.getLocale());
-        buffer.append(", Locales = ").append(Collections.list(request.getLocales()));
-        buffer.append(", Scheme = ").append(request.getScheme());
-        buffer.append(", isSecure = ").append(request.isSecure());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("CharacterEncoding = ").append(request.getCharacterEncoding());
+        builder.append(", ContentLength = ").append(request.getContentLength());
+        builder.append(", ContentType = ").append(request.getContentType());
+        builder.append(", Locale = ").append(request.getLocale());
+        builder.append(", Locales = ").append(Collections.list(request.getLocales()));
+        builder.append(", Scheme = ").append(request.getScheme());
+        builder.append(", isSecure = ").append(request.isSecure());
+        builder.append(lf);
 
-        buffer.append(indent);
-        buffer.append("SERVER_PROTOCOL = ").append(request.getProtocol());
-        buffer.append(", REMOTE_ADDR = ").append(request.getRemoteAddr());
-        buffer.append(", REMOTE_HOST = ").append(request.getRemoteHost());
-        buffer.append(", SERVER_NAME = ").append(request.getServerName());
-        buffer.append(", SERVER_PORT = ").append(request.getServerPort());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("SERVER_PROTOCOL = ").append(request.getProtocol());
+        builder.append(", REMOTE_ADDR = ").append(request.getRemoteAddr());
+        builder.append(", REMOTE_HOST = ").append(request.getRemoteHost());
+        builder.append(", SERVER_NAME = ").append(request.getServerName());
+        builder.append(", SERVER_PORT = ").append(request.getServerPort());
+        builder.append(lf);
 
-        buffer.append(indent);
-        buffer.append("ContextPath = ").append(request.getContextPath());
-        buffer.append(", REQUEST_METHOD = ").append(request.getMethod());
-        buffer.append(", QUERY_STRING = ").append(Arrays.toString(StringUtils.split(request.getQueryString(), '&')));
-        buffer.append(", PathInfo = ").append(request.getPathInfo());
-        buffer.append(", RemoteUser = ").append(request.getRemoteUser());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("ContextPath = ").append(request.getContextPath());
+        builder.append(", REQUEST_METHOD = ").append(request.getMethod());
+        builder.append(", QUERY_STRING = ").append(Arrays.toString(StringUtils.split(request.getQueryString(), '&')));
+        builder.append(", PathInfo = ").append(request.getPathInfo());
+        builder.append(", RemoteUser = ").append(request.getRemoteUser());
+        builder.append(lf);
     }
 
     /**
-     * セッションのプロパティを文字列バッファにダンプします。
+     * セッションのプロパティを文字列ビルダーにダンプします。
      *
-     * @param buffer  文字列バッファ
+     * @param builder 文字列ビルダー
      * @param request リクエスト
      * @param lf      改行文字
      * @param indent  インデント
      */
-    public static void dumpSessionProperties(@NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
+    public static void dumpSessionProperties(@NonNull final StringBuilder builder, @NonNull final HttpServletRequest request,
                                              @NonNull final String lf, @NonNull final String indent) {
         final HttpSession session = request.getSession(false);
 
@@ -107,65 +107,65 @@ public class RequestDumpUtil {
             return;
         }
 
-        buffer.append(indent);
-        buffer.append("Session :: SessionId = ").append(session.getId());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("Session :: SessionId = ").append(session.getId());
+        builder.append(lf);
 
-        buffer.append(indent);
-        buffer.append("Session :: CreationTime = ").append(ZonedDateTime.ofInstant(Instant.ofEpochMilli(session.getCreationTime()), ZoneId.systemDefault()));
-        buffer.append(", LastAccessedTime = ").append(ZonedDateTime.ofInstant(Instant.ofEpochMilli(session.getLastAccessedTime()), ZoneId.systemDefault()));
-        buffer.append(", MaxInactiveInterval = ").append(session.getMaxInactiveInterval());
-        buffer.append(lf);
+        builder.append(indent);
+        builder.append("Session :: CreationTime = ").append(ZonedDateTime.ofInstant(Instant.ofEpochMilli(session.getCreationTime()), ZoneId.systemDefault()));
+        builder.append(", LastAccessedTime = ").append(ZonedDateTime.ofInstant(Instant.ofEpochMilli(session.getLastAccessedTime()), ZoneId.systemDefault()));
+        builder.append(", MaxInactiveInterval = ").append(session.getMaxInactiveInterval());
+        builder.append(lf);
     }
 
     /**
-     * リクエストヘッダの内容を文字列バッファにダンプします。
+     * リクエストヘッダの内容を文字列ビルダーにダンプします。
      *
-     * @param buffer  文字列バッファ
+     * @param builder 文字列ビルダー
      * @param request リクエスト
      * @param lf      改行文字
      * @param indent  インデント
      */
-    public static void dumpRequestHeaders(@NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
+    public static void dumpRequestHeaders(@NonNull final StringBuilder builder, @NonNull final HttpServletRequest request,
                                           @NonNull final String lf, @NonNull final String indent) {
         Collections.list(request.getHeaderNames()).stream().sorted().forEach(headerName -> {
-            buffer.append(indent);
-            buffer.append("[Header] ").append(headerName).append(" = ").append(request.getHeader(headerName));
-            buffer.append(lf);
+            builder.append(indent);
+            builder.append("[Header] ").append(headerName).append(" = ").append(request.getHeader(headerName));
+            builder.append(lf);
         });
     }
 
     /**
-     * リクエストパラメータの内容を文字列バッファにダンプします。
+     * リクエストパラメータの内容を文字列ビルダーにダンプします。
      *
-     * @param buffer  文字列バッファ
+     * @param builder 文字列ビルダー
      * @param request リクエスト
      * @param lf      改行文字
      * @param indent  インデント
      */
-    public static void dumpRequestParameters(@NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
+    public static void dumpRequestParameters(@NonNull final StringBuilder builder, @NonNull final HttpServletRequest request,
                                              @NonNull final String lf, @NonNull final String indent) {
         Collections.list(request.getParameterNames()).stream().sorted().forEach(paramName -> {
-            buffer.append(indent);
-            buffer.append("[Parameter] ").append(paramName).append(" = ").append(String.join(", ", request.getParameterValues(paramName)));
-            buffer.append(lf);
+            builder.append(indent);
+            builder.append("[Parameter] ").append(paramName).append(" = ").append(String.join(", ", request.getParameterValues(paramName)));
+            builder.append(lf);
         });
     }
 
     /**
-     * クッキーの内容を文字列バッファにダンプします。
+     * クッキーの内容を文字列ビルダーにダンプします。
      *
-     * @param buffer  文字列バッファ
+     * @param builder 文字列ビルダー
      * @param request リクエスト
      * @param lf      改行文字
      * @param indent  インデント
      */
-    public static void dumpCookies(@NonNull final StringBuffer buffer, @NonNull final HttpServletRequest request,
+    public static void dumpCookies(@NonNull final StringBuilder builder, @NonNull final HttpServletRequest request,
                                    @NonNull final String lf, @NonNull final String indent) {
         Stream.ofNullable(request.getCookies()).flatMap(Stream::of).sorted(Comparator.comparing(Cookie::getName)).forEach(cookie -> {
-            buffer.append(indent);
-            buffer.append("[Cookie] ").append(cookie.getName()).append(" = ").append(cookie.getValue());
-            buffer.append(lf);
+            builder.append(indent);
+            builder.append("[Cookie] ").append(cookie.getName()).append(" = ").append(cookie.getValue());
+            builder.append(lf);
         });
     }
 }

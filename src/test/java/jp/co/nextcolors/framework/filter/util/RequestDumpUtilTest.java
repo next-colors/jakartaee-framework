@@ -52,102 +52,102 @@ class RequestDumpUtilTest {
     private Cookie cookie;
 
     /**
-     * {@link RequestDumpUtil#dumpRequestProperties(StringBuffer, HttpServletRequest, String, String)} のテストです。
+     * {@link RequestDumpUtil#dumpRequestProperties(StringBuilder, HttpServletRequest, String, String)} のテストです。
      */
     @Test
     void testDumpRequestProperties() {
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder builder = new StringBuilder();
 
-        RequestDumpUtil.dumpRequestProperties(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isNotEmpty();
+        RequestDumpUtil.dumpRequestProperties(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isNotEmpty();
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(null, request, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, null, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, request, null, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(builder, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(builder, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestProperties(builder, request, LF, null));
     }
 
     /**
-     * {@link RequestDumpUtil#dumpSessionProperties(StringBuffer, HttpServletRequest, String, String)} のテストです。
+     * {@link RequestDumpUtil#dumpSessionProperties(StringBuilder, HttpServletRequest, String, String)} のテストです。
      */
     @Test
     void testDumpSessionProperties() {
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder builder = new StringBuilder();
 
         doReturn(null).when(request).getSession(false);
-        RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isEmpty();
+        RequestDumpUtil.dumpSessionProperties(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isEmpty();
         reset(request);
 
-        RequestDumpUtil.dumpSessionProperties(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isNotEmpty();
+        RequestDumpUtil.dumpSessionProperties(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isNotEmpty();
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(null, request, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, null, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, request, null, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(builder, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(builder, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpSessionProperties(builder, request, LF, null));
     }
 
     /**
-     * {@link RequestDumpUtil#dumpRequestHeaders(StringBuffer, HttpServletRequest, String, String)} のテストです。
+     * {@link RequestDumpUtil#dumpRequestHeaders(StringBuilder, HttpServletRequest, String, String)} のテストです。
      */
     @Test
     void testDumpRequestHeaders() {
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder builder = new StringBuilder();
 
-        RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isEmpty();
+        RequestDumpUtil.dumpRequestHeaders(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isEmpty();
 
         doReturn(Collections.enumeration(strings().collection(2).get())).when(request).getHeaderNames();
-        RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isNotEmpty();
+        RequestDumpUtil.dumpRequestHeaders(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isNotEmpty();
         reset(request);
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(null, request, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, null, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, request, null, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(builder, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(builder, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestHeaders(builder, request, LF, null));
     }
 
     /**
-     * {@link RequestDumpUtil#dumpRequestParameters(StringBuffer, HttpServletRequest, String, String)} のテストです。
+     * {@link RequestDumpUtil#dumpRequestParameters(StringBuilder, HttpServletRequest, String, String)} のテストです。
      */
     @Test
     void testDumpRequestParameters() {
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder builder = new StringBuilder();
 
-        RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isEmpty();
+        RequestDumpUtil.dumpRequestParameters(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isEmpty();
 
         doReturn(Collections.enumeration(strings().collection(2).get())).when(request).getParameterNames();
-        RequestDumpUtil.dumpRequestParameters(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isNotEmpty();
+        RequestDumpUtil.dumpRequestParameters(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isNotEmpty();
         reset(request);
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(null, request, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, null, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, request, null, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(builder, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(builder, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpRequestParameters(builder, request, LF, null));
     }
 
     /**
-     * {@link RequestDumpUtil#dumpCookies(StringBuffer, HttpServletRequest, String, String)} のテストです。
+     * {@link RequestDumpUtil#dumpCookies(StringBuilder, HttpServletRequest, String, String)} のテストです。
      */
     @Test
     void testDumpCookies() {
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder builder = new StringBuilder();
 
-        RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isEmpty();
+        RequestDumpUtil.dumpCookies(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isEmpty();
 
         doReturn(Arrays.array(cookie)).when(request).getCookies();
-        RequestDumpUtil.dumpCookies(buffer, request, LF, INDENT);
-        assertThat(buffer.toString()).isNotEmpty();
+        RequestDumpUtil.dumpCookies(builder, request, LF, INDENT);
+        assertThat(builder.toString()).isNotEmpty();
         reset(request);
 
         assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(null, request, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, null, LF, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, request, null, INDENT));
-        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(buffer, request, LF, null));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(builder, null, LF, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(builder, request, null, INDENT));
+        assertThatNullPointerException().isThrownBy(() -> RequestDumpUtil.dumpCookies(builder, request, LF, null));
     }
 }
