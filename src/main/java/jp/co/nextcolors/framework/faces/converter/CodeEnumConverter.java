@@ -39,7 +39,7 @@ import lombok.ToString;
 import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
 
 /**
- * JSF でプロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
+ * Faces でプロパティにコードを持つ列挙型の列挙型定数に変換するための抽象クラスです。
  *
  * @param <E> 列挙型の型です。
  * @param <C> 列挙型のコードの型です。
