@@ -261,7 +261,7 @@ tasks.javadoc {
             "https://commons.apache.org/proper/commons-beanutils/apidocs/",
             "https://commons.apache.org/proper/commons-codec/apidocs/",
             "https://commons.apache.org/proper/commons-collections/apidocs/",
-            "https://commons.apache.org/proper/commons-io/javadocs/api-release/",
+            "https://commons.apache.org/proper/commons-io/apidocs/",
             "https://commons.apache.org/proper/commons-lang/apidocs/",
             "https://docs.oracle.com/javase/jp/17/docs/api/",
             "https://jakarta.ee/specifications/platform/8/apidocs/",
