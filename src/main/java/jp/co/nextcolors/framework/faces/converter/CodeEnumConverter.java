@@ -95,7 +95,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
 
         try {
             return ICodeEnum.codeOf(enumClass, code);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             throw new ConverterException(getConversionErrorMessage(context, component, code), e);
         }
     }

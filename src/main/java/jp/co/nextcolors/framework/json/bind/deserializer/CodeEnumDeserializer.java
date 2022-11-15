@@ -66,7 +66,7 @@ public abstract class CodeEnumDeserializer<T extends Enum<T> & ICodeEnum<T, C>, 
             final C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
             return ICodeEnum.codeOf(enumClass, code);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new JsonbException(ExceptionUtils.getMessage(e), e);
         }
     }

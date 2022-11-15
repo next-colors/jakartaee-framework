@@ -217,7 +217,7 @@ public class DateConverter extends DateTimeConverter {
             final Date date = DateUtils.parseDateStrictly(Objects.toString(value), getPatterns());
 
             return type.cast(date);
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new ConversionException("%s を %s に変換できませんでした。使用した日時フォーマットは %s です。"
                     .formatted(value, type.getName(), Arrays.toString(getPatterns())),
                     e);
