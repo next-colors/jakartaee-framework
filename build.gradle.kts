@@ -120,8 +120,8 @@ java {
 
 // Gradle Lombok Plugin の設定
 lombok {
-    version = findProperty("lombok.version").toString()
-    sha256 = findProperty("lombok.checksum.sha256").toString()
+    version = providers.gradleProperty("lombok.version").get()
+    sha256 = providers.gradleProperty("lombok.checksum.sha256").get()
 }
 
 // Eclipse Plugin の設定
@@ -305,6 +305,6 @@ tasks.eclipse {
 
 // Gradle ラッパーのタスク
 tasks.wrapper {
-    gradleVersion = findProperty("gradle.version").toString()
+    gradleVersion = providers.gradleProperty("gradle.version").get()
     distributionType = Wrapper.DistributionType.ALL
 }
