@@ -70,7 +70,7 @@ class CodeEnumConverterTest {
     @Test
     void testGetAsObject() {
         try (final MockedStatic<MessageFactory> messageFactory = mockStatic(MessageFactory.class)) {
-            messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any())).thenReturn(message);
+            messageFactory.when(() -> MessageFactory.getMessage(any(FacesContext.class), anyString(), any(Object[].class))).thenReturn(message);
 
             Stream.of(Foo.values()).forEach(value ->
                     assertThat(converter.getAsObject(context, component, value.getCode().toString())).isEqualTo(value)
