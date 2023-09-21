@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.jdbc.converter;
 import static net.andreinc.mockneat.unit.networking.URLs.urls;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.net.URI;
 import java.net.URL;
 
 import org.jooq.lambda.Unchecked;
@@ -36,7 +37,7 @@ class UrlConverterTest {
      */
     @Test
     void testFrom() {
-        final URL url = urls().get(Unchecked.function(URL::new));
+        final URL url = urls().get(Unchecked.function(uri -> URI.create(uri).toURL()));
 
         assertThat(converter.from(url.toString())).isEqualTo(url);
 
@@ -49,7 +50,7 @@ class UrlConverterTest {
      */
     @Test
     void testTo() {
-        final URL url = urls().get(Unchecked.function(URL::new));
+        final URL url = urls().get(Unchecked.function(uri -> URI.create(uri).toURL()));
 
         assertThat(converter.to(url)).isEqualTo(url.toString());
 
