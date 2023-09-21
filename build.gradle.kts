@@ -114,7 +114,7 @@ dependencies {
 java {
     toolchain {
         // ビルド時に使用する Java のバージョン
-        languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.majorVersion))
+        languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_21.majorVersion))
     }
 }
 
