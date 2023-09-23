@@ -83,7 +83,7 @@ public interface ICodeEnum<E extends Enum<E> & ICodeEnum<E, C>, C> {
      * @return すべてのコード
      */
     static <E extends Enum<E> & ICodeEnum<E, C>, C> Set<C> codes(@NonNull final Class<E> enumClass) {
-        return EnumSet.allOf(enumClass).stream().map(constant -> constant.getCode()).collect(Collectors.toUnmodifiableSet());
+        return EnumSet.allOf(enumClass).stream().map(ICodeEnum::getCode).collect(Collectors.toUnmodifiableSet());
     }
 
     /**
