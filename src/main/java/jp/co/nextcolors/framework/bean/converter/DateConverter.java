@@ -102,41 +102,19 @@ public class DateConverter extends DateTimeConverter {
      */
     private Date toDate(final Temporal value) {
         final ZoneId zone = Optional.ofNullable(getTimeZone()).map(TimeZone::toZoneId).orElseGet(ZoneId::systemDefault);
+        final LocalDate epochDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
 
-        if (value instanceof Instant instant) {
-            return Date.from(instant);
-        }
-
-        if (value instanceof LocalDate localDate) {
-            return Date.from(localDate.atStartOfDay(zone).toInstant());
-        }
-
-        if (value instanceof LocalDateTime localDateTime) {
-            return Date.from(localDateTime.atZone(zone).toInstant());
-        }
-
-        if (value instanceof LocalTime localTime) {
-            final LocalDate epochDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
-
-            return Date.from(epochDate.atTime(localTime).atZone(zone).toInstant());
-        }
-
-        if (value instanceof OffsetDateTime offsetDateTime) {
-            return Date.from(offsetDateTime.toInstant());
-        }
-
-        if (value instanceof OffsetTime offsetTime) {
-            final LocalDate epochDate = LocalDateTime.ofInstant(Instant.EPOCH, zone).toLocalDate();
-
-            return Date.from(epochDate.atTime(offsetTime).toInstant());
-        }
-
-        if (value instanceof ZonedDateTime zonedDateTime) {
-            return Date.from(zonedDateTime.toInstant());
-        }
-
-        throw new IllegalArgumentException("%s はサポートされていない日付/時間の型です。"
-                .formatted(value.getClass().getName()));
+        return switch (value) {
+            case Instant instant -> Date.from(instant);
+            case LocalDate localDate -> Date.from(localDate.atStartOfDay(zone).toInstant());
+            case LocalDateTime localDateTime -> Date.from(localDateTime.atZone(zone).toInstant());
+            case LocalTime localTime -> Date.from(epochDate.atTime(localTime).atZone(zone).toInstant());
+            case OffsetDateTime offsetDateTime -> Date.from(offsetDateTime.toInstant());
+            case OffsetTime offsetTime -> Date.from(epochDate.atTime(offsetTime).toInstant());
+            case ZonedDateTime zonedDateTime -> Date.from(zonedDateTime.toInstant());
+            default -> throw new IllegalArgumentException("%s はサポートされていない日付/時間の型です。"
+                    .formatted(value.getClass().getName()));
+        };
     }
 
     /**
