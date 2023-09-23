@@ -161,7 +161,7 @@ public class Page<T> implements IPage<T> {
      */
     @Override
     public <R> IPage<R> map(@NonNull final Function<? super T, ? extends R> mapper) {
-        final List<R> elements = this.elements.stream().map(mapper::apply).collect(Collectors.toUnmodifiableList());
+        final List<R> elements = this.elements.stream().map(mapper).collect(Collectors.toUnmodifiableList());
 
         return new Page<>(pageRequest, elements, totalElements);
     }
