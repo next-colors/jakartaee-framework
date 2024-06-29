@@ -39,7 +39,7 @@ class YearConverterTest {
     void testGetDateTime() {
         final OffsetDateTime offsetDateTime = localDates().get().atStartOfDay(converter.zone).toOffsetDateTime();
 
-        assertThat(converter.getDateTime(offsetDateTime)).isEqualTo(Year.from(offsetDateTime));
+        assertThat(converter.getDateTime(offsetDateTime).getValue()).isEqualTo(Year.from(offsetDateTime).getValue());
 
         assertThatNullPointerException().isThrownBy(() -> converter.getDateTime(null));
     }
