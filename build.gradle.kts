@@ -19,10 +19,8 @@
 import io.franzbecker.gradle.lombok.LombokPluginExtension
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.dokka.DokkaConfiguration
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import java.time.Year
 
 //-----------------------------------------------------------------------------
@@ -124,6 +122,31 @@ lombok {
     sha256 = providers.gradleProperty("lombok.checksum.sha256").get()
 }
 
+// Dokka Plugin の設定
+dokka {
+    dokkaSourceSets {
+        register(sourceSets.main.name) {
+            val outputDir: Directory by delombok.get().extra
+
+            sourceRoots.from(outputDir)
+
+            documentedVisibilities.set(
+                setOf(
+                    VisibilityModifier.Public,
+                    VisibilityModifier.Protected
+                )
+            )
+
+            jdkVersion.set(java.targetCompatibility.majorVersion.toInt())
+        }
+    }
+
+    pluginsConfiguration.html {
+        separateInheritedMembers = true
+        footerMessage = "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
+    }
+}
+
 // Eclipse Plugin の設定
 eclipse {
     // .project の設定
@@ -150,28 +173,6 @@ tasks.withType<DelombokTask>().configureEach {
 // Dokka のタスク
 tasks.withType<DokkaTask>().configureEach {
     dependsOn(delombok)
-
-    dokkaSourceSets {
-        register(sourceSets.main.name) {
-            val outputDir: Directory by delombok.get().extra
-
-            sourceRoots.from(outputDir)
-
-            documentedVisibilities.set(
-                setOf(
-                    DokkaConfiguration.Visibility.PUBLIC,
-                    DokkaConfiguration.Visibility.PROTECTED
-                )
-            )
-
-            jdkVersion.set(java.targetCompatibility.majorVersion.toInt())
-        }
-    }
-
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-        separateInheritedMembers = true
-        footerMessage = "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
-    }
 }
 
 // JAR ファイルを構築するタスク
