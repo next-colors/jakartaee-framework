@@ -34,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.context.ExecutionContext;
 
 /**
  * {@link SqlFileWrite} のテストです。
@@ -57,7 +57,7 @@ class SqlFileWriteTest {
     private Map<String, Object> params;
 
     @Mock(answer = Answers.RETURNS_MOCKS)
-    private SqlContext sqlContext;
+    private ExecutionContext executionContext;
 
     /**
      * {@link SqlFileWrite#SqlFileWrite(DSLContext, Path)} のテストです。
@@ -72,7 +72,7 @@ class SqlFileWriteTest {
      */
     @Test
     void testGetQuery() {
-        doReturn(sqlContext).when(sqlFileWrite).createSqlContext();
+        doReturn(executionContext).when(sqlFileWrite).createExecutionContext();
         sqlFileWrite.getQuery();
         verify(dslContext).query(anyString(), any(Object[].class));
         reset(sqlFileWrite);

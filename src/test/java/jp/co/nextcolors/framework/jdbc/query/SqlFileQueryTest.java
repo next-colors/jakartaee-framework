@@ -51,7 +51,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import jp.co.future.uroborosql.UroboroSQL;
 import jp.co.future.uroborosql.UroboroSQL.UroboroSQLBuilder;
-import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.context.ExecutionContext;
 import jp.co.future.uroborosql.dialect.DefaultDialect;
 import jp.co.future.uroborosql.expr.ognl.OgnlExpressionParser;
 
@@ -117,7 +117,7 @@ class SqlFileQueryTest {
     }
 
     /**
-     * {@link SqlFileQuery#createSqlContext()} のテストです。
+     * {@link SqlFileQuery#createExecutionContext()} のテストです。
      */
     @SneakyThrows(SQLException.class)
     @Test
@@ -145,21 +145,21 @@ class SqlFileQueryTest {
             files.when(() -> Files.readString(sqlFilePath)).thenReturn(sql);
             uroboroSQL.when(() -> UroboroSQL.builder(any(Connection.class))).thenReturn(builder);
             sqlFileQuery.setParameters(params);
-            final SqlContext sqlContext = sqlFileQuery.createSqlContext();
-            assertThat(sqlContext.getExecutableSql()).isNotEmpty();
-            assertThat(sqlContext.getBindVariables()).isNotEmpty();
+            final ExecutionContext executionContext = sqlFileQuery.createExecutionContext();
+            assertThat(executionContext.getExecutableSql()).isNotEmpty();
+            assertThat(executionContext.getBindVariables()).isNotEmpty();
             files.reset();
             uroboroSQL.reset();
 
             files.when(() -> Files.readString(sqlFilePath)).thenThrow(IOException.class);
-            assertThatIOException().isThrownBy(() -> sqlFileQuery.createSqlContext());
+            assertThatIOException().isThrownBy(() -> sqlFileQuery.createExecutionContext());
             files.reset();
 
             files.when(() -> Files.readString(sqlFilePath)).thenReturn(sql);
             uroboroSQL.when(() -> UroboroSQL.builder(connection)).thenReturn(builder);
             when(dslContext.configuration().connectionProvider().acquire()).thenReturn(connection);
             doThrow(SQLException.class).when(connection).close();
-            assertThatExceptionOfType(SQLException.class).isThrownBy(() -> sqlFileQuery.createSqlContext());
+            assertThatExceptionOfType(SQLException.class).isThrownBy(() -> sqlFileQuery.createExecutionContext());
             files.reset();
             uroboroSQL.reset();
             reset(dslContext.configuration().connectionProvider().acquire());

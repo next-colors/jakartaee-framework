@@ -22,7 +22,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
 
-import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.context.ExecutionContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -59,8 +59,8 @@ public class SqlFileSelect extends SqlFileQuery<ISqlFileSelect> implements ISqlF
      */
     @Override
     public ResultQuery<Record> getQuery() {
-        final SqlContext sqlContext = createSqlContext();
+        final ExecutionContext executionContext = createExecutionContext();
 
-        return dslContext.resultQuery(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
+        return dslContext.resultQuery(executionContext.getExecutableSql(), executionContext.getBindVariables());
     }
 }
