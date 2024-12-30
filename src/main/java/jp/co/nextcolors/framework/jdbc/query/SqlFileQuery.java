@@ -31,7 +31,7 @@ import org.jooq.impl.DSL;
 
 import jp.co.future.uroborosql.UroboroSQL;
 import jp.co.future.uroborosql.config.SqlConfig;
-import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.context.ExecutionContext;
 import jp.co.future.uroborosql.dialect.Dialect;
 import jp.co.future.uroborosql.parser.ContextTransformer;
 import jp.co.future.uroborosql.parser.SqlParser;
@@ -107,12 +107,12 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
     }
 
     /**
-     * SQL のコンテキストを生成します。
+     * SQL の実行コンテキストを生成します。
      *
-     * @return SQL のコンテキスト
+     * @return SQL の実行コンテキスト
      */
     @SneakyThrows({IOException.class, SQLException.class})
-    protected SqlContext createSqlContext() {
+    protected ExecutionContext createExecutionContext() {
         final String sql = Files.readString(sqlFilePath);
         final Map<String, Object> params = createBindParameters();
 
@@ -123,14 +123,14 @@ public abstract class SqlFileQuery<S extends ISqlFileQuery<S>> implements ISqlFi
 
             final SqlParser sqlParser = new SqlParserImpl(sql, sqlConfig.getExpressionParser(), dialect.isRemoveTerminator(), false);
 
-            final SqlContext sqlContext = sqlConfig.context()
+            final ExecutionContext executionContext = sqlConfig.context()
                     .paramMap(params)
                     .param(Dialect.PARAM_KEY_ESCAPE_CHAR, dialect.getEscapeChar());
 
             final ContextTransformer contextTransformer = sqlParser.parse();
-            contextTransformer.transform(sqlContext);
+            contextTransformer.transform(executionContext);
 
-            return sqlContext;
+            return executionContext;
         }
     }
 

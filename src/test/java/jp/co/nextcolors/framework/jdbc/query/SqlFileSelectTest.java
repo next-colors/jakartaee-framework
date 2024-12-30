@@ -34,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.context.ExecutionContext;
 
 /**
  * {@link SqlFileSelect} のテストです。
@@ -57,7 +57,7 @@ class SqlFileSelectTest {
     private Map<String, Object> params;
 
     @Mock(answer = Answers.RETURNS_MOCKS)
-    private SqlContext sqlContext;
+    private ExecutionContext executionContext;
 
     /**
      * {@link SqlFileSelect#SqlFileSelect(DSLContext, Path)} のテストです。
@@ -72,7 +72,7 @@ class SqlFileSelectTest {
      */
     @Test
     void testGetQuery() {
-        doReturn(sqlContext).when(sqlFileSelect).createSqlContext();
+        doReturn(executionContext).when(sqlFileSelect).createExecutionContext();
         sqlFileSelect.getQuery();
         verify(dslContext).resultQuery(anyString(), any(Object[].class));
         reset(sqlFileSelect);

@@ -21,7 +21,7 @@ import java.util.Map;
 import org.jooq.DSLContext;
 import org.jooq.Query;
 
-import jp.co.future.uroborosql.context.SqlContext;
+import jp.co.future.uroborosql.context.ExecutionContext;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -58,8 +58,8 @@ public class SqlFileWrite extends SqlFileQuery<ISqlFileWrite> implements ISqlFil
      */
     @Override
     public Query getQuery() {
-        final SqlContext sqlContext = createSqlContext();
+        final ExecutionContext executionContext = createExecutionContext();
 
-        return dslContext.query(sqlContext.getExecutableSql(), sqlContext.getBindVariables());
+        return dslContext.query(executionContext.getExecutableSql(), executionContext.getBindVariables());
     }
 }
