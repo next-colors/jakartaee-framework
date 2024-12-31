@@ -1,8 +1,7 @@
 [plugins]
 gradle-dependency-graph-generator = { id = 'com.vanniktech.dependency.graph.generator', version = 'latest.release' }
 gradle-dokka = { id = 'org.jetbrains.dokka', version = 'latest.release' }
-gradle-dokka-javadoc = { id = 'org.jetbrains.dokka-javadoc', version = 'latest.release' }
-gradle-lombok = { id = 'io.franzbecker.gradle-lombok', version = 'latest.release' }
+gradle-lombok = { id = 'io.freefair.lombok', version = 'latest.release' }
 gradle-versions = { id = 'com.github.ben-manes.versions', version = 'latest.release' }
 
 [libraries]
