@@ -19,8 +19,8 @@
 import io.franzbecker.gradle.lombok.LombokPluginExtension
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.dokka.gradle.tasks.DokkaGenerateTask
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
+import org.jetbrains.dokka.gradle.tasks.DokkaGenerateTask
 import java.time.Year
 
 //-----------------------------------------------------------------------------
@@ -34,16 +34,6 @@ plugins {
     alias(libs.plugins.gradle.dokka)
     alias(libs.plugins.gradle.lombok)
     alias(libs.plugins.gradle.versions)
-}
-
-//-----------------------------------------------------------------------------
-//    Build Script Settings
-//-----------------------------------------------------------------------------
-buildscript {
-    // 依存関係の設定
-    dependencies {
-        classpath(libs.dokka.base)
-    }
 }
 
 //-----------------------------------------------------------------------------
