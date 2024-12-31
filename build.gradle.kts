@@ -16,8 +16,6 @@
 //-----------------------------------------------------------------------------
 //    Import Classes
 //-----------------------------------------------------------------------------
-import io.franzbecker.gradle.lombok.LombokPluginExtension
-import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.dokka.gradle.tasks.DokkaGenerateTask
@@ -32,7 +30,6 @@ plugins {
     `eclipse-wtp`
     alias(libs.plugins.gradle.dependency.graph.generator)
     alias(libs.plugins.gradle.dokka)
-    alias(libs.plugins.gradle.dokka.javadoc)
     alias(libs.plugins.gradle.lombok)
     alias(libs.plugins.gradle.versions)
 }
@@ -110,15 +107,12 @@ java {
 // Gradle Lombok Plugin の設定
 lombok {
     version = providers.gradleProperty("lombok.version").get()
-    sha256 = providers.gradleProperty("lombok.checksum.sha256").get()
 }
 
 // Dokka Plugin の設定
 dokka {
     dokkaSourceSets.javaMain {
-        val outputDir: Directory by delombok.get().extra
-
-        sourceRoots.setFrom(outputDir)
+        sourceRoots.setFrom(tasks.delombok.get().target)
 
         documentedVisibilities(
             VisibilityModifier.Public,
@@ -152,14 +146,9 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = Charsets.UTF_8.name()
 }
 
-// Delombok のタスク
-tasks.withType<DelombokTask>().configureEach {
-    mainClass.set(LombokPluginExtension().main)
-}
-
 // Dokka のタスク
 tasks.withType<DokkaGenerateTask>().configureEach {
-    dependsOn(delombok)
+    dependsOn(tasks.delombok)
 }
 
 // JAR ファイルを構築するタスク
@@ -188,53 +177,11 @@ tasks.jacocoTestReport {
     dependsOn(tasks.test)
 }
 
-// Lombok による変換後のソースコードを生成するタスク
-val delombok by tasks.registering(DelombokTask::class) {
-    dependsOn(tasks.compileJava)
-
-    description = "Generates delomboked sources."
-    group = LombokPluginExtension.getNAME()
-
-    val outputDir by extra(layout.buildDirectory.dir(name).get())
-
-    outputs.dir(outputDir)
-
-    sourceSets.main {
-        java.srcDirs.filter(File::exists).forEach {
-            inputs.dir(it)
-
-            args(it, "-d", outputDir)
-        }
-    }
-
-    doFirst {
-        delete(outputDir)
-    }
-}
-
-// Lombok による変換後のソースコードを生成する際のヘルプを表示するタスク
-val delombokHelp by tasks.registering(DelombokTask::class) {
-    description = "Displays the help about delomboking."
-    group = delombok.get().group
-
-    args("--help")
-}
-
-// Lombok による変換後のソースコードを生成する際のフォーマットに関するヘルプを表示するタスク
-val delombokFormatHelp by tasks.registering(DelombokTask::class) {
-    description = "Displays the help about the format of delomboking."
-    group = delombok.get().group
-
-    args("--format-help")
-}
-
 // Javadoc のタスク
 tasks.javadoc {
-    dependsOn(delombok)
+    dependsOn(tasks.delombok)
 
-    val outputDir: Directory by delombok.get().extra
-
-    source = outputDir.asFileTree
+    source = tasks.delombok.get().target.get().asFileTree
     isFailOnError = false
 
     options {
