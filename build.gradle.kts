@@ -32,6 +32,7 @@ plugins {
     `eclipse-wtp`
     alias(libs.plugins.gradle.dependency.graph.generator)
     alias(libs.plugins.gradle.dokka)
+    alias(libs.plugins.gradle.dokka.javadoc)
     alias(libs.plugins.gradle.lombok)
     alias(libs.plugins.gradle.versions)
 }
@@ -90,9 +91,9 @@ dependencies {
     testRuntimeOnly(libs.jakarta.servlet.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
 
-    // Dokka のタスク実行時に必要なライブラリ
+    // Dokka の HTML 生成タスク実行時に必要なライブラリ
     // ※ Dokka で Java の書式でドキュメントを生成するためのライブラリ
-    dokkaPlugin(libs.dokka.kotlin.java.plugin)
+    dokkaHtmlPlugin(libs.dokka.kotlin.java.plugin)
 }
 
 //-----------------------------------------------------------------------------
