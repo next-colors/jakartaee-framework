@@ -114,19 +114,17 @@ lombok {
 
 // Dokka Plugin の設定
 dokka {
-    dokkaSourceSets {
-        register(sourceSets.main.name) {
-            val outputDir: Directory by delombok.get().extra
+    dokkaSourceSets.javaMain {
+        val outputDir: Directory by delombok.get().extra
 
-            sourceRoots.from(outputDir)
+        sourceRoots.setFrom(outputDir)
 
-            documentedVisibilities(
-                VisibilityModifier.Public,
-                VisibilityModifier.Protected
-            )
+        documentedVisibilities(
+            VisibilityModifier.Public,
+            VisibilityModifier.Protected
+        )
 
-            jdkVersion.set(java.targetCompatibility.majorVersion.toInt())
-        }
+        jdkVersion.set(java.targetCompatibility.majorVersion.toInt())
     }
 
     pluginsConfiguration.html {
