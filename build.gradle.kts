@@ -63,6 +63,7 @@ dependencies {
     api(libs.commons.collections4)
     api(libs.commons.io)
     api(libs.commons.lang3)
+    api(libs.commons.text)
     api(libs.generics.resolver)
     api(libs.jool)
     api(libs.jooq)
