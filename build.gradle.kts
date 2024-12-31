@@ -19,7 +19,7 @@
 import io.franzbecker.gradle.lombok.LombokPluginExtension
 import io.franzbecker.gradle.lombok.task.DelombokTask
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.tasks.DokkaGenerateTask
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import java.time.Year
 
@@ -130,11 +130,9 @@ dokka {
 
             sourceRoots.from(outputDir)
 
-            documentedVisibilities.set(
-                setOf(
-                    VisibilityModifier.Public,
-                    VisibilityModifier.Protected
-                )
+            documentedVisibilities(
+                VisibilityModifier.Public,
+                VisibilityModifier.Protected
             )
 
             jdkVersion.set(java.targetCompatibility.majorVersion.toInt())
@@ -171,7 +169,7 @@ tasks.withType<DelombokTask>().configureEach {
 }
 
 // Dokka のタスク
-tasks.withType<DokkaTask>().configureEach {
+tasks.withType<DokkaGenerateTask>().configureEach {
     dependsOn(delombok)
 }
 
