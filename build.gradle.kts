@@ -63,7 +63,6 @@ dependencies {
     api(libs.commons.collections4)
     api(libs.commons.io)
     api(libs.commons.lang3)
-    api(libs.commons.text)
     api(libs.generics.resolver)
     api(libs.jool)
     api(libs.jooq)
@@ -79,6 +78,7 @@ dependencies {
     // テスト時にのみ必要なライブラリ
     testImplementation(libs.assertj.core)
     testImplementation(libs.assertj.db)
+    testImplementation(libs.commons.text)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.junit.jupiter)
