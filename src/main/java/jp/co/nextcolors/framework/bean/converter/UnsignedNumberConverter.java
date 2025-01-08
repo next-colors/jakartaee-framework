@@ -15,7 +15,7 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
-import org.apache.commons.beanutils.converters.NumberConverter;
+import org.apache.commons.beanutils2.converters.NumberConverter;
 import org.jooq.types.UNumber;
 
 import ru.vyarus.java.generics.resolver.GenericsResolver;
@@ -34,7 +34,7 @@ import lombok.ToString;
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class UnsignedNumberConverter<U extends UNumber, S extends Number> extends NumberConverter {
+public abstract class UnsignedNumberConverter<U extends UNumber, S extends Number> extends NumberConverter<U> {
     /**
      * 符号なし整数の型を表すクラスです。
      */

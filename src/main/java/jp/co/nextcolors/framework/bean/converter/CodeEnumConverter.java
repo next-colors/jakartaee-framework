@@ -15,8 +15,8 @@
  */
 package jp.co.nextcolors.framework.bean.converter;
 
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.converters.AbstractConverter;
+import org.apache.commons.beanutils2.ConvertUtils;
+import org.apache.commons.beanutils2.converters.AbstractConverter;
 
 import ru.vyarus.java.generics.resolver.GenericsResolver;
 import ru.vyarus.java.generics.resolver.context.GenericsContext;
@@ -36,7 +36,7 @@ import jp.co.nextcolors.framework.enumeration.type.ICodeEnum;
  */
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> extends AbstractConverter {
+public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> extends AbstractConverter<E> {
     /**
      * 列挙型の型を表すクラスです。
      */

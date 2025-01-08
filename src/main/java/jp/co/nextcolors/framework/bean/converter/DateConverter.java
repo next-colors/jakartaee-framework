@@ -36,8 +36,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.converters.DateTimeConverter;
+import org.apache.commons.beanutils2.ConversionException;
+import org.apache.commons.beanutils2.converters.DateTimeConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -56,7 +56,7 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @BeanConverter(forClass = Date.class)
-public class DateConverter extends DateTimeConverter {
+public class DateConverter extends DateTimeConverter<Date> {
     /**
      * 日付のコンポーネントです。
      */

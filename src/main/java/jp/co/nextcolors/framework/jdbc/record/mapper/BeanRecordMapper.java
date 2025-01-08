@@ -17,8 +17,8 @@ package jp.co.nextcolors.framework.jdbc.record.mapper;
 
 import java.util.Objects;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils2.BeanUtils;
+import org.apache.commons.beanutils2.PropertyUtils;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Record;

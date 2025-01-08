@@ -122,7 +122,7 @@ class SqlFileQueryTest {
     @SneakyThrows(SQLException.class)
     @Test
     void testCreateSqlContext() {
-        try (final MockedStatic<Files> files = mockStatic(Files.class);
+        try (final MockedStatic<Files> files = mockStatic(Files.class, Answers.CALLS_REAL_METHODS);
              final MockedStatic<UroboroSQL> uroboroSQL = mockStatic(UroboroSQL.class, Answers.CALLS_REAL_METHODS)) {
             final String sql = sqlInserts()
                     .tableName("foo")

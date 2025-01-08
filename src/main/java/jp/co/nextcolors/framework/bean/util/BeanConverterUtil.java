@@ -15,9 +15,9 @@
  */
 package jp.co.nextcolors.framework.bean.util;
 
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.Converter;
+import org.apache.commons.beanutils2.BeanUtilsBean;
+import org.apache.commons.beanutils2.ConvertUtilsBean;
+import org.apache.commons.beanutils2.Converter;
 import org.jooq.lambda.Unchecked;
 
 import io.github.classgraph.ClassGraph;
@@ -42,17 +42,17 @@ public class BeanConverterUtil {
     /**
      * {@link ConvertUtilsBean} にコンバータを登録します。
      *
-     * @see ConvertUtils#register(Converter, Class)
+     * @see ConvertUtilsBean#register(Converter, Class)
      */
     public static void registerConverters() {
         try (final ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
             scanResult.getClassesImplementing(Converter.class)
                     .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class))
                     .loadClasses(Converter.class).forEach(Unchecked.consumer(converterClass -> {
-                        final Converter converter = converterClass.getConstructor().newInstance();
+                        final Converter<?> converter = converterClass.getConstructor().newInstance();
                         final Class<?> targetClass = converterClass.getAnnotation(BeanConverter.class).forClass();
 
-                        ConvertUtils.register(converter, targetClass);
+                        BeanUtilsBean.getInstance().getConvertUtils().register(converter, targetClass);
                     }));
         }
     }

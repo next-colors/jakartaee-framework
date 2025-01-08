@@ -34,7 +34,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.Temporal;
 import java.util.Date;
 
-import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils2.ConversionException;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
