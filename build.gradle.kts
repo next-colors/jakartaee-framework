@@ -101,7 +101,7 @@ dependencies {
 java {
     toolchain {
         // ビルド時に使用する Java のバージョン
-        languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_21.majorVersion))
+        languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_21.majorVersion)
     }
 }
 
@@ -120,7 +120,7 @@ dokka {
             VisibilityModifier.Protected
         )
 
-        jdkVersion.set(java.targetCompatibility.majorVersion.toInt())
+        jdkVersion = java.targetCompatibility.majorVersion.toInt()
     }
 
     pluginsConfiguration.html {
