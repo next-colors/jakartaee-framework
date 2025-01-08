@@ -24,7 +24,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.EnumConverter;
 
-import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils2.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.sun.faces.util.MessageFactory;

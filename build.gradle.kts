@@ -58,7 +58,7 @@ dependencies {
 
     // パッケージに含めるライブラリ
     api(libs.classgraph)
-    api(libs.commons.beanutils)
+    api(libs.commons.beanutils2)
     api(libs.commons.codec)
     api(libs.commons.collections4)
     api(libs.commons.io)

@@ -18,13 +18,17 @@ package jp.co.nextcolors.framework.bean.util;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.Converter;
+import org.apache.commons.beanutils2.BeanUtilsBean;
+import org.apache.commons.beanutils2.ConvertUtilsBean;
+import org.apache.commons.beanutils2.Converter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -40,12 +44,18 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  */
 @ExtendWith(MockitoExtension.class)
 class BeanConverterUtilTest {
+    @Mock
+    private ConvertUtilsBean convertUtils;
+
     /**
      * {@link BeanConverterUtil#registerConverters()} のテストです。
      */
+    @SuppressWarnings("rawtypes")
     @Test
     void testRegisterConverters() {
-        try (final MockedStatic<ConvertUtils> convertUtils = mockStatic(ConvertUtils.class)) {
+        try (final MockedStatic<BeanUtilsBean> beanUtilsBean = mockStatic(BeanUtilsBean.class, Answers.RETURNS_DEEP_STUBS)) {
+            beanUtilsBean.when(() -> BeanUtilsBean.getInstance().getConvertUtils()).thenReturn(convertUtils);
+
             BeanConverterUtil.registerConverters();
 
             try (final ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
@@ -53,7 +63,7 @@ class BeanConverterUtilTest {
                         .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class))
                         .loadClasses(Converter.class);
 
-                convertUtils.verify(() -> ConvertUtils.register(any(), any()), times(converterClasses.size()));
+                verify(convertUtils, times(converterClasses.size())).register(any(), any());
             }
         }
     }

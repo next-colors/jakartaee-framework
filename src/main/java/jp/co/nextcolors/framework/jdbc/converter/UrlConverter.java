@@ -18,7 +18,7 @@ package jp.co.nextcolors.framework.jdbc.converter;
 import java.net.URL;
 import java.util.Objects;
 
-import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils2.ConvertUtils;
 import org.jooq.impl.AbstractConverter;
 
 import lombok.EqualsAndHashCode;

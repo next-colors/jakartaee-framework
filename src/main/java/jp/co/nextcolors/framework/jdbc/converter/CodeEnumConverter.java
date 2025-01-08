@@ -17,7 +17,7 @@ package jp.co.nextcolors.framework.jdbc.converter;
 
 import java.util.Objects;
 
-import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils2.ConvertUtils;
 import org.jooq.Converter;
 
 import ru.vyarus.java.generics.resolver.GenericsResolver;

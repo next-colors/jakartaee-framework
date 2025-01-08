@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils2.ConvertUtilsBean;
 
 /**
  * {@link ConvertUtilsBean} に登録するコンバータであることを表すアノテーションです。
