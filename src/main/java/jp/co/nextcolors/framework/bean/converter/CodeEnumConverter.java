@@ -61,7 +61,7 @@ public abstract class CodeEnumConverter<E extends Enum<E> & ICodeEnum<E, C>, C> 
      * {@inheritDoc}
      */
     @Override
-    protected <T> T convertToType(@NonNull final Class<T> type, @NonNull final Object value) throws Throwable {
+    protected <R> R convertToType(@NonNull final Class<R> type, @NonNull final Object value) throws Throwable {
         final C code = enumCodeClass.cast(ConvertUtils.convert(value, enumCodeClass));
 
         return type.cast(ICodeEnum.codeOf(enumClass, code));
