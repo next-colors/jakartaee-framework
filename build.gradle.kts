@@ -107,7 +107,7 @@ java {
 
 // Gradle Lombok Plugin の設定
 lombok {
-    version = providers.gradleProperty("lombok.version").get()
+    version = providers.gradleProperty("lombok.version")
 }
 
 // Dokka Plugin の設定
