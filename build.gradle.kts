@@ -200,7 +200,7 @@ tasks.javadoc {
             "https://commons.apache.org/proper/commons-io/apidocs/",
             "https://commons.apache.org/proper/commons-lang/apidocs/",
             "https://docs.oracle.com/en/java/javase/21/docs/api/",
-            "https://jakarta.ee/specifications/platform/8/apidocs/",
+            "https://jakarta.ee/specifications/platform/11/apidocs/",
             "https://javadoc.io/doc/io.github.classgraph/classgraph/",
             "https://javadoc.io/doc/ru.vyarus/generics-resolver/",
             "https://javadoc.io/doc/jp.co.future/uroborosql/",
