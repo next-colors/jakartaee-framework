@@ -186,7 +186,7 @@ tasks.jacocoTestReport {
 tasks.javadoc {
     dependsOn(tasks.delombok)
 
-    source = tasks.delombok.get().target.get().asFileTree
+    source = tasks.delombok.get().target.asFileTree
     isFailOnError = false
 
     options {
