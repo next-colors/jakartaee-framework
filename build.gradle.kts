@@ -176,6 +176,10 @@ tasks.test {
 // Jacoco でテストのレポートを生成するためのタスク
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+
+    reports {
+        html.required = true
+    }
 }
 
 // Javadoc のタスク
