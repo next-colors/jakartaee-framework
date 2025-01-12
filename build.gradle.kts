@@ -165,7 +165,6 @@ tasks.jar {
 tasks.test {
     useJUnitPlatform()
 
-    ignoreFailures = true
     maxParallelForks = Runtime.getRuntime().availableProcessors().div(2).coerceAtLeast(1)
 
     testLogging {
