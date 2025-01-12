@@ -105,7 +105,7 @@ java {
     }
 }
 
-// Gradle Lombok Plugin の設定
+// Lombok Plugin の設定
 lombok {
     version = providers.gradleProperty("lombok.version")
 }
@@ -156,8 +156,10 @@ tasks.withType<DokkaGenerateTask>().configureEach {
 tasks.jar {
     // マニフェストファイル
     manifest {
-        attributes["Created-By"] = GradleVersion.current()
-        attributes["Build-Jdk"] = System.getProperty("java.vm.version")
+        attributes(
+            "Created-By" to GradleVersion.current(),
+            "Build-Jdk" to System.getProperty("java.vm.version")
+        )
     }
 }
 
