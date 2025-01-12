@@ -31,10 +31,15 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build jacocoTestReport
 
-      - name: Upload build artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           path: build/reports/tests/
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: build/test-results/test/TEST-*.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
