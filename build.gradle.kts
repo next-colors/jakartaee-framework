@@ -88,6 +88,7 @@ dependencies {
     // テスト実行時にのみ必要なライブラリ
     testRuntimeOnly(libs.jakarta.servlet.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
 
     // Dokka の HTML 生成タスク実行時に必要なライブラリ
     // ※ Dokka で Java の書式でドキュメントを生成するためのライブラリ
