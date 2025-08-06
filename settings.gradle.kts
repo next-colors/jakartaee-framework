@@ -22,6 +22,8 @@ rootProject.name = "jakartaee-framework"
 //    Dependency Management
 //-----------------------------------------------------------------------------
 dependencyResolutionManagement {
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+
     // ライブラリ取得先リポジトリ
     repositories {
         // Maven セントラルリポジトリ
