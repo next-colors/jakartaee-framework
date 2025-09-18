@@ -102,7 +102,7 @@ dependencies {
 java {
     toolchain {
         // ビルド時に使用する Java のバージョン
-        languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_21.majorVersion)
+        languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_25.majorVersion)
     }
 }
 
@@ -205,7 +205,7 @@ tasks.javadoc {
             "https://commons.apache.org/proper/commons-collections/apidocs/",
             "https://commons.apache.org/proper/commons-io/apidocs/",
             "https://commons.apache.org/proper/commons-lang/apidocs/",
-            "https://docs.oracle.com/en/java/javase/21/docs/api/",
+            "https://docs.oracle.com/en/java/javase/25/docs/api/",
             "https://jakarta.ee/specifications/platform/11/apidocs/",
             "https://javadoc.io/doc/io.github.classgraph/classgraph/",
             "https://javadoc.io/doc/ru.vyarus/generics-resolver/",
