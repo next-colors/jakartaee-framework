@@ -47,7 +47,7 @@ configurations {
     // テスト時にのみ必要なライブラリ
     testImplementation {
         // コンパイル時にのみ必要なライブラリを追加
-        extendsFrom(compileOnly.get())
+        extendsFrom(compileOnly)
     }
 }
 
