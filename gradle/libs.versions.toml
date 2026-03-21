@@ -17,7 +17,7 @@ commons-text = { group = 'org.apache.commons', name = 'commons-text', version = 
 dokka-kotlin-java-plugin = { group = 'org.jetbrains.dokka', name = 'kotlin-as-java-plugin', version = 'latest.release' }
 generics-resolver = { group = 'ru.vyarus', name = 'generics-resolver', version = 'latest.release' }
 jakarta-faces = { group = 'org.glassfish', name = 'jakarta.faces', version = 'latest.release' }
-jakarta-servlet-api = { group = 'jakarta.servlet', name = 'jakarta.servlet-api', version = 'latest.release' }
+jakarta-servlet-api = { group = 'jakarta.servlet', name = 'jakarta.servlet-api', version = '6.1.+' }
 jakartaee-api = { group = 'jakarta.platform', name = 'jakarta.jakartaee-api', version = 'latest.release' }
 jool = { group = 'org.jooq', name = 'jool', version = 'latest.release' }
 jooq = { group = 'org.jooq', name = 'jooq', version = 'latest.release' }
