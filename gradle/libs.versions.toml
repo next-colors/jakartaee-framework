@@ -31,5 +31,4 @@ mockneat = { group = 'net.andreinc', name = 'mockneat', version = 'latest.releas
 ninja-squad-dbsetup = { group = 'com.ninja-squad', name = 'DbSetup', version = 'latest.release' }
 ognl = { group = 'ognl', name = 'ognl', version = 'latest.release' }
 slf4j-api = { group = 'org.slf4j', name = 'slf4j-api', version = 'latest.release' }
-toolfactory-jvm-driver = { group = 'io.github.toolfactory', name = 'jvm-driver', version = 'latest.release' }
 uroborosql = { group = 'jp.co.future', name = 'uroborosql', version = 'latest.release' }

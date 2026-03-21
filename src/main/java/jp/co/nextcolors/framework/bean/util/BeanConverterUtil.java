@@ -21,7 +21,6 @@ import org.apache.commons.beanutils2.Converter;
 import org.jooq.lambda.Unchecked;
 
 import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassGraph.CircumventEncapsulationMethod;
 import io.github.classgraph.ScanResult;
 
 import lombok.experimental.UtilityClass;
@@ -35,10 +34,6 @@ import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
  */
 @UtilityClass
 public class BeanConverterUtil {
-    static {
-        ClassGraph.CIRCUMVENT_ENCAPSULATION = CircumventEncapsulationMethod.JVM_DRIVER;
-    }
-
     /**
      * {@link ConvertUtilsBean} にコンバータを登録します。
      *

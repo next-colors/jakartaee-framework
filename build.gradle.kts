@@ -68,7 +68,6 @@ dependencies {
     api(libs.jooq)
     api(libs.ognl)
     api(libs.slf4j.api)
-    api(libs.toolfactory.jvm.driver)
     api(libs.uroborosql)
 
     // コンパイル時にのみ必要なライブラリ
