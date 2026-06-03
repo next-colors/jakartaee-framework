@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Validate checksum of Gradle Wrapper JAR file
         uses: gradle/actions/wrapper-validation@v6
