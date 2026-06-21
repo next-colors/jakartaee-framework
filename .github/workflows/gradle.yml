@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
@@ -48,7 +48,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: github.actor != 'dependabot[bot]'
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: build/reports/jacoco/test/jacocoTestReport.xml
