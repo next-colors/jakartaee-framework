@@ -28,7 +28,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5.6.0
         with:
-          distribution: corretto
+          distribution: temurin
           java-version-file: .java-version
 
       - name: Set up Gradle
