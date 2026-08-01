@@ -28,8 +28,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5.6.0
         with:
-          java-version: 25
           distribution: corretto
+          java-version-file: .java-version
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
