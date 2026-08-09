@@ -43,6 +43,11 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Set up Java
+        uses: jdx/mise-action@v4.2.4
+        with:
+          install_args: java
+
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.37.6

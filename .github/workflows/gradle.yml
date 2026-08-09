@@ -26,10 +26,9 @@ jobs:
           persist-credentials: false
 
       - name: Set up Java
-        uses: actions/setup-java@v5.7.0
+        uses: jdx/mise-action@v4.2.4
         with:
-          distribution: temurin
-          java-version-file: .java-version
+          install_args: java
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6.3.0
