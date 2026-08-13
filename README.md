@@ -17,7 +17,7 @@ converting code-backed enums, paginated queries, running SQL files, base classes
 | :--------- | :------ |
 | Java       | 25      |
 | Jakarta EE | 11      |
-| Build tool | Gradle  |
+| Gradle     | 9.7.x   |
 
 The Jakarta EE API (`jakarta.platform:jakarta.jakartaee-api`) and the Faces implementation
 (`org.glassfish:jakarta.faces`) are `compileOnly` dependencies,
