@@ -6,8 +6,8 @@
 
 A collection of utilities that support Jakarta EE application development.
 
-This library does not replace any part of the Jakarta EE specification. Instead, it packages the
-boilerplate that tends to be written over and over when building applications on top of Jakarta EE,
+This library does not replace any part of the Jakarta EE specification.<br>
+Instead, it packages the boilerplate that tends to be written over and over when building applications on top of Jakarta EE,
 [jOOQ](https://www.jooq.org/), and [uroboroSQL](https://future-architect.github.io/uroborosql-doc/) —
 converting code-backed enums, paginated queries, running SQL files, base classes for interceptors,
 and so on.
@@ -209,7 +209,8 @@ The resulting JAR is written to `build/libs/`.
 
 Dependencies are managed by the version catalog in
 [gradle/libs.versions.toml](gradle/libs.versions.toml), where versions are declared as
-`latest.release`.<br>
+`latest.release`.
+
 The main ones are:
 
 - [Apache Commons](https://commons.apache.org/) (BeanUtils 2, Codec, Collections 4, IO, Lang 3)
