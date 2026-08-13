@@ -220,9 +220,3 @@ The main ones are:
 - [OGNL](https://commons.apache.org/proper/commons-ognl/)
 - [SLF4J](https://www.slf4j.org/)
 - [uroboroSQL](https://future-architect.github.io/uroborosql-doc/)
-
-## License
-
-[Apache License, Version 2.0](LICENSE)
-
-&copy; 2017 NEXT COLORS Co., Ltd.
