@@ -9,8 +9,7 @@ A collection of utilities that support Jakarta EE application development.
 This library does not replace any part of the Jakarta EE specification.<br>
 Instead, it packages the boilerplate that tends to be written over and over when building applications on top of Jakarta EE,
 [jOOQ](https://www.jooq.org/), and [uroboroSQL](https://future-architect.github.io/uroborosql-doc/) —
-converting code-backed enums, paginated queries, running SQL files, base classes for interceptors,
-and so on.
+converting code-backed enums, paginated queries, running SQL files, base classes for interceptors, and so on.
 
 ## Requirements
 
@@ -21,15 +20,15 @@ and so on.
 | Build tool | Gradle  |
 
 The Jakarta EE API (`jakarta.platform:jakarta.jakartaee-api`) and the Faces implementation
-(`org.glassfish:jakarta.faces`) are `compileOnly` dependencies, so they must be provided at runtime
-by the application server or by the application itself.
+(`org.glassfish:jakarta.faces`) are `compileOnly` dependencies,
+so they must be provided at runtime by the application server or by the application itself.
 
 ## Features
 
 ### Enums with a code property (`enumeration`)
 
-[`ICodeEnum`](src/main/java/jp/co/nextcolors/framework/enumeration/type/ICodeEnum.java) models enums
-that carry a code value, typically the value stored in a database column.
+[`ICodeEnum`](src/main/java/jp/co/nextcolors/framework/enumeration/type/ICodeEnum.java) models enums that carry a code value,
+typically the value stored in a database column.
 
 ```java
 @Getter
@@ -56,8 +55,7 @@ Such enums can be converted in each layer by extending the corresponding base cl
 | JSON-B (serialization)      | [`json.bind.serializer.CodeEnumSerializer`](src/main/java/jp/co/nextcolors/framework/json/bind/serializer/CodeEnumSerializer.java)         |
 | JSON-B (deserialization)    | [`json.bind.deserializer.CodeEnumDeserializer`](src/main/java/jp/co/nextcolors/framework/json/bind/deserializer/CodeEnumDeserializer.java) |
 
-Each base class resolves the target types from its type arguments, so extending it is all that is
-required.
+Each base class resolves the target types from its type arguments, so extending it is all that is required.
 
 ```java
 public class GenderConverter extends CodeEnumConverter<Gender, Integer, Integer> {
@@ -67,8 +65,8 @@ public class GenderConverter extends CodeEnumConverter<Gender, Integer, Integer>
 ### JavaBeans converters (`bean`)
 
 Commons BeanUtils `Converter` implementations annotated with
-[`@BeanConverter`](src/main/java/jp/co/nextcolors/framework/bean/annotation/BeanConverter.java) are
-discovered on the classpath and registered in bulk.
+[`@BeanConverter`](src/main/java/jp/co/nextcolors/framework/bean/annotation/BeanConverter.java)
+are discovered on the classpath and registered in bulk.
 
 ```java
 @BeanConverter(forClass = Gender.class)
@@ -79,17 +77,15 @@ public class GenderConverter extends CodeEnumConverter<Gender, Integer> {
 BeanConverterUtil.registerConverters();
 ```
 
-Converters for `java.util.Date` and for the jOOQ unsigned number types (`UByte`, `UShort`,
-`UInteger`, `ULong`) are provided out of the box.
+Converters for `java.util.Date` and for the jOOQ unsigned number types (`UByte`, `UShort`, `UInteger`, `ULong`)
+are provided out of the box.
 
 ### Pagination (`data.pagination`, `jdbc.pagination`)
 
 Pagination is modelled by
-[`IPageRequest`](src/main/java/jp/co/nextcolors/framework/data/pagination/IPageRequest.java) (the
-requested page) and [`IPage`](src/main/java/jp/co/nextcolors/framework/data/pagination/IPage.java)
-(the resulting page), with
-[`IPager`](src/main/java/jp/co/nextcolors/framework/jdbc/pagination/IPager.java) running the
-paginated query through jOOQ.
+[`IPageRequest`](src/main/java/jp/co/nextcolors/framework/data/pagination/IPageRequest.java)(the requested page)
+and [`IPage`](src/main/java/jp/co/nextcolors/framework/data/pagination/IPage.java)(the resulting page),
+with [`IPager`](src/main/java/jp/co/nextcolors/framework/jdbc/pagination/IPager.java) running the paginated query through jOOQ.
 
 ```java
 IPager<User> pager = new Pager<>(dslContext, User.class);
@@ -104,8 +100,7 @@ IPage<User> page = pager.fetchPageBySqlFile(pageRequest, Path.of("sql", "user", 
                                             Map.of("age", 20));
 ```
 
-`fetchPageBySqlFile` automatically binds the pagination values to the `offset` and `limit`
-parameters of the SQL file.
+`fetchPageBySqlFile` automatically binds the pagination values to the `offset` and `limit` parameters of the SQL file.
 
 ### Queries backed by SQL files (`jdbc.query`)
 
@@ -125,8 +120,7 @@ int count = write.execute();
 ```
 
 Parameters passed as a `Collection` or an array are expanded into an IN list.
-[`Sort`](src/main/java/jp/co/nextcolors/framework/jdbc/query/Sort.java) is provided for building
-sort orders.
+[`Sort`](src/main/java/jp/co/nextcolors/framework/jdbc/query/Sort.java) is provided for building sort orders.
 
 ### Database converters (`jdbc.converter`)
 
@@ -136,13 +130,12 @@ The following jOOQ `Converter` implementations are provided.
 - [`Sha256Converter`](src/main/java/jp/co/nextcolors/framework/jdbc/converter/Sha256Converter.java) / [`Sha512Converter`](src/main/java/jp/co/nextcolors/framework/jdbc/converter/Sha512Converter.java) — hashing of strings
 - [`UrlConverter`](src/main/java/jp/co/nextcolors/framework/jdbc/converter/UrlConverter.java) — conversion between `java.net.URL` and `String`
 
-[`BeanRecordMapper`](src/main/java/jp/co/nextcolors/framework/jdbc/record/mapper/BeanRecordMapper.java)
-maps a record to a JavaBean.
+[`BeanRecordMapper`](src/main/java/jp/co/nextcolors/framework/jdbc/record/mapper/BeanRecordMapper.java) — maps a record to a JavaBean.
 
 ### Interceptors (`interceptor`)
 
-Base classes for implementing Jakarta Interceptors. Implementing `invokeInternal` is enough — the
-interception annotations (`@AroundInvoke` and friends) are already declared on the base class.
+Base classes for implementing Jakarta Interceptors. Implementing `invokeInternal` is enough —
+the interception annotations (`@AroundInvoke` and friends) are already declared on the base class.
 
 | Class                                                                                                            | Target                           |
 | :--------------------------------------------------------------------------------------------------------------- | :------------------------------- |
@@ -154,9 +147,9 @@ interception annotations (`@AroundInvoke` and friends) are already declared on t
 ### Request dumping (`filter`)
 
 Registering
-[`RequestDumpFilter`](src/main/java/jp/co/nextcolors/framework/filter/RequestDumpFilter.java) logs
-the request properties, session properties, headers, parameters, and cookies at DEBUG level. Nothing
-is done when DEBUG logging is disabled.
+[`RequestDumpFilter`](src/main/java/jp/co/nextcolors/framework/filter/RequestDumpFilter.java) logs the request properties,
+session properties, headers, parameters, and cookies at DEBUG level.
+Nothing is done when DEBUG logging is disabled.
 
 ```xml
 <filter>
@@ -184,8 +177,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale,
 
 ## Building
 
-If you use [mise](https://mise.jdx.dev/), the configuration in
-[mise.toml](mise.toml) installs Temurin.
+If you use [mise](https://mise.jdx.dev/), the configuration in [mise.toml](mise.toml) installs Temurin.
 
 ```console
 $ ./gradlew build
@@ -208,8 +200,7 @@ The resulting JAR is written to `build/libs/`.
 ## Dependencies
 
 Dependencies are managed by the version catalog in
-[gradle/libs.versions.toml](gradle/libs.versions.toml), where versions are declared as
-`latest.release`.
+[gradle/libs.versions.toml](gradle/libs.versions.toml), where versions are declared as `latest.release`.
 
 The main ones are:
 
