@@ -18,7 +18,6 @@
 //-----------------------------------------------------------------------------
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
-import org.jetbrains.dokka.gradle.tasks.DokkaGenerateTask
 import java.time.Year
 
 //-----------------------------------------------------------------------------
@@ -147,11 +146,6 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = Charsets.UTF_8.name()
 }
 
-// Dokka のタスク
-tasks.withType<DokkaGenerateTask>().configureEach {
-    dependsOn(tasks.delombok)
-}
-
 // JAR ファイルを構築するタスク
 tasks.jar {
     // マニフェストファイル
@@ -185,8 +179,6 @@ tasks.jacocoTestReport {
 
 // Javadoc のタスク
 tasks.javadoc {
-    dependsOn(tasks.delombok)
-
     source = tasks.delombok.get().target.asFileTree
     isFailOnError = false
 
@@ -223,24 +215,20 @@ tasks.eclipse {
 
     doFirst {
         // Buildship の設定
-        layout.projectDirectory.file(".settings/org.eclipse.buildship.core.prefs").asFile.writer().use {
-            it.appendLine(
-                """
-                eclipse.preferences.version=1
-                connection.project.dir=${relativePath(rootDir)}
-                """.trimIndent()
-            )
-        }
+        file(".settings/org.eclipse.buildship.core.prefs").writeText(
+            """
+            eclipse.preferences.version=1
+            connection.project.dir=${relativePath(rootDir)}
+            """.trimIndent()
+        )
 
         // テキストファイルのエンコードの設定
-        layout.projectDirectory.file(".settings/org.eclipse.core.resources.prefs").asFile.writer().use {
-            it.appendLine(
-                """
-                eclipse.preferences.version=1
-                encoding/<project>=${Charsets.UTF_8}
-                """.trimIndent()
-            )
-        }
+        file(".settings/org.eclipse.core.resources.prefs").writeText(
+            """
+            eclipse.preferences.version=1
+            encoding/<project>=${Charsets.UTF_8}
+            """.trimIndent()
+        )
     }
 }
 
