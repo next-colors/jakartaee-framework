@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//-----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
 //    Import Classes
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import java.time.Year
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 //    Plugins
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 plugins {
     `java-library`
     jacoco
@@ -33,14 +34,14 @@ plugins {
     alias(libs.plugins.gradle.versions)
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 //    Project Settings
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 group = "jp.co.next-colors"
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 //    Dependency Management
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // コンフィギュレーションの設定
 configurations {
     // テスト時にのみ必要なライブラリ
@@ -93,9 +94,9 @@ dependencies {
     dokkaHtmlPlugin(libs.dokka.kotlin.java.plugin)
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 //    Plugin Configurations
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // Java Plugin の設定
 java {
     toolchain {
@@ -116,7 +117,7 @@ dokka {
 
         documentedVisibilities(
             VisibilityModifier.Public,
-            VisibilityModifier.Protected
+            VisibilityModifier.Protected,
         )
 
         jdkVersion = java.targetCompatibility.majorVersion.toInt()
@@ -138,9 +139,9 @@ eclipse {
     }
 }
 
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 //    Tasks
-//-----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // Java コンパイルのタスク
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = Charsets.UTF_8.name()
@@ -152,7 +153,7 @@ tasks.jar {
     manifest {
         attributes(
             "Created-By" to GradleVersion.current(),
-            "Build-Jdk" to System.getProperty("java.vm.version")
+            "Build-Jdk" to System.getProperty("java.vm.version"),
         )
     }
 }
@@ -161,7 +162,12 @@ tasks.jar {
 tasks.test {
     useJUnitPlatform()
 
-    maxParallelForks = Runtime.getRuntime().availableProcessors().div(2).coerceAtLeast(1)
+    maxParallelForks =
+        Runtime
+            .getRuntime()
+            .availableProcessors()
+            .div(2)
+            .coerceAtLeast(1)
 
     testLogging {
         exceptionFormat = TestExceptionFormat.FULL
@@ -179,13 +185,19 @@ tasks.jacocoTestReport {
 
 // Javadoc のタスク
 tasks.javadoc {
-    source = tasks.delombok.get().target.asFileTree
+    source =
+        tasks.delombok
+            .get()
+            .target.asFileTree
     isFailOnError = false
 
     options {
         this as StandardJavadocDocletOptions
 
-        encoding = tasks.compileJava.get().options.encoding
+        encoding =
+            tasks.compileJava
+                .get()
+                .options.encoding
         isAuthor = true
         isUse = true
         version = true
@@ -204,7 +216,7 @@ tasks.javadoc {
             "https://projectlombok.org/api/",
             "https://www.jooq.org/javadoc/latest/",
             "https://www.jooq.org/products/jOO%CE%BB/javadoc/latest/",
-            "https://www.slf4j.org/apidocs/"
+            "https://www.slf4j.org/apidocs/",
         )
     }
 }
@@ -219,7 +231,7 @@ tasks.eclipse {
             """
             eclipse.preferences.version=1
             connection.project.dir=${relativePath(rootDir)}
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         // テキストファイルのエンコードの設定
@@ -227,7 +239,7 @@ tasks.eclipse {
             """
             eclipse.preferences.version=1
             encoding/<project>=${Charsets.UTF_8}
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 }

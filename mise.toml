@@ -1,2 +1,7 @@
 [tools]
 java = "temurin-25"
+ktlint = "latest"
+lefthook = "latest"
+
+[hooks]
+postinstall = "lefthook install"
