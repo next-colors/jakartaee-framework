@@ -49,3 +49,8 @@ pre-commit:
       glob: "*.{kt,kts}"
       run: ktlint --format {staged_files}
       stage_fixed: true
+
+    - name: tombi
+      glob: "*.toml"
+      run: tombi format {staged_files}
+      stage_fixed: true

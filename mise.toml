@@ -2,6 +2,7 @@
 java = "temurin-25"
 ktlint = "latest"
 lefthook = "latest"
+tombi = "latest"
 
 [hooks]
 postinstall = "lefthook install"
