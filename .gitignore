@@ -10,6 +10,14 @@
 # IntelliJ IDEA
 /.idea/
 
+# Visual Studio Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Node
+node_modules/
+
 # Gradle
 /.gradle/
 

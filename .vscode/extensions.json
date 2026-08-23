@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "bierner.markdown-preview-github-styles",
+    "eamodio.gitlens",
+    "github.vscode-github-actions",
+    "oxc.oxc-vscode",
+    "redhat.vscode-yaml",
+    "tekumara.typos-vscode",
+    "tombi-toml.tombi"
+  ]
+}
