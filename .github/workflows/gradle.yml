@@ -28,7 +28,7 @@ jobs:
 
       - &setup-java
         name: Set up Java
-        uses: jdx/mise-action@v4.2.5
+        uses: jdx/mise-action@v4.3.0
         with:
           install_args: java
 
