@@ -8,8 +8,12 @@
 name: Java CI with Gradle
 
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
