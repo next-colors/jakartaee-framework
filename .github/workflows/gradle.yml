@@ -53,6 +53,7 @@ jobs:
         with:
           report-path: build/test-results/test/TEST-*.xml
           title: Test Report
+          collapse-large-reports: true
           use-suite-name: true
           integrations-config: |
             {
