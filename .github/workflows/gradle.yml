@@ -26,30 +26,30 @@ jobs:
     steps:
       - &checkout
         name: Checkout repository
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
       - &setup-java
         name: Set up Java
-        uses: jdx/mise-action@v4.3.0
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
         with:
           install_args: java
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6.3.0
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
 
       - name: Build with Gradle
         run: ./gradlew build jacocoTestReport
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: build/reports/tests/
 
       - name: Publish test report
         if: always()
-        uses: ctrf-io/github-test-reporter@v1.3.0
+        uses: ctrf-io/github-test-reporter@7974087018bf4857cf5a9d78723e152038c3fa31 # v1.3.0
         with:
           report-path: build/test-results/test/TEST-*.xml
           title: Test Report
@@ -63,7 +63,7 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: github.actor != 'dependabot[bot]'
-        uses: codecov/codecov-action@v7.0.0
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
         with:
           fail_ci_if_error: true
           files: build/reports/jacoco/test/jacocoTestReport.xml
@@ -81,4 +81,4 @@ jobs:
       - *setup-java
 
       - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@v6.3.0
+        uses: gradle/actions/dependency-submission@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
