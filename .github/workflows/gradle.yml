@@ -50,8 +50,6 @@ jobs:
       - name: Publish test report
         if: always()
         uses: ctrf-io/github-test-reporter@v1.3.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           report-path: build/test-results/test/TEST-*.xml
           title: Test Report
