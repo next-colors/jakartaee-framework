@@ -47,10 +47,21 @@ jobs:
         with:
           path: build/reports/tests/
 
-      - name: Publish test results
-        uses: EnricoMi/publish-unit-test-result-action@v2.24.0
+      - name: Publish test report
+        if: always()
+        uses: ctrf-io/github-test-reporter@v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: build/test-results/test/TEST-*.xml
+          report-path: build/test-results/test/TEST-*.xml
+          title: Test Report
+          use-suite-name: true
+          integrations-config: |
+            {
+              "junit-to-ctrf": {
+                "enabled": true
+              }
+            }
 
       - name: Upload coverage to Codecov
         if: github.actor != 'dependabot[bot]'
