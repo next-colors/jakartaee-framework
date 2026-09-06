@@ -1,4 +1,5 @@
 [tools]
+actionlint = "latest"
 java = "temurin-25"
 ktlint = "latest"
 lefthook = "latest"
