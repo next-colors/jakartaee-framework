@@ -5,6 +5,7 @@ ktlint = "latest"
 lefthook = "latest"
 node = "lts"
 pnpm = "latest"
+shellcheck = "latest"
 tombi = "latest"
 
 [hooks]
