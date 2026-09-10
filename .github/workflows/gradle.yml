@@ -17,6 +17,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       checks: write
       contents: read
@@ -71,6 +72,7 @@ jobs:
   dependency-submission:
     name: Dependency Submission
     runs-on: ubuntu-slim
+    timeout-minutes: 30
     permissions:
       contents: write
 
