@@ -3,12 +3,9 @@ actionlint = "latest"
 ghalint = "latest"
 java = "temurin-25"
 ktlint = "latest"
-lefthook = "latest"
+lefthook = { version = "latest", postinstall = "lefthook install" }
 node = "lts"
 pnpm = "latest"
 shellcheck = "latest"
 tombi = "latest"
 zizmor = "latest"
-
-[hooks]
-postinstall = "lefthook install"
