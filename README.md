@@ -180,7 +180,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("messages", locale,
 If you use [mise](https://mise.jdx.dev/), the configuration in [mise.toml](mise.toml) installs Temurin.
 
 ```console
-$ ./gradlew build
+./gradlew build
 ```
 
 The main tasks are:
