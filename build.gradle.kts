@@ -53,9 +53,6 @@ configurations {
 
 // 依存関係の設定
 dependencies {
-    // アノテーションプロセッサ
-    annotationProcessor(libs.lombok)
-
     // パッケージに含めるライブラリ
     api(libs.classgraph)
     api(libs.commons.beanutils2)
@@ -107,7 +104,7 @@ java {
 
 // Lombok Plugin の設定
 lombok {
-    version = providers.gradleProperty("lombok.version")
+    version = libs.lombok.map { it.version }
 }
 
 // Dokka Plugin の設定
