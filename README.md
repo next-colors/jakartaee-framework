@@ -200,7 +200,7 @@ The resulting JAR is written to `build/libs/`.
 ## Dependencies
 
 Dependencies are managed by the version catalog in
-[gradle/libs.versions.toml](gradle/libs.versions.toml), where versions are declared as `latest.release`.
+[gradle/libs.versions.toml](gradle/libs.versions.toml), and Dependabot keeps their versions up to date.
 
 The main ones are:
 

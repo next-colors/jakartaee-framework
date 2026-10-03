@@ -243,6 +243,5 @@ tasks.eclipse {
 
 // Gradle ラッパーのタスク
 tasks.wrapper {
-    gradleVersion = providers.gradleProperty("gradle.version").get()
     distributionType = Wrapper.DistributionType.ALL
 }

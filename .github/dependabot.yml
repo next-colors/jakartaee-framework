@@ -16,6 +16,22 @@ updates:
         patterns:
           - gradle/actions/*
 
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: daily
+      time: "09:00"
+      timezone: Asia/Tokyo
+    cooldown:
+      default-days: 7
+    groups:
+      dokka:
+        patterns:
+          - org.jetbrains.dokka*
+      junit:
+        patterns:
+          - org.junit.*
+
   - package-ecosystem: npm
     directory: /
     schedule:

@@ -1,34 +1,34 @@
 [plugins]
-gradle-dependency-graph-generator = { id = "com.vanniktech.dependency.graph.generator", version = "latest.release" }
-gradle-dokka = { id = "org.jetbrains.dokka", version = "latest.release" }
-gradle-lombok = { id = "io.freefair.lombok", version = "latest.release" }
-gradle-versions = { id = "io.github.ben-manes.versions", version = "latest.release" }
+gradle-dependency-graph-generator = { id = "com.vanniktech.dependency.graph.generator", version = "0.8.0" }
+gradle-dokka = { id = "org.jetbrains.dokka", version = "2.3.0-Beta" }
+gradle-lombok = { id = "io.freefair.lombok", version = "9.8.0" }
+gradle-versions = { id = "io.github.ben-manes.versions", version = "0.64.0" }
 
 [libraries]
-assertj-core = { group = "org.assertj", name = "assertj-core", version = "latest.release" }
-assertj-db = { group = "org.assertj", name = "assertj-db", version = "latest.release" }
-classgraph = { group = "io.github.classgraph", name = "classgraph", version = "latest.release" }
-commons-beanutils2 = { group = "org.apache.commons", name = "commons-beanutils2", version = "latest.release" }
-commons-codec = { group = "commons-codec", name = "commons-codec", version = "latest.release" }
-commons-collections4 = { group = "org.apache.commons", name = "commons-collections4", version = "latest.release" }
-commons-io = { group = "commons-io", name = "commons-io", version = "latest.release" }
-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version = "latest.release" }
-commons-text = { group = "org.apache.commons", name = "commons-text", version = "latest.release" }
-dokka-kotlin-java-plugin = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version = "latest.release" }
-generics-resolver = { group = "ru.vyarus", name = "generics-resolver", version = "latest.release" }
-jakarta-faces = { group = "org.glassfish", name = "jakarta.faces", version = "latest.release" }
+assertj-core = { group = "org.assertj", name = "assertj-core", version = "4.0.0-M1" }
+assertj-db = { group = "org.assertj", name = "assertj-db", version = "3.0.2" }
+classgraph = { group = "io.github.classgraph", name = "classgraph", version = "4.8.196" }
+commons-beanutils2 = { group = "org.apache.commons", name = "commons-beanutils2", version = "2.0.0-M2" }
+commons-codec = { group = "commons-codec", name = "commons-codec", version = "1.22.1" }
+commons-collections4 = { group = "org.apache.commons", name = "commons-collections4", version = "4.6.0" }
+commons-io = { group = "commons-io", name = "commons-io", version = "2.22.0" }
+commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version = "3.21.0" }
+commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.15.0" }
+dokka-kotlin-java-plugin = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version = "2.3.0-Beta" }
+generics-resolver = { group = "ru.vyarus", name = "generics-resolver", version = "3.0.3" }
+jakarta-faces = { group = "org.glassfish", name = "jakarta.faces", version = "4.1.17" }
 jakarta-servlet-api = { group = "jakarta.servlet", name = "jakarta.servlet-api", version = "6.1.+" }
-jakartaee-api = { group = "jakarta.platform", name = "jakarta.jakartaee-api", version = "latest.release" }
-jool = { group = "org.jooq", name = "jool", version = "latest.release" }
-jooq = { group = "org.jooq", name = "jooq", version = "latest.release" }
-junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version = "latest.release" }
-junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "latest.release" }
-junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "latest.release" }
-lombok = { group = "org.projectlombok", name = "lombok", version = "latest.release" }
-mockito-inline = { group = "org.mockito", name = "mockito-inline", version = "latest.release" }
-mockito-junit-jupiter = { group = "org.mockito", name = "mockito-junit-jupiter", version = "latest.release" }
-mockneat = { group = "net.andreinc", name = "mockneat", version = "latest.release" }
-ninja-squad-dbsetup = { group = "com.ninja-squad", name = "DbSetup", version = "latest.release" }
-ognl = { group = "ognl", name = "ognl", version = "latest.release" }
-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "latest.release" }
-uroborosql = { group = "jp.co.future", name = "uroborosql", version = "latest.release" }
+jakartaee-api = { group = "jakarta.platform", name = "jakarta.jakartaee-api", version = "11.0.0" }
+jool = { group = "org.jooq", name = "jool", version = "0.9.15" }
+jooq = { group = "org.jooq", name = "jooq", version = "3.21.9" }
+junit-jupiter-api = { group = "org.junit.jupiter", name = "junit-jupiter-api", version = "6.1.3" }
+junit-jupiter-engine = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version = "6.1.3" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher", version = "6.1.3" }
+lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.48" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version = "5.2.0" }
+mockito-junit-jupiter = { group = "org.mockito", name = "mockito-junit-jupiter", version = "5.24.0" }
+mockneat = { group = "net.andreinc", name = "mockneat", version = "0.4.8" }
+ninja-squad-dbsetup = { group = "com.ninja-squad", name = "DbSetup", version = "2.1.0" }
+ognl = { group = "ognl", name = "ognl", version = "3.5.0-BETA7" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.1.0-alpha1" }
+uroborosql = { group = "jp.co.future", name = "uroborosql", version = "1.0.12" }
