@@ -7,7 +7,7 @@ gradle-versions = { id = "io.github.ben-manes.versions", version = "0.64.0" }
 [libraries]
 assertj-core = { group = "org.assertj", name = "assertj-core", version = "4.0.0-M1" }
 assertj-db = { group = "org.assertj", name = "assertj-db", version = "3.0.2" }
-classgraph = { group = "io.github.classgraph", name = "classgraph", version = "4.8.196" }
+classgraph = { group = "io.github.classgraph", name = "classgraph", version = "4.8.197" }
 commons-beanutils2 = { group = "org.apache.commons", name = "commons-beanutils2", version = "2.0.0-M2" }
 commons-codec = { group = "commons-codec", name = "commons-codec", version = "1.22.1" }
 commons-collections4 = { group = "org.apache.commons", name = "commons-collections4", version = "4.6.0" }
