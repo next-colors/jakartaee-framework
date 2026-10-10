@@ -6,8 +6,6 @@ updates:
       interval: daily
       time: "09:00"
       timezone: Asia/Tokyo
-    cooldown:
-      default-days: 7
     groups:
       codeql:
         patterns:
@@ -22,8 +20,6 @@ updates:
       interval: daily
       time: "09:00"
       timezone: Asia/Tokyo
-    cooldown:
-      default-days: 7
     groups:
       dokka:
         patterns:
@@ -38,8 +34,6 @@ updates:
       interval: daily
       time: "09:00"
       timezone: Asia/Tokyo
-    cooldown:
-      default-days: 7
     groups:
       commitlint:
         patterns:
