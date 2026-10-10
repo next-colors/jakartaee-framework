@@ -2,7 +2,7 @@
 gradle-dependency-graph-generator = { id = "com.vanniktech.dependency.graph.generator", version = "0.8.0" }
 gradle-dokka = { id = "org.jetbrains.dokka", version = "2.3.0-Beta" }
 gradle-lombok = { id = "io.freefair.lombok", version = "9.8.0" }
-gradle-versions = { id = "io.github.ben-manes.versions", version = "0.64.0" }
+gradle-versions = { id = "io.github.ben-manes.versions", version = "0.65.0" }
 
 [libraries]
 assertj-core = { group = "org.assertj", name = "assertj-core", version = "4.0.0-M1" }
