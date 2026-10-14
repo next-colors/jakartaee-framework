@@ -16,7 +16,7 @@ commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version 
 commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.15.0" }
 dokka-kotlin-java-plugin = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version = "2.3.0-Beta" }
 generics-resolver = { group = "ru.vyarus", name = "generics-resolver", version = "3.0.3" }
-jakarta-faces = { group = "org.glassfish", name = "jakarta.faces", version = "4.1.17" }
+jakarta-faces = { group = "org.glassfish", name = "jakarta.faces", version = "4.1.18" }
 jakarta-servlet-api = { group = "jakarta.servlet", name = "jakarta.servlet-api", version = "6.1.+" }
 jakartaee-api = { group = "jakarta.platform", name = "jakarta.jakartaee-api", version = "11.0.0" }
 jool = { group = "org.jooq", name = "jool", version = "0.9.15" }
