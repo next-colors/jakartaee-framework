@@ -9,7 +9,7 @@ assertj-core = { group = "org.assertj", name = "assertj-core", version = "4.0.0-
 assertj-db = { group = "org.assertj", name = "assertj-db", version = "3.0.2" }
 classgraph = { group = "io.github.classgraph", name = "classgraph", version = "4.8.197" }
 commons-beanutils2 = { group = "org.apache.commons", name = "commons-beanutils2", version = "2.0.0-M2" }
-commons-codec = { group = "commons-codec", name = "commons-codec", version = "1.22.1" }
+commons-codec = { group = "commons-codec", name = "commons-codec", version = "1.23.0" }
 commons-collections4 = { group = "org.apache.commons", name = "commons-collections4", version = "4.6.0" }
 commons-io = { group = "commons-io", name = "commons-io", version = "2.22.0" }
 commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version = "3.21.0" }
