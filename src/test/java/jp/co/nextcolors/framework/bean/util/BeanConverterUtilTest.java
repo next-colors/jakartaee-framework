@@ -20,8 +20,6 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
 import org.apache.commons.beanutils2.BeanUtilsBean;
 import org.apache.commons.beanutils2.ConvertUtilsBean;
 import org.apache.commons.beanutils2.Converter;
@@ -33,6 +31,7 @@ import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 
 import jp.co.nextcolors.framework.bean.annotation.BeanConverter;
@@ -50,7 +49,6 @@ class BeanConverterUtilTest {
     /**
      * {@link BeanConverterUtil#registerConverters()} のテストです。
      */
-    @SuppressWarnings("rawtypes")
     @Test
     void testRegisterConverters() {
         try (final MockedStatic<BeanUtilsBean> beanUtilsBean = mockStatic(BeanUtilsBean.class, Answers.RETURNS_DEEP_STUBS)) {
@@ -58,10 +56,15 @@ class BeanConverterUtilTest {
 
             BeanConverterUtil.registerConverters();
 
-            try (final ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
-                final List<Class<Converter>> converterClasses = scanResult.getClassesImplementing(Converter.class)
-                        .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class))
-                        .loadClasses(Converter.class);
+            try (final ScanResult scanResult = new ClassGraph()
+                    .enableClasspath()
+                    .enableNonSystemModules()
+                    .enableClassInfo()
+                    .enableAnnotationInfo()
+                    .ignoreClassVisibility()
+                    .scan()) {
+                final ClassInfoList converterClasses = scanResult.getAllClassesImplementing(Converter.class)
+                        .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class));
 
                 verify(convertUtils, times(converterClasses.size())).register(any(), any());
             }

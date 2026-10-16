@@ -18,6 +18,7 @@ package jp.co.nextcolors.framework.bean.util;
 import org.apache.commons.beanutils2.BeanUtilsBean;
 import org.apache.commons.beanutils2.ConvertUtilsBean;
 import org.apache.commons.beanutils2.Converter;
+import org.apache.commons.lang3.ClassUtils;
 import org.jooq.lambda.Unchecked;
 
 import io.github.classgraph.ClassGraph;
@@ -40,11 +41,18 @@ public class BeanConverterUtil {
      * @see ConvertUtilsBean#register(Converter, Class)
      */
     public static void registerConverters() {
-        try (final ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
-            scanResult.getClassesImplementing(Converter.class)
+        try (final ScanResult scanResult = new ClassGraph()
+                .enableClasspath()
+                .enableNonSystemModules()
+                .enableClassInfo()
+                .enableAnnotationInfo()
+                .ignoreClassVisibility()
+                .scan()) {
+            scanResult.getAllClassesImplementing(Converter.class)
                     .filter(converterClassInfo -> converterClassInfo.hasAnnotation(BeanConverter.class))
-                    .loadClasses(Converter.class).forEach(Unchecked.consumer(converterClass -> {
-                        final Converter<?> converter = converterClass.getConstructor().newInstance();
+                    .forEach(Unchecked.consumer(converterClassInfo -> {
+                        final Class<?> converterClass = ClassUtils.getClass(converterClassInfo.getName(), false);
+                        final Converter<?> converter = converterClass.asSubclass(Converter.class).getConstructor().newInstance();
                         final Class<?> targetClass = converterClass.getAnnotation(BeanConverter.class).forClass();
 
                         BeanUtilsBean.getInstance().getConvertUtils().register(converter, targetClass);
