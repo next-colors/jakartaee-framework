@@ -1,7 +1,7 @@
 [plugins]
 gradle-dependency-graph-generator = { id = "com.vanniktech.dependency.graph.generator", version = "0.8.0" }
 gradle-dokka = { id = "org.jetbrains.dokka", version = "2.3.0-Beta" }
-gradle-lombok = { id = "io.freefair.lombok", version = "9.8.0" }
+gradle-lombok = { id = "io.freefair.lombok", version = "9.8.2" }
 gradle-versions = { id = "io.github.ben-manes.versions", version = "0.66.0" }
 
 [libraries]
