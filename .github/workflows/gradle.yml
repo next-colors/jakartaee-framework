@@ -48,34 +48,35 @@ jobs:
         shell: bash
         run: ./gradlew build jacocoTestReport
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          path: build/reports/tests/
-          if-no-files-found: error
+      - parallel:
+          - name: Upload artifacts
+            uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+            with:
+              path: build/reports/tests/
+              if-no-files-found: error
 
-      - name: Publish test report
-        if: ${{ always() }}
-        uses: ctrf-io/github-test-reporter@dbb08957b5b2af918b39136ab2c5532002c7649b # v1.3.2
-        with:
-          report-path: build/test-results/test/TEST-*.xml
-          title: Test Report
-          collapse-large-reports: true
-          use-suite-name: true
-          integrations-config: |
-            {
-              "junit-to-ctrf": {
-                "enabled": true
-              }
-            }
+          - name: Publish test report
+            if: ${{ always() }}
+            uses: ctrf-io/github-test-reporter@dbb08957b5b2af918b39136ab2c5532002c7649b # v1.3.2
+            with:
+              report-path: build/test-results/test/TEST-*.xml
+              title: Test Report
+              collapse-large-reports: true
+              use-suite-name: true
+              integrations-config: |
+                {
+                  "junit-to-ctrf": {
+                    "enabled": true
+                  }
+                }
 
-      - name: Upload coverage to Codecov
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
-        with:
-          fail_ci_if_error: true
-          files: build/reports/jacoco/test/jacocoTestReport.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+          - name: Upload coverage to Codecov
+            if: ${{ github.actor != 'dependabot[bot]' }}
+            uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+            with:
+              fail_ci_if_error: true
+              files: build/reports/jacoco/test/jacocoTestReport.xml
+              token: ${{ secrets.CODECOV_TOKEN }}
 
   dependency-submission:
     name: Dependency Submission
