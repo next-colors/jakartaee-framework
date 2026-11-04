@@ -30,19 +30,19 @@ jobs:
     steps:
       - &checkout
         name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - &setup-java
         name: Set up Java
-        uses: jdx/mise-action@6612f0ef07ed2a736cd1e00a94a065522dd41195 # v5.2.5
+        uses: jdx/mise-action@v5.2.5
         with:
           install_args: java
           add_shims_to_path: false
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+        uses: gradle/actions/setup-gradle@v6.4.1
 
       - name: Build with Gradle
         shell: bash
@@ -50,14 +50,14 @@ jobs:
 
       - parallel:
           - name: Upload artifacts
-            uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+            uses: actions/upload-artifact@v7.0.2
             with:
               path: build/reports/tests/
               if-no-files-found: error
 
           - name: Publish test report
             if: ${{ always() }}
-            uses: ctrf-io/github-test-reporter@dbb08957b5b2af918b39136ab2c5532002c7649b # v1.3.2
+            uses: ctrf-io/github-test-reporter@v1.3.2
             with:
               report-path: build/test-results/test/TEST-*.xml
               title: Test Report
@@ -72,7 +72,7 @@ jobs:
 
           - name: Upload coverage to Codecov
             if: ${{ github.actor != 'dependabot[bot]' }}
-            uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+            uses: codecov/codecov-action@v7.1.1
             with:
               fail_ci_if_error: true
               files: build/reports/jacoco/test/jacocoTestReport.xml
@@ -91,4 +91,4 @@ jobs:
       - *setup-java
 
       - name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@8da46b539cd8fe6ab27ca75128919a18d757604c # v6.4.1
+        uses: gradle/actions/dependency-submission@v6.4.1
