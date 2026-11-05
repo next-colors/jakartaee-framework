@@ -62,7 +62,7 @@ jobs:
       # This includes steps like installing compilers or runtimes (`actions/setup-node`
       # or others). This is typically only required for manual builds.
       - name: Set up Java
-        uses: jdx/mise-action@v5.2.5
+        uses: jdx/mise-action@v5.2.6
         with:
           install_args: java
           add_shims_to_path: false
