@@ -14,7 +14,7 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'github/codeql-action@v4.39.3'
         - 'jdx/mise-action@v5.2.6'
-    '.github/workflows/delete-action-cache.yml':
+    '.github/workflows/delete-actions-cache.yml':
         - 'toshimaru/delete-action-cache@v1.0.1'
     '.github/workflows/gradle.yml':
         - 'actions/checkout@v7.0.1'
