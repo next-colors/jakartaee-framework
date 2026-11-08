@@ -197,7 +197,7 @@ tasks.javadoc {
                 .options.encoding
         isAuthor = true
         isUse = true
-        version = true
+        isVersion = true
         bottom = "&#169; 2017-${Year.now()} NEXT COLORS Co., Ltd."
         links(
             "https://commons.apache.org/proper/commons-beanutils/apidocs/",
