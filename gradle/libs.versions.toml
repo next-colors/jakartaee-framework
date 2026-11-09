@@ -1,6 +1,6 @@
 [plugins]
 gradle-dependency-graph-generator = { id = "com.vanniktech.dependency.graph.generator", version = "0.8.0" }
-gradle-dokka = { id = "org.jetbrains.dokka", version = "2.3.0-Beta" }
+gradle-dokka = { id = "org.jetbrains.dokka", version = "2.3.0" }
 gradle-lombok = { id = "io.freefair.lombok", version = "9.8.3" }
 gradle-versions = { id = "io.github.ben-manes.versions", version = "0.67.0" }
 
@@ -14,7 +14,7 @@ commons-collections4 = { group = "org.apache.commons", name = "commons-collectio
 commons-io = { group = "commons-io", name = "commons-io", version = "2.22.0" }
 commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version = "3.21.0" }
 commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.15.0" }
-dokka-kotlin-java-plugin = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version = "2.3.0-Beta" }
+dokka-kotlin-java-plugin = { group = "org.jetbrains.dokka", name = "kotlin-as-java-plugin", version = "2.3.0" }
 generics-resolver = { group = "ru.vyarus", name = "generics-resolver", version = "3.0.3" }
 jakarta-faces = { group = "org.glassfish", name = "jakarta.faces", version = "4.1.20" }
 jakarta-servlet-api = { group = "jakarta.servlet", name = "jakarta.servlet-api", version = "6.1.+" }
