@@ -36,7 +36,7 @@ jobs:
 
       - &setup-java
         name: Set up Java
-        uses: jdx/mise-action@v5.2.6
+        uses: jdx/mise-action@v5.2.7
         with:
           install_args: java
           add_shims_to_path: false
