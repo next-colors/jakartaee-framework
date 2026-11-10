@@ -27,6 +27,12 @@ updates:
       junit:
         patterns:
           - org.junit.*
+    ignore:
+      # uroboroSQL 1.0.12 cannot evaluate /*IF ...*/ conditions that refer to
+      # parameters with OGNL 3.4 or later.
+      - dependency-name: ognl:ognl
+        versions:
+          - ">= 3.4"
 
   - package-ecosystem: npm
     directory: /

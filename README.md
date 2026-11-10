@@ -209,6 +209,6 @@ The main ones are:
 - [generics-resolver](https://github.com/xvik/generics-resolver)
 - [jOOQ](https://www.jooq.org/) / [jOOλ](https://github.com/jOOQ/jOOL)
 - [Lombok](https://projectlombok.org/) (compile time only)
-- [OGNL](https://commons.apache.org/proper/commons-ognl/)
+- [OGNL](https://github.com/orphan-oss/ognl)
 - [SLF4J](https://www.slf4j.org/)
 - [uroboroSQL](https://future-architect.github.io/uroborosql-doc/)

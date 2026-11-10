@@ -151,6 +151,20 @@ class SqlFileQueryTest {
             files.reset();
             uroboroSQL.reset();
 
+            final String conditionalSql = "SELECT * FROM foo WHERE 1 = 1"
+                    + " /*IF bar != null*/ AND bar = /*bar*/'' /*END*/"
+                    + " /*IF qux == null*/ AND qux IS NULL /*END*/";
+
+            files.when(() -> Files.readString(sqlFilePath)).thenReturn(conditionalSql);
+            uroboroSQL.when(() -> UroboroSQL.builder(any(Connection.class))).thenReturn(builder);
+            final ExecutionContext conditionalExecutionContext = sqlFileQuery.createExecutionContext();
+            assertThat(conditionalExecutionContext.getExecutableSql())
+                    .contains("AND bar = ?")
+                    .doesNotContain("AND qux");
+            assertThat(conditionalExecutionContext.getBindVariables()).containsExactly(params.get("bar"));
+            files.reset();
+            uroboroSQL.reset();
+
             files.when(() -> Files.readString(sqlFilePath)).thenThrow(IOException.class);
             assertThatIOException().isThrownBy(() -> sqlFileQuery.createExecutionContext());
             files.reset();

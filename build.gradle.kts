@@ -28,7 +28,6 @@ plugins {
     `java-library`
     jacoco
     `eclipse-wtp`
-    alias(libs.plugins.gradle.dependency.graph.generator)
     alias(libs.plugins.gradle.dokka)
     alias(libs.plugins.gradle.lombok)
     alias(libs.plugins.gradle.versions)
