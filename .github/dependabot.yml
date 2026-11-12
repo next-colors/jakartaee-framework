@@ -3,8 +3,8 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
-      time: "09:00"
+      interval: cron
+      cronjob: 0 9 * * *
       timezone: Asia/Tokyo
     groups:
       codeql:
@@ -17,8 +17,8 @@ updates:
   - package-ecosystem: gradle
     directory: /
     schedule:
-      interval: daily
-      time: "09:00"
+      interval: cron
+      cronjob: 0 9 * * *
       timezone: Asia/Tokyo
     groups:
       dokka:
@@ -37,8 +37,8 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: daily
-      time: "09:00"
+      interval: cron
+      cronjob: 0 9 * * *
       timezone: Asia/Tokyo
     groups:
       commitlint:
