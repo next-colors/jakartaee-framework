@@ -12,6 +12,7 @@ github-cli = { version = "latest", postinstall = "gh extension install github/gh
 jactionlint = "latest"
 java = "lts"
 ktlint = "latest"
+lychee = "latest"
 node = "lts"
 pnpm = "latest"
 shellcheck = "latest"
