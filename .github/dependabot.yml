@@ -4,8 +4,7 @@ updates:
     directory: /
     schedule:
       interval: cron
-      cronjob: 0 9 * * *
-      timezone: Asia/Tokyo
+      cronjob: 0 0 * * *
     groups:
       codeql:
         patterns:
@@ -18,8 +17,7 @@ updates:
     directory: /
     schedule:
       interval: cron
-      cronjob: 0 9 * * *
-      timezone: Asia/Tokyo
+      cronjob: 0 0 * * *
     groups:
       dokka:
         patterns:
@@ -38,8 +36,7 @@ updates:
     directory: /
     schedule:
       interval: cron
-      cronjob: 0 9 * * *
-      timezone: Asia/Tokyo
+      cronjob: 0 0 * * *
     groups:
       commitlint:
         patterns:
