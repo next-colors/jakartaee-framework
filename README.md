@@ -1,7 +1,7 @@
 # Jakarta EE Framework
 
 [![Java CI with Gradle](https://github.com/next-colors/jakartaee-framework/actions/workflows/gradle.yml/badge.svg)](https://github.com/next-colors/jakartaee-framework/actions/workflows/gradle.yml)
-[![CodeQL](https://github.com/next-colors/jakartaee-framework/actions/workflows/codeql.yml/badge.svg)](https://github.com/next-colors/jakartaee-framework/actions/workflows/codeql.yml)
+[![CodeQL](https://github.com/next-colors/jakartaee-framework/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/next-colors/jakartaee-framework/actions/workflows/github-code-scanning/codeql)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
 A collection of utilities that support Jakarta EE application development.
@@ -17,7 +17,7 @@ converting code-backed enums, paginated queries, running SQL files, base classes
 | :--------- | :------ |
 | Java       | 25      |
 | Jakarta EE | 11      |
-| Gradle     | 9.8.x   |
+| Gradle     | 9.9.x   |
 
 The Jakarta EE API (`jakarta.platform:jakarta.jakartaee-api`) and the Faces implementation
 (`org.glassfish:jakarta.faces`) are `compileOnly` dependencies,

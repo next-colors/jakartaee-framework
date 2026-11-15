@@ -6,9 +6,6 @@ updates:
       interval: cron
       cronjob: 0 0 * * *
     groups:
-      codeql:
-        patterns:
-          - github/codeql-action/*
       gradle:
         patterns:
           - gradle/actions/*
