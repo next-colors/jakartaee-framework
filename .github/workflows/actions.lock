@@ -16,7 +16,7 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'actions/upload-artifact@v7.0.2'
         - 'codecov/codecov-action@v7.1.1'
-        - 'ctrf-io/github-test-reporter@v1.3.2'
+        - 'ctrf-io/github-test-reporter@v1.4.0'
         - 'gradle/actions@v6.4.1'
         - 'jdx/mise-action@v5.2.10'
     '.github/workflows/lychee.yml':
@@ -45,9 +45,9 @@ dependencies:
         repo_id: 200299178
         uses:
             - 'actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd'
-    'ctrf-io/github-test-reporter@v1.3.2':
-        ref: 'v1.3.2'
-        commit: 'sha1-dbb08957b5b2af918b39136ab2c5532002c7649b'
+    'ctrf-io/github-test-reporter@v1.4.0':
+        ref: 'v1.4.0'
+        commit: 'sha1-c2e2997afb89a9a515d83121ce7499e272630446'
         owner_id: 158504486
         repo_id: 788637527
     'github/codeql-action@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2':
