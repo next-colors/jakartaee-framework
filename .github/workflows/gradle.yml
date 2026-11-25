@@ -57,7 +57,7 @@ jobs:
 
           - name: Publish test report
             if: ${{ !cancelled() }}
-            uses: ctrf-io/github-test-reporter@v1.3.2
+            uses: ctrf-io/github-test-reporter@v1.4.0
             with:
               report-path: build/test-results/test/TEST-*.xml
               title: Test Report
